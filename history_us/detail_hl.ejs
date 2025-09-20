@@ -1,0 +1,90 @@
+<%- include ("../_headerusers") %>
+    <link rel="stylesheet" href="/dist/css/user_menu.css">
+    <div class="container-fluid mt-4">
+    <a href="/history_us/all" class="btn btn-secondary"><i class="fas fa-arrow-circle-left"></i> กลับ</a>
+    <br><br>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="d-flex border-bottom title-part-padding align-items-center">
+                        <div>
+                            <h4 class="card-title mb-0"> รายละเอียด</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <% for(var j=0; j<forms_field.length;j++ ){ %>
+                                <%if(forms_field[j].field_type=='Shorttextfield_q'
+                                    ){%>
+                                    <%= forms_field[j].label_inputname%> : <%=
+                                            forms_field[j].value_res%><br>
+                                            <%}%>
+                                                <%if(forms_field[j].field_type=='Longtextfield_q'
+                                                    ){%>
+                                                    <%=
+                                                        forms_field[j].label_longtext%>
+                                                        : <%=
+                                                            forms_field[j].value_res%>
+                                                            <br>
+                                                            <%}%>
+                                                                <%if(forms_field[j].field_type=='Dropdownfield_q'
+                                                                    ){%>
+                                                                    <%=
+                                                                        forms_field[j].label_dropdown%>
+                                                                        : <%=
+                                                                            forms_field[j].value_res%>
+                                                                            <br>
+                                                                            <%}%>
+                                                                                <%if(forms_field[j].field_type=='Checkboxfield_q'
+                                                                                    ){%>
+                                                                                    <%=
+                                                                                        forms_field[j].label_checkbox%>
+                                                                                        :
+                                                                                        <%=
+                                                                                            forms_field[j].value_res%>
+                                                                                            <br>
+                                                                                            <%}%>
+                                                                                                <%if(forms_field[j].field_type=='Radiofield_q'
+                                                                                                    ){%>
+                                                                                                    <%=
+                                                                                                        forms_field[j].label_radio%>
+                                                                                                        :
+                                                                                                        <%=
+                                                                                                            forms_field[j].value_res%>
+                                                                                                            <br>
+                                                                                                            <%}%>
+                                                                                                                <%if(forms_field[j].field_type=='Datetimefield_q'
+                                                                                                                    ){%>
+                                                                                                                    <%=
+                                                                                                                        forms_field[j].label_datetime%>
+                                                                                                                        :
+                                                                                                                        <%=
+                                                                                                                            forms_field[j].value_res%>
+                                                                                                                            <br>
+                                                                                                                            <%}%>
+                                                                                                                                <%if(forms_field[j].field_type=='Gpsfield_q'
+                                                                                                                                    ){%>
+                                                                                                                                    ตำแหน่ง
+                                                                                                                                    :
+                                                                                                                                    <%=forms_field[j].value_res%>
+                                                                                                                                        <br>
+                                                                                                                                        <%}%>
+                                                                                                                                            <%if(forms_field[j].field_type=='Imagefield_q'
+                                                                                                                                                ){%>
+                                                                                                                                                <%=
+                                                                                                                                                    forms_field[j].label_inputimage%>
+                                                                                                                                                    :
+                                                                                                                                                    <br>
+                                                                                                                                                    <img src="/image_webapp/g_Imagefield/<%= forms_field[j].value_res %>"
+                                                                                                                                                        alt="Image"
+                                                                                                                                                        width="150px"><br>
+                                                                                                                                                    <%}%>
+                                                                                                                                                        <%}%>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <%- include ("../_footerusers") %>

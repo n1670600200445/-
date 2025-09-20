@@ -1,0 +1,237 @@
+<%- include ("../_header") %>
+
+<style>
+  p {
+    text-align: center !important;
+  }
+</style>
+
+<input id="idvillage" value="<%=idvillage%>" readonly hidden>
+<input id="name_village" value="<%=name_village%>" readonly hidden> 
+
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-md-5 align-self-center">
+        <h3 class="page-title">หมู่บ้าน</h3>
+        <div class="d-flex align-items-center mt-1">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">แดชบอร์ด</a></li>
+              <li class="breadcrumb-item active" aria-current="page">หมู่บ้าน</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="d-flex border-bottom title-part-padding align-items-center">
+            <div>
+              <h4 class="card-title mb-0">หมู่บ้าน</h4>
+            </div>
+            <div class="ms-auto flex-shrink-0">
+              <a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#add-village-modal"><svg
+                  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-plus fill-white feather-sm">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>เพิ่มหมู่บ้าน</a>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="table-responsive">
+              <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <table id="zero_config" class="table table-striped table-bordered dataTable" role="grid"
+                      aria-describedby="zero_config_info">
+                      <thead>
+                        <tr role="row">
+                          <th class="sorting_asc" tabindex="0" aria-controls="zero_config" rowspan="1" colspan="1"
+                            aria-sort="ascending" aria-label="Name: activate to sort column descending"
+                            style="width: 0px;">ลำดับ</th>
+                          <th class="sorting" tabindex="0" aria-controls="zero_config" rowspan="1" colspan="1"
+                            aria-label="Position: activate to sort column ascending" style="width: 0px;">ชื่อหมู่บ้าน
+                          </th>
+                          <th class="sorting" tabindex="0" aria-controls="zero_config" rowspan="1" colspan="1"
+                            aria-label="Office: activate to sort column ascending" style="width: 0px;">แสดง</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <%if(village){%>
+                          <% for(var i=0; i<village.length;i++ ){ %>
+                            <tr>
+                              <td>
+                                <%= i+1 %>
+                              </td>
+                              <td>
+                                <%= village[i].name_village%>
+                              </td>
+                              <td>
+                                <div class="btn-group">
+                                  <a id="<%= village[i].idvillage%>" href="#" onclick="editvillage(this.id)"
+                                    class="btn btn-warning" data-bs-toggle="modal"
+                                    data-bs-target="#edit-village-modal"><i class="fas fa-pencil-alt fa-x"></i>
+                                    แก้ไขข้อมูล</a>
+                                  <a id="<%= village[i].idvillage%>" href="#" onclick="deletevillage(this.id)"
+                                    class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#delete-village-modal"><i class="fas fa-trash-alt fa-x"></i>
+                                    ลบข้อมูล</a>
+                                  <a class="btn btn-info" href="/village/name<%= village[i].idvillage%> "><i
+                                    class="bi bi-card-checklist" aria-hidden="true"></i>
+                                    ดูรายชื่อประชาชนในหมู่บ้าน</a>
+                                </div>
+
+                              </td>
+                            </tr>
+                            <%}%>
+                              <%}%>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <form action="/village/save" method="POST">
+    <div id="add-village-modal" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md"
+      style="display: none;" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header d-flex align-items-center border-bottom">
+            <h4 class="modal-title" id="myModalLabel">เพิ่มหมู่บ้าน</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body mb row">
+            <label for="fname" class="col-sm-3 text-start control-label col-form-label"> หมู่บ้าน:</label>
+            <div class="col-sm-9">
+              <input type="text" name="name_village" placeholder="กรอกชื่อหมู่บ้าน" class="form-control" required>
+            </div>
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button type="submit" class="btn btn-success font-weight-medium waves-effect">บันทึกข้อมูล</button>
+            <button type="button" class="btn btn-secondary font-weight-medium waves-effect"
+              data-bs-dismiss="modal">ปิด</button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+  </form>
+
+  <form action="/village/update" method="POST">
+    <div id="edit-village-modal" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md"
+      style="display: none;" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header d-flex align-items-center border-bottom">
+            <h4 class="modal-title" id="myModalLabel">แก้ไขหมู่บ้าน</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body mb row" id="editvillage">
+
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button type="submit" class="btn btn-warning font-weight-medium waves-effect">แก้ไขข้อมูล</button>
+            <button type="button" class="btn btn-secondary font-weight-medium waves-effect"
+              data-bs-dismiss="modal">ปิด</button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+  </form>
+  
+  <form action="/village/delete" method="POST">
+    <div id="delete-village-modal" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md"
+      style="display: none;" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header d-flex align-items-center border-bottom">
+            <h4 class="modal-title" id="myModalLabel">ลบข้อมูลหมู่บ้าน</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body mb row" id="deletevillage">
+
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button type="submit" class="btn btn-danger font-weight-medium waves-effect">ยืนยัน</button>
+            <button type="button" class="btn btn-secondary font-weight-medium waves-effect"
+              data-bs-dismiss="modal">ปิด</button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+  </form>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('.table').DataTable();
+    });
+  </script>
+
+  <script>
+
+    function editvillage(id) {
+      const idvillage = document.getElementById("idvillage").value
+      const name_village = document.getElementById('name_village').value
+
+
+      let sort_idvillage = idvillage.split(',')
+      let sort_name_village = name_village.split(',')
+
+
+      let obj = []
+      var editvillage = document.getElementById("editvillage");
+      for (i in sort_idvillage) {
+        obj.push({ "idvillage": sort_idvillage[i], "name_village": sort_name_village[i] })
+      }
+      for (j in obj) {
+        if (id == obj[j].idvillage) {
+          editvillage.innerHTML = '<label for="fname" class="col-sm-3 text-start control-label col-form-label"> หมู่บ้าน:</label>'
+            + '<div class="col-sm-9"> <input type="text" name="name_village" value="' + obj[j].name_village + '" class="form-control" required></div>'
+            + '<input type="hidden" name="idvillage" value="' + obj[j].idvillage + '" readonly>'
+        }
+      }
+    }
+
+    function deletevillage(id) {
+      const idvillage = document.getElementById("idvillage").value
+      const name_village = document.getElementById('name_village').value
+
+
+      let sort_idvillage = idvillage.split(',')
+      let sort_name_village = name_village.split(',')
+
+
+      let obj = []
+      var deletevillage = document.getElementById("deletevillage");
+      for (i in sort_idvillage) {
+        obj.push({ "idvillage": sort_idvillage[i], "name_village": sort_name_village[i] })
+      }
+      for (j in obj) {
+        if (id == obj[j].idvillage) {
+          deletevillage.innerHTML = '<p>ต้องการลบหมู่บ้าน ' + obj[j].name_village + ' ? </p>'
+            + '<input type="hidden" name="idvillage" value="' + obj[j].idvillage + '" readonly>'
+        }
+      }
+    }
+
+  </script>
+
+  <%- include ("../_footer") %>

@@ -1,0 +1,75 @@
+<%- include ("../_header") %>
+<% JSON.stringify(editadmins)%>
+<section id="main-content">
+    <section class="wrapper">
+      <div class="row">
+        <div class="col-lg-12">
+          <h3 class="page-header"><i class="fa fa-files-o"></i> EDIT INFORMATION</h3>
+          <ol class="breadcrumb">
+            <li><i class="fa fa-home"></i><a href="/index">Dashboard</a></li>
+            <li><i class="icon_document_alt"></i><a href="/admin"> จัดการข้อมูลแอดมิน</a></li>
+            <li><i class="fa fa-files-o"></i>แก้ไขข้อมูลแอดมิน</li>
+          </ol>
+        </div>
+      </div>
+      <!-- Form validations -->
+      <div class="row">
+        <div class="col-lg-3"> </div>
+        <div class="col-lg-6">
+            <div class="col-lg-3"> </div>
+          <section class="panel">
+            <header class="panel-heading">
+                <b style="font-size: large;"> แก้ไขข้อมูลแอดมินที่ดูแลระบบ </b>
+                <div class="panel-actions">
+                  <a href="/admin/edit<%=editadmins.idadmins %>" class="btn-setting"><i class="fa fa-rotate-right"></i></a>
+                  <a href="/admin" class="btn-close"><i class="fa fa-times"></i></a>
+                </div>
+                
+            </header>
+            <div class="panel-body">
+              <div class="form">
+                <form class="form-validate form-horizontal" id="feedback_form" method="POST" action="/admin/update<%=editadmins.idadmins %>">
+                  <div class="form-group " style="background-color: rgb(247, 245, 242); padding: 30px; margin: auto;">
+                    <label for="cname" class="control-label col-lg-2">ชื่อ <span class="required">*</span></label>
+                    <div class="col-lg-3">
+                      <input class="form-control" id="cname" value="<%=editadmins.fname_ad%>" name="fname_ad"  type="text" required />
+                    </div>
+                    <label for="cname" class="control-label col-lg-1">นามสกุล <span class="required">*</span></label>
+                    <div class="col-lg-3">
+                        <input class="form-control" id="cname" value="<%=editadmins.lname_ad%>" name="lname_ad"  type="text" required />
+                    </div>
+                  </div>
+                  <div class="form-group " style="background-color: rgb(221, 213, 200); padding: 30px; margin: auto;">
+                    <label for="cname" class="control-label col-lg-2">Username <span class="required">*</span></label>
+                    <div class="col-lg-3">
+                      <input class="form-control" id="cname" value="<%=editadmins.username%>" name="username"  minlength="5"  type="text" required />
+                    </div>
+                    <label for="cname" class="control-label col-lg-1">Password <span class="required">*</span></label>
+                    <div class="col-lg-3">
+                        <input class="form-control" id="cname" value="<%=editadmins.password%>" name="password"  minlength="5" type="text" required />
+                    </div>
+                  </div>
+                  <div class="form-group " style="background-color: rgb(247, 245, 242); padding: 30px; margin: auto;">
+                    <label for="cname" class="control-label col-lg-2">เบอร์ติดต่อ <span class="required">*</span></label>
+                    <div class="col-lg-3" ar>
+                      <input class="form-control" id="subject" name="phone_ad" value="<%=editadmins.phone_ad%>" minlength="10" type="text" required />
+                    </div>
+                  </div>
+                  <div class="form-group" style="background-color: rgb(221, 213, 200); padding: 30px; margin: auto;">
+                    <div class="col-lg-offset-4 col-lg-4">
+                      <button id="editter" class="btn btn-primary" type="submit">บันทึก</button>
+                      
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+            </div>
+          </section>
+        </div>
+      </div>
+      
+      <!-- page end-->
+    </section>
+  </section>
+  <%- include ("../_footer") %>

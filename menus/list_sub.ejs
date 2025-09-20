@@ -1,0 +1,1204 @@
+<%- include ("../_header") %>
+
+    <style>
+        p {
+            text-align: center !important;
+        }
+
+        .scroll_form_defaulticon {
+            overflow: auto;
+            height: 200px;
+        }
+
+        .form-control:disabled,
+        .form-control:read-only {
+            background-color: white;
+            opacity: 1;
+        }
+  
+    </style>
+
+
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-md-5 align-self-center">
+                <h3 class="page-title">
+                    <%=menu_main[0].name_mm%>
+                </h3>
+                <div class="d-flex align-items-center">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/menus">เมนูหลัก</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">รายการเมนูย่อย</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="sendmm_id" value="<%=menu_main[0].idmenu_main%>">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="d-flex border-bottom title-part-padding align-items-center">
+                        <div>
+                            <h4 class="card-title mb-0">รายการเมนูย่อย</h4>
+                        </div>
+                        <div class="ms-auto flex-shrink-0">
+                            <a type="button" class="btn btn-info btn-lg px-4 fs-4 font-weight-medium"
+                                data-bs-toggle="modal" data-bs-target="#scroll-long-inner-modal" onclick="show_ms_preview()">
+                                ดูตัวอย่างเมนู
+                            </a>
+                            <a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#add-menus-modal"
+                                onclick="reset_saveform_ms()"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="feather feather-plus fill-white feather-sm">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>เพิ่มเมนูย่อย</a>
+                        </div>
+                    </div>
+                    <div>
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#menu_users"
+                                    onclick="clicktab_ms(1)" role="tab" aria-selected="true">
+                                    <span>ประชาชนทั่วไป</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#menu_registerusers"
+                                    onclick="clicktab_ms(2)" role="tab" aria-selected="false">
+                                    <span>ประชาชนลงทะเบียน</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#menu_officers" onclick="clicktab_ms(3)"
+                                    role="tab" aria-selected="false">
+                                    <span>เจ้าหน้าที่</span>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <input type="hidden" name="check_tabmm" id="checktab_ms" value="1">
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div class="tab-pane p-3 active" id="menu_users" role="tabpanel">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <div id="zero_config_wrapper1"
+                                            class="dataTables_wrapper container-fluid dt-bootstrap4">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <table id="table1"
+                                                        class="table table-striped table-bordered dataTable" role="grid"
+                                                        aria-describedby="zero_config_info">
+                                                        <thead>
+                                                            <tr role="row">
+                                                                <th class="sorting_asc" tabindex="0"
+                                                                    aria-controls="zero_config" rowspan="1" colspan="1"
+                                                                    aria-sort="ascending"
+                                                                    aria-label="Name: activate to sort column descending"
+                                                                    style="width: 0px;">ลำดับ</th>
+                                                                <th class="sorting" tabindex="0"
+                                                                    aria-controls="zero_config" rowspan="1" colspan="1"
+                                                                    aria-label="Position: activate to sort column ascending"
+                                                                    style="width: 0px;">ชื่อเมนู
+                                                                </th>
+                                                                <th class="sorting" tabindex="0"
+                                                                    aria-controls="zero_config" rowspan="1" colspan="1"
+                                                                    aria-label="Position: activate to sort column ascending"
+                                                                    style="width: 0px;">รูปไอคอน
+                                                                </th>
+                                                                <th class="sorting" tabindex="0"
+                                                                    aria-controls="zero_config" rowspan="1" colspan="1"
+                                                                    aria-label="Position: activate to sort column ascending"
+                                                                    style="width: 0px;">กลุ่มที่ให้บริการ
+                                                                </th>
+                                                                <th class="sorting" tabindex="0"
+                                                                    aria-controls="zero_config" rowspan="1" colspan="1"
+                                                                    aria-label="Office: activate to sort column ascending"
+                                                                    style="width: 100px;">แสดง</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="wrapper start_showmm">
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane p-3" id="menu_registerusers" role="tabpanel">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <div id="zero_config_wrapper1"
+                                            class="dataTables_wrapper container-fluid dt-bootstrap4">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <table id="table2"
+                                                        class="table table-striped table-bordered dataTable" role="grid"
+                                                        aria-describedby="zero_config_info">
+                                                        <thead>
+                                                            <tr role="row">
+                                                                <th class="sorting_asc" tabindex="0"
+                                                                    aria-controls="zero_config" rowspan="1" colspan="1"
+                                                                    aria-sort="ascending"
+                                                                    aria-label="Name: activate to sort column descending"
+                                                                    style="width: 0px;">ลำดับ</th>
+                                                                <th class="sorting" tabindex="0"
+                                                                    aria-controls="zero_config" rowspan="1" colspan="1"
+                                                                    aria-label="Position: activate to sort column ascending"
+                                                                    style="width: 0px;">ชื่อเมนู
+                                                                </th>
+                                                                <th class="sorting" tabindex="0"
+                                                                    aria-controls="zero_config" rowspan="1" colspan="1"
+                                                                    aria-label="Position: activate to sort column ascending"
+                                                                    style="width: 0px;">รูปไอคอน
+                                                                </th>
+                                                                <th class="sorting" tabindex="0"
+                                                                    aria-controls="zero_config" rowspan="1" colspan="1"
+                                                                    aria-label="Position: activate to sort column ascending"
+                                                                    style="width: 0px;">กลุ่มที่ให้บริการ
+                                                                </th>
+                                                                <th class="sorting" tabindex="0"
+                                                                    aria-controls="zero_config" rowspan="1" colspan="1"
+                                                                    aria-label="Office: activate to sort column ascending"
+                                                                    style="width: 100px;">แสดง</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="wrapper">
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane p-3" id="menu_officers" role="tabpanel">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <div id="zero_config_wrapper1"
+                                            class="dataTables_wrapper container-fluid dt-bootstrap4">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <table id="table3"
+                                                        class="table table-striped table-bordered dataTable" role="grid"
+                                                        aria-describedby="zero_config_info">
+                                                        <thead>
+                                                            <tr role="row">
+                                                                <th class="sorting_asc" tabindex="0"
+                                                                    aria-controls="zero_config" rowspan="1" colspan="1"
+                                                                    aria-sort="ascending"
+                                                                    aria-label="Name: activate to sort column descending"
+                                                                    style="width: 0px;">ลำดับ</th>
+                                                                <th class="sorting" tabindex="0"
+                                                                    aria-controls="zero_config" rowspan="1" colspan="1"
+                                                                    aria-label="Position: activate to sort column ascending"
+                                                                    style="width: 0px;">ชื่อเมนู
+                                                                </th>
+                                                                <th class="sorting" tabindex="0"
+                                                                    aria-controls="zero_config" rowspan="1" colspan="1"
+                                                                    aria-label="Position: activate to sort column ascending"
+                                                                    style="width: 0px;">รูปไอคอน
+                                                                </th>
+                                                                <th class="sorting" tabindex="0"
+                                                                    aria-controls="zero_config" rowspan="1" colspan="1"
+                                                                    aria-label="Position: activate to sort column ascending"
+                                                                    style="width: 0px;">กลุ่มที่ให้บริการ
+                                                                </th>
+                                                                <th class="sorting" tabindex="0"
+                                                                    aria-controls="zero_config" rowspan="1" colspan="1"
+                                                                    aria-label="Office: activate to sort column ascending"
+                                                                    style="width: 100px;">แสดง</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="wrapper">
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form action="/menus/save_ms" enctype="multipart/form-data" method="POST">
+        <div id="add-menus-modal" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md"
+            style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header d-flex align-items-center border-bottom">
+                        <h4 class="modal-title" id="myModalLabel">เพิ่มเมนูย่อย</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body mb row">
+                        <div class="form-group row">
+                            <label for="fname" class="col-sm-3  text-start control-label col-form-label">
+                                ชื่อเมนูย่อย</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="name_ms" id="name_mm" placeholder="กรอกชื่อเมนู"
+                                    class="form-control" required>
+                            </div>
+                        </div>
+                        <br>
+
+                        <div class="checked-showform row mt-4" align="start">
+                            <label class="col-md-3"></label>
+                            <div class="col-md-9">
+                                <select name="form_ms" class="form-control" id="select_forms_list">
+                                    <option value="">กรุณาเลือกแบบฟอร์ม</option>
+                                    <% if(forms){ %>
+                                        <% for(i=0;i<forms.length;i++){%>
+                                            <option value="<%= forms[i].idforms %>">
+                                                <%= forms[i].name_forms %>
+                                            </option>
+                                            <% } %>
+                                                <% } %>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="checked-personneltype row mt-4" align="start">
+                            <label class="col-md-3"></label>
+                            <div class="col-md-9">
+                                <select name="personneltype_ms" class="form-control" id="select_personneltype_list">
+                                    <option value="">กรุณาเลือกหน่วยงาน</option>
+                                    <% if(personneltype){ %>
+                                        <% for(i=0;i<personneltype.length;i++){%>
+                                            <option value="<%= personneltype[i].idpersonneltype %>">
+                                                <%= personneltype[i].name_pst %>
+                                            </option>
+                                            <% } %>
+                                                <% } %>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="radio-sex row mt-4" align="start">
+                            <label class="col-md-3"> กำหนดเวลา</label>
+                            <div class="col-md-3">
+                                <input name="checktime_radio" type="radio" id="checked_time1" value="1" checked required
+                                    onchange="showsettime_mm(this.value)"
+                                    class="with-gap material-inputs material-inputs radio-col-indigo">
+                                <label for="checked_time1">ไม่มีกำหนด</label>
+                            </div>
+                            <div class="col-md-3">
+                                <input name="checktime_radio" type="radio" id="checked_time2" value="2" required
+                                    onchange="showsettime_mm(this.value)"
+                                    class="with-gap material-inputs material-inputs radio-col-indigo">
+                                <label for="checked_time2">กำหนดเวลา</label>
+                            </div>
+                        </div>
+
+                        <div class="settime_mm form-group row mt-4" hidden>
+                            <label class="col-md-3 text-start control-label col-form-label"> </label>
+                            <div class="col-md-9">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="mb-3">
+                                            <input type="date" name="datestart_ms" id="checkdatestart_mm"
+                                                class="form-control">
+                                        </div>
+                                    </div>
+                                    <label class="text-center control-label col-form-label col-md-2">ถึง</label>
+                                    <div class="col-md-5">
+                                        <div class="mb-3">
+                                            <input type="date" name="dateend_ms" id="checkdateend_mm"
+                                                class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="radio-sex row mt-4" align="start">
+                            <label class="col-md-3"> สถานะ</label>
+                            <div class="col-md-3">
+                                <input name="checkstatus_radio" type="radio" id="status_mm_input1" value="1" checked
+                                    required onchange="document.getElementById('status_menus_id').value = 1"
+                                    class="with-gap material-inputs material-inputs radio-col-indigo">
+                                <label for="status_mm_input1">เปิดใช้งาน</label>
+                            </div>
+                            <div class="col-md-2">
+                                <input name="checkstatus_radio" type="radio" id="status_mm_input2" value="2" required
+                                    onchange="document.getElementById('status_menus_id').value = 2"
+                                    class="with-gap material-inputs material-inputs radio-col-indigo">
+                                <label for="status_mm_input2">ปิดใช้งาน</label>
+                            </div>
+                        </div>
+
+                        <div class="radio-sex row mt-4" align="start">
+                            <label class="col-md-3"> รูปไอคอน</label>
+                            <div class="col-md-3">
+                                <input name="checkicon_radio" type="radio" id="icon_check1" value="1" required
+                                    onchange="showform_icon(this.value)"
+                                    class="with-gap material-inputs material-inputs radio-col-indigo">
+                                <label for="icon_check1">อัพโหลดรูป</label>
+                            </div>
+                            <div class="col-md-2">
+                                <input name="checkicon_radio" type="radio" id="icon_check2" value="2" required
+                                    onchange="showform_icon(this.value)"
+                                    class="with-gap material-inputs material-inputs radio-col-indigo">
+                                <label for="icon_check2">รูปที่มีอยู่</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-4 form_previewicon" hidden>
+                            <label for="fname" class="col-sm-3 text-start control-label col-form-label"></label>
+                            <div class="col-sm-9">
+                                <img id="preview_icon_mm" width="150px" height="150px" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-4 form_uploadicon" hidden>
+                            <label for="fname" class="col-sm-3 text-start control-label col-form-label"></label>
+                            <div class="col-sm-9 ">
+                                <input type="file" name="icon_ms" accept="image/*" multiple id="icon_mm_input"
+                                    onchange="document.getElementById('preview_icon_mm').src = window.URL.createObjectURL(this.files[0])">
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-4 form_defaulticon" hidden>
+                            <label for="fname" class="col-sm-3 text-start control-label col-form-label"></label>
+                            <div class="col-sm-9 form_defaulticon">
+                                <div class="row scroll_form_defaulticon">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="value_icon_default" id="value_icon_default">
+                        <input type="hidden" name="mm_id" value="<%=menu_main[0].idmenu_main%>">
+
+                        <div class="main_group_service row mt-4" align="start">
+                            <label class="col-md-3"> กลุ่มที่ให้บริการ</label>
+                            <div class="col-md-3">
+                                <input name="nomember_radio" type="checkbox" id="member_service1" value="1"
+                                    onchange="member_service(this.value)"
+                                    class="material-inputs filled-in chk-col-indigo">
+                                <label for="member_service1">ประชาชนทั่วไป</label>
+                            </div>
+                        </div>
+
+                        <div class="main_group_service row mt-4" align="start">
+                            <label class="col-md-3"> </label>
+                            <div class="col-md-5" style="width: 275px;">
+                                <input name="member_radio" type="checkbox" id="member_service2" value="2"
+                                    onchange="member_service(this.value)"
+                                    class="material-inputs filled-in chk-col-indigo">
+                                <label for="member_service2">ประชาชนลงทะเบียน</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input name="officer_radio" type="checkbox" id="member_service3" value="3"
+                                    onchange="member_service(this.value)"
+                                    class="material-inputs filled-in chk-col-indigo">
+                                <label for="member_service3">เจ้าหน้าที่</label>
+                            </div>
+                        </div>
+
+
+                        <style>
+                            .radio_check_g {
+                                display: grid;
+                                grid-template-columns: 190px 275px 650px;
+                                grid-template-rows: auto auto auto;
+                            }
+
+                            .member_check_ps {
+                                grid-column: 3;
+                            }
+
+                            .form_np_g_css {
+                                display: grid;
+                                grid-template-columns: 190px 275px 650px;
+                                grid-template-rows: auto auto auto;
+                            }
+
+                            .all_group_ps {
+                                grid-column: 3;
+                            }
+                        </style>
+
+                        <div class="row radio_check_g mt-4" align="start">
+                            <label class="row radio_check_g1 col-md-3" style="width: 220px;"></label>
+                            <div class="row member_check col-md-5" style="width: 305px;">
+                                <div class="col-md-1" style="width: 80px;">
+                                    <input name="checkgroup_radio" type="radio" id="group_us1" value="1" checked
+                                        required onchange="changgroup_us(this.value)"
+                                        class="with-gap material-inputs material-inputs radio-col-indigo">
+                                    <label for="group_us1">ทั้งหมด</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input name="checkgroup_radio" type="radio" id="group_us2" value="2" required
+                                        onchange="changgroup_us(this.value)"
+                                        class="with-gap material-inputs material-inputs radio-col-indigo">
+                                    <label for="group_us2">กลุ่มประชาชน</label>
+                                </div>
+                            </div>
+                            <div class="row member_check_ps col-md-5">
+                                <div class="col-md-1" style="width: 80px;">
+                                    <input name="checkgroup_radio_ps" type="radio" id="group_ps1" value="1" checked
+                                        required onchange="changgroup_ps(this.value)"
+                                        class="with-gap material-inputs material-inputs radio-col-indigo">
+                                    <label for="group_ps1">ทั้งหมด</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input name="checkgroup_radio_ps" type="radio" id="group_ps2" value="2" required
+                                        onchange="changgroup_ps(this.value)"
+                                        class="with-gap material-inputs material-inputs radio-col-indigo">
+                                    <label for="group_ps2">กลุ่มเจ้าหน้าที่</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row form_np_g_css mt-2" align="start">
+                            <label class="col-md-3"></label>
+                            <div class="col-md-4 all_group_us " hidden style="width: 275px">
+                                <input type="text" class="form-control" name="group_mm" id="input_group_mm"
+                                    style="width: 100%;background-color: white;" placeholder="ค้นหาชื่อกลุ่ม">
+                            </div>
+                            <div class="col-md-4 all_group_ps" hidden style="width: 275px;">
+                                <input type="text" class="form-control" name="group_mm_ps" id="input_group_mm_ps"
+                                    style="width: 100%;background-color: white;" placeholder="ค้นหาชื่อกลุ่ม">
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-4">
+                            <label for="fname" class="col-sm-3 text-start control-label col-form-label">
+                                รายละเอียด</label>
+                            <div class="col-sm-9">
+                                <textarea name="detail_mm" id="detail_mm" style="height:60px;" cols="10" rows="10"
+                                    class="form-control" placeholder="กรอกรายละเอียดของเมนู"></textarea>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="submit"
+                            class="btn btn-success font-weight-medium waves-effect">บันทึกข้อมูล</button>
+                        <button type="button" class="btn btn-secondary font-weight-medium waves-effect"
+                            data-bs-dismiss="modal">ปิด</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    </form>
+
+    <form action="/menus/update_ms" enctype="multipart/form-data" method="POST">
+        <div id="edit-ms-modal" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md"
+            style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header d-flex align-items-center border-bottom">
+                        <h4 class="modal-title" id="myModalLabel">แก้ไขเมนูย่อย</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body mb row">
+                        <div class="form-group row">
+                            <label for="fname" class="col-sm-3  text-start control-label col-form-label">
+                                ชื่อเมนูย่อย</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="name_ms" id="edit_name_mm" placeholder="กรอกชื่อเมนู"
+                                    class="form-control" required>
+                            </div>
+                        </div>
+                        <br>
+
+
+                        <div class="edit_checked-showform row mt-4" align="start">
+                            <label class="col-md-3"></label>
+                            <div class="col-md-9">
+                                <select name="form_ms" class="form-control" id="edit_select_forms_list">
+                                    <option value="">กรุณาเลือกแบบฟอร์ม</option>
+                                    <% if(forms){ %>
+                                        <% for(i=0;i<forms.length;i++){%>
+                                            <option value="<%= forms[i].idforms %>">
+                                                <%= forms[i].name_forms %>
+                                            </option>
+                                            <% } %>
+                                                <% } %>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="edit_checked-personneltype row mt-4" align="start">
+                            <label class="col-md-3"></label>
+                            <div class="col-md-9">
+                                <select name="personneltype_ms" class="form-control"
+                                    id="edit_select_personneltype_list">
+                                    <option value="">กรุณาเลือกหน่วยงาน</option>
+                                    <% if(personneltype){ %>
+                                        <% for(i=0;i<personneltype.length;i++){%>
+                                            <option value="<%= personneltype[i].idpersonneltype %>">
+                                                <%= personneltype[i].name_pst %>
+                                            </option>
+                                            <% } %>
+                                                <% } %>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="radio-sex row mt-4" align="start">
+                            <label class="col-md-3"> กำหนดเวลา</label>
+                            <div class="col-md-3">
+                                <input name="checktime_radio" type="radio" id="edit_checked_time1" value="1" required
+                                    onchange="showsettime_mm1(this.value)"
+                                    class="with-gap material-inputs material-inputs radio-col-indigo">
+                                <label for="edit_checked_time1">ไม่มีกำหนด</label>
+                            </div>
+                            <div class="col-md-3">
+                                <input name="checktime_radio" type="radio" id="edit_checked_time2" value="2" required
+                                    onchange="showsettime_mm1(this.value)"
+                                    class="with-gap material-inputs material-inputs radio-col-indigo">
+                                <label for="edit_checked_time2">กำหนดเวลา</label>
+                            </div>
+                        </div>
+
+                        <div class="edit_settime_mm form-group row mt-4" hidden>
+                            <label class="col-md-3 text-start control-label col-form-label"> </label>
+                            <div class="col-md-9">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="mb-3">
+                                            <input type="date" name="datestart_ms" id="edit_checkdatestart_mm"
+                                                class="form-control">
+                                        </div>
+                                    </div>
+                                    <label class="text-center control-label col-form-label col-md-2">ถึง</label>
+                                    <div class="col-md-5">
+                                        <div class="mb-3">
+                                            <input type="date" name="dateend_ms" id="edit_checkdateend_mm"
+                                                class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="radio-sex row mt-4" align="start">
+                            <label class="col-md-3"> สถานะ</label>
+                            <div class="col-md-3">
+                                <input name="checkstatus_radio" type="radio" id="edit_status_mm_input1" value="1"
+                                    required class="with-gap material-inputs material-inputs radio-col-indigo">
+                                <label for="edit_status_mm_input1">เปิดใช้งาน</label>
+                            </div>
+                            <div class="col-md-2">
+                                <input name="checkstatus_radio" type="radio" id="edit_status_mm_input2" value="2"
+                                    required class="with-gap material-inputs material-inputs radio-col-indigo">
+                                <label for="edit_status_mm_input2">ปิดใช้งาน</label>
+                            </div>
+                        </div>
+
+                        <div class="radio-sex row mt-4" align="start">
+                            <label class="col-md-3"> รูปไอคอน</label>
+                            <div class="col-md-3">
+                                <input name="checkicon_radio" type="radio" id="edit_icon_check1" value="1"
+                                    onchange="showform_icon1(this.value)"
+                                    class="with-gap material-inputs material-inputs radio-col-indigo">
+                                <label for="edit_icon_check1">อัพโหลดรูป</label>
+                            </div>
+                            <div class="col-md-2">
+                                <input name="checkicon_radio" type="radio" id="edit_icon_check2" value="2"
+                                    onchange="showform_icon1(this.value)"
+                                    class="with-gap material-inputs material-inputs radio-col-indigo">
+                                <label for="edit_icon_check2">รูปที่มีอยู่</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-4 edit_form_previewicon" hidden>
+                            <label for="fname" class="col-sm-3 text-start control-label col-form-label"></label>
+                            <div class="col-sm-9">
+                                <img id="edit_preview_icon_mm" width="150px" height="150px" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-4 edit_form_uploadicon" hidden>
+                            <label for="fname" class="col-sm-3 text-start control-label col-form-label"></label>
+                            <div class="col-sm-9 ">
+                                <input type="file" name="icon_ms" accept="image/*" multiple id="edit_icon_mm_input"
+                                    onchange="document.getElementById('edit_preview_icon_mm').src = window.URL.createObjectURL(this.files[0])">
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-4 edit_form_defaulticon" hidden>
+                            <label for="fname" class="col-sm-3 text-start control-label col-form-label"></label>
+                            <div class="col-sm-9 form_defaulticon">
+                                <div class="row scroll_form_defaulticon">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="value_icon_default" id="edit_value_icon_default">
+
+                        <div class="main_group_service row mt-4" align="start">
+                            <label class="col-md-3"> กลุ่มที่ให้บริการ</label>
+                            <div class="col-md-3">
+                                <input name="nomember_radio" type="checkbox" id="member_service1_edit" value="1"
+                                    onchange="member_service1(this.value)"
+                                    class="material-inputs filled-in chk-col-indigo">
+                                <label for="member_service1_edit">ประชาชนทั่วไป</label>
+                            </div>
+                        </div>
+
+                        <div class="main_group_service row mt-4" align="start">
+                            <label class="col-md-3"> </label>
+                            <div class="col-md-5" style="width: 275px;">
+                                <input name="member_radio" type="checkbox" id="member_service2_edit" value="2"
+                                    onchange="member_service1(this.value)"
+                                    class="material-inputs filled-in chk-col-indigo">
+                                <label for="member_service2_edit">ประชาชนลงทะเบียน</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input name="officer_radio" type="checkbox" id="member_service3_edit" value="3"
+                                    onchange="member_service1(this.value)"
+                                    class="material-inputs filled-in chk-col-indigo">
+                                <label for="member_service3_edit">เจ้าหน้าที่</label>
+                            </div>
+                        </div>
+
+                        <style>
+                            .radio_check_g1 {
+                                display: grid;
+                                grid-template-columns: 190px 275px 650px;
+                                grid-template-rows: auto auto auto;
+                            }
+
+                            .member_check_ps1 {
+                                grid-column: 3;
+                            }
+
+                            .form_np_g_css1 {
+                                display: grid;
+                                grid-template-columns: 190px 275px 650px;
+                                grid-template-rows: auto auto auto;
+                            }
+
+                            .all_group_ps1 {
+                                grid-column: 3;
+                            }
+                        </style>
+
+                        <div class="row radio_check_g1 mt-4" align="start">
+                            <label class="row col-md-3" style="width: 220px;"></label>
+                            <div class="row member_check1 col-md-5" style="width: 305px;">
+                                <div class="col-md-1" style="width: 80px;">
+                                    <input name="checkgroup_radio" type="radio" id="edit_group_us1" value="1" required
+                                        onchange="changgroup_us1(this.value)"
+                                        class="with-gap material-inputs material-inputs radio-col-indigo">
+                                    <label for="edit_group_us1">ทั้งหมด</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input name="checkgroup_radio" type="radio" id="edit_group_us2" value="2" required
+                                        onchange="changgroup_us1(this.value)"
+                                        class="with-gap material-inputs material-inputs radio-col-indigo">
+                                    <label for="edit_group_us2">กลุ่มประชาชน</label>
+                                </div>
+                            </div>
+
+                            <div class="row member_check_ps1 justify-content-end col-md-5">
+                                <div class="col-md-1" style="width: 80px;">
+                                    <input name="checkgroup_radio_ps" type="radio" id="edit_group_ps1" value="1" checked
+                                        required onchange="changgroup_ps1(this.value)"
+                                        class="with-gap material-inputs material-inputs radio-col-indigo">
+                                    <label for="edit_group_ps1">ทั้งหมด</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input name="checkgroup_radio_ps" type="radio" id="edit_group_ps2" value="2"
+                                        required onchange="changgroup_ps1(this.value)"
+                                        class="with-gap material-inputs material-inputs radio-col-indigo">
+                                    <label for="edit_group_ps2">กลุ่มเจ้าหน้าที่</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row form_np_g_css1 mt-2" align="start">
+                            <label class="col-md-3"></label>
+                            <div class="col-md-4 all_group_us1 " id="testx_tag" hidden style="width: 275px">
+                                <input type="text" class="form-control" name="group_mm" id="edit_input_group_mm"
+                                    style="width: 100%;background-color: white;" placeholder="ค้นหาชื่อกลุ่ม">
+                            </div>
+                            <div class="col-md-4 all_group_ps1" hidden style="width: 275px">
+                                <input type="text" class="form-control" name="group_mm_ps" id="edit_input_group_mm_ps"
+                                    style="width: 100%;background-color: white;" placeholder="ค้นหาชื่อกลุ่ม">
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-4">
+                            <label for="fname" class="col-sm-3 text-start control-label col-form-label">
+                                รายละเอียด</label>
+                            <div class="col-sm-9">
+                                <textarea name="detail_ms" id="edit_detail_mm" style="height:60px;" cols="10" rows="10"
+                                    class="form-control" placeholder="กรอกรายละเอียดของเมนู"></textarea>
+                            </div>
+                        </div>
+                        <input type="hidden" name="idms" id="edit_idmm">
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="submit"
+                            class="btn btn-warning font-weight-medium waves-effect">แก้ไขข้อมูล</button>
+                        <button type="button" class="btn btn-secondary font-weight-medium waves-effect"
+                            data-bs-dismiss="modal">ปิด</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    </form>
+
+    <form action="/menus/delete_ms" method="POST">
+        <div id="delete-ms-modal" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md"
+            style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header d-flex align-items-center border-bottom">
+                        <h4 class="modal-title" id="myModalLabel">ลบเมนูหลัก</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body mb text-center">
+                        <img id="delete_icon_mm" width="150px" height="150px" />
+                        <p id="delete-name_mm" class="mt-4"></p>
+                        <input type="hidden" name="order_ms" id="delete-order_mm" readonly>
+                        <input type="hidden" name="idms" id="delete-idmain_menu" readonly>
+                        <input type="hidden" name="mm_id" value="<%=menu_main[0].idmenu_main%>" readonly>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="submit" class="btn btn-danger font-weight-medium waves-effect">ยืนยัน</button>
+                        <button type="button" class="btn btn-secondary font-weight-medium waves-effect"
+                            data-bs-dismiss="modal">ปิด</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    </form>
+
+
+    <style>
+        .menulist-con {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            grid-gap: 2rem;
+        }
+
+        .menulist-img img {
+            width: 100%;
+            max-width: 100px;
+        }
+
+
+        .menulist-item {
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            transition: 0.3s;
+            outline: 1px solid white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .menulist-item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+        }
+
+        .menulist-name_mm {
+            text-align: center;
+            font-size: 12px;
+        }
+    </style>
+
+    <div class="modal fade" id="scroll-long-inner-modal" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="scroll-long-inner-modal" aria-modal="true" role="dialog">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header d-flex align-items-center">
+                    <h4 class="modal-title" id="myLargeModalLabel">ตัวอย่างเมนู</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="menulist-con">
+
+                    </div>
+                </div>
+                <div class="modal-footer" style="justify-content: center !important;">
+                    <button type="button" class="btn btn-secondary font-weight-medium waves-effect"
+                        data-bs-dismiss="modal">ปิด</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+    <script src="/script/menu_sub_save.js"></script>
+    <script src="/script/menu_sub_update.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
+        integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
+    <script>
+        $('.wrapper').sortable({
+            update: function (event, ui) {
+                event.preventDefault()
+                $(this).children().each(function (index) {
+                    if ($(this).attr('data-position') != (index + 1)) {
+                        $(this).attr('data-position', (index + 1)).addClass('updated');
+                    }
+                });
+                saveNewPositions_ms();
+            }
+        })
+
+
+        function saveNewPositions_ms() {
+            var positions = [];
+            $('.updated').each(function () {
+                positions.push([$(this).attr('data-index'), $(this).attr('data-position')]);
+                $(this).removeClass('updated');
+            })
+
+            const menu_length = positions.length;
+            const tabmm = $('#checktab_ms').val()
+            $.ajax({
+                url: '/menus/position_ms',
+                type: 'POST',
+                data: {
+                    update: 1,
+                    positions: positions,
+                    menu_length,
+                    tabmm,
+                },
+                success: (data) => {
+                    clicktab_ms(tabmm)
+                    show_ms_preview()
+                }
+            });
+        }
+
+        $('.menulist-con').sortable({
+            update: function (event, ui) {
+                event.preventDefault()
+                $(this).children().each(function (index) {
+                    if ($(this).attr('data-position') != (index + 1)) {
+                        $(this).attr('data-position', (index + 1)).addClass('updated');
+                    }
+                });
+                saveNewPositions_ms();
+            }
+        })
+    </script>
+    <script>
+        clicktab_ms(1)
+        function show_ms_preview() {
+            const val = document.getElementById('checktab_ms').value
+            const mm_id =  $('#sendmm_id').val()
+            console.log(val);
+            let tab = '';
+
+            $.ajax({
+                url: '/menus/clicktab_ms',
+                type: 'POST',
+                data: { val,mm_id },
+                success: (data) => {
+                    console.log(data.menus);
+                    data.menus.forEach((ms) => {
+                        tab += `<div class="menulist-item" data-positon="" data-index="${ms.idmenu_sub}">
+                                    <div class=" menulist-item-info">
+                                    <div class="menulist-img">
+                                        <img src="/image_default/${ms.icon_ms}" alt="">
+                                    </div>
+                                    <div class="menulist-name_mm">
+                                        <b>
+                                            ${ms.name_ms}
+                                        </b>
+                                    </div>
+                                </div>
+                    </div>`;
+                    });
+                    document.querySelector('.menulist-con').innerHTML = tab;
+                }
+            });
+        }
+    </script>
+    <script>
+        window.onload = function () {
+            var val = 1; // กำหนดค่า val ที่คุณต้องการส่งไปยัง clicktab_mm(val)
+            clicktab_ms(val);
+        };
+
+        function clicktab_ms(val) {
+            $('#checktab_ms').val(val)
+            const mm_id =  $('#sendmm_id').val()
+            $.ajax({
+                url: '/menus/clicktab_ms',
+                type: 'POST',
+                data: { val,mm_id },
+                success: (data) => {
+                    $('#table' + val + '').DataTable().destroy();
+                    if (val == 1) {
+                        $('#table1').DataTable({
+                            data: data.menus,
+                            columns: [
+                                {
+                                    title: "ลำดับ",
+                                    render: function (data, type, full, meta) {
+                                        return meta.row + 1; // แสดงลำดับข้อมูล (หมายเลขแถว + 1)
+                                    }
+                                },
+                                { data: "name_ms", title: "ชื่อเมนู" },
+                                {
+                                    data: "icon_ms",
+                                    title: "รูปไอคอน",
+                                    render: function (data, type, full, meta) {
+                                        // สร้างแท็ก <img> เพื่อแสดงรูปภาพ
+                                        return '<img src="/image_default/' + data + '" alt="รูปภาพ" width="150px" />'; // แสดงรูปภาพ 50x50 พิกเซล
+                                    }
+                                },
+                                {
+                                    data: "group_ms", title: "กลุ่มที่ให้บริการ",
+                                    render: function (data, type, full, meta) {
+                                        // สร้างแท็ก <img> เพื่อแสดงรูปภาพ
+                                        return '-'; // แสดงรูปภาพ 50x50 พิกเซล
+                                    }
+                                },
+                                {
+                                    title: "แสดง",
+                                    render: function (data, type, full, meta) {
+                                        const id = full.idmenu_sub;
+                                            return '<a id="' + id + '" href="#" onclick="edit_ms(this.id)" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit-ms-modal"><i class="fas fa-pencil-alt fa-x"></i> แก้ไขข้อมูล</a><a id="' + id + '" href="#" onclick="delete_ms(this.id)" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-ms-modal"><i class="fas fa-trash-alt fa-x"></i> ลบข้อมูล</a>';
+                                    }
+                                }
+                            ],
+                            createdRow: function (row, data, dataIndex) {
+                                // เพิ่ม attribute ให้กับแถว (tr)
+                                $(row).attr('data-index', data.idmenu_sub);
+                                $(row).attr('data-position', "");
+                                $(row).addClass('ms-auto item');
+                            },
+                        });
+                    }
+                    if (val == 2) {
+                        $('#table2').DataTable({
+                            data: data.menus,
+                            columns: [
+                                {
+                                    title: "ลำดับ",
+                                    render: function (data, type, full, meta) {
+                                        return meta.row + 1; // แสดงลำดับข้อมูล (หมายเลขแถว + 1)
+                                    }
+                                },
+                                { data: "name_ms", title: "ชื่อเมนู" },
+                                {
+                                    data: "icon_ms",
+                                    title: "รูปไอคอน",
+                                    render: function (data, type, full, meta) {
+                                        // สร้างแท็ก <img> เพื่อแสดงรูปภาพ
+                                        return '<img src="/image_default/' + data + '" alt="รูปภาพ" width="150px" />'; // แสดงรูปภาพ 50x50 พิกเซล
+                                    }
+                                },
+                                {
+                                    data: 'group_ms',
+                                    title: "กลุ่มที่ให้บริการ",
+                                    render: function (data, type, full, meta) {
+                                        var group_mm = full.group_ms;
+                                        if (group_mm == '-') {
+                                            return 'ทุกกลุ่ม'
+                                        } else {
+                                            const groupIds = group_mm.split(",").map(Number);
+                                            const groupNames = groupIds.map(id => {
+                                                const matchedGroup = group_menu.find(group => group.idgroup_us === id);
+                                                return matchedGroup ? matchedGroup.name_group : "ไม่ระบุ";
+                                            });
+                                            return groupNames.join(", ");
+                                        }
+                                    }
+                                },
+                                {
+                                    title: "แสดง",
+                                    render: function (data, type, full, meta) {
+                                        const id = full.idmenu_sub;
+                                            return '<a id="' + id + '" href="#" onclick="edit_ms(this.id)" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit-ms-modal"><i class="fas fa-pencil-alt fa-x"></i> แก้ไขข้อมูล</a><a id="' + id + '" href="#" onclick="delete_ms(this.id)" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-ms-modal"><i class="fas fa-trash-alt fa-x"></i> ลบข้อมูล</a>';
+                                    }
+                                }
+                            ],
+                            createdRow: function (row, data, dataIndex) {
+                                // เพิ่ม attribute ให้กับแถว (tr)
+                                $(row).attr('data-index', data.idmenu_sub);
+                                $(row).attr('data-position', "");
+                                $(row).addClass('ms-auto item');
+                            }
+                        });
+                    }
+                    if (val == 3) {
+                        $('#table3').DataTable({
+                            data: data.menus,
+                            columns: [
+                                {
+                                    title: "ลำดับ",
+                                    render: function (data, type, full, meta) {
+                                        return meta.row + 1; // แสดงลำดับข้อมูล (หมายเลขแถว + 1)
+                                    }
+                                },
+                                { data: "name_ms", title: "ชื่อเมนู" },
+                                {
+                                    data: "icon_ms",
+                                    title: "รูปไอคอน",
+                                    render: function (data, type, full, meta) {
+                                        // สร้างแท็ก <img> เพื่อแสดงรูปภาพ
+                                        return '<img src="/image_default/' + data + '" alt="รูปภาพ" width="150px" />'; // แสดงรูปภาพ 50x50 พิกเซล
+                                    }
+                                },
+                                {
+                                    data: "group_ms_ps", title: "กลุ่มที่ให้บริการ",
+                                    title: "กลุ่มที่ให้บริการ",
+                                    render: function (data, type, full, meta) {
+                                        console.log(group_mm_ps);
+                                        var group_mm_ps = full.group_ms_ps;
+                                        if (group_mm_ps !== null) {
+                                            if (group_mm_ps == '-') {
+                                                return 'ทุกกลุ่ม'
+                                            } else {
+                                                const groupIds = group_mm_ps.split(",").map(Number);
+                                                const groupNames = groupIds.map(id => {
+                                                    const matchedGroup = group_menu_ps.find(group => group.idgroup_ps === id);
+                                                    return matchedGroup ? matchedGroup.gname_ps : "ไม่ระบุ";
+                                                });
+                                                return groupNames.join(", ");
+                                            }
+                                        } else {
+                                            return '-'
+                                        }
+                                    }
+                                },
+                                {
+                                    title: "แสดง",
+                                    render: function (data, type, full, meta) {
+                                        const id = full.idmenu_sub;
+                                            return '<a id="' + id + '" href="#" onclick="edit_ms(this.id)" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit-ms-modal"><i class="fas fa-pencil-alt fa-x"></i> แก้ไขข้อมูล</a><a id="' + id + '" href="#" onclick="delete_ms(this.id)" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-ms-modal"><i class="fas fa-trash-alt fa-x"></i> ลบข้อมูล</a>';
+                                    }
+                                }
+                            ],
+                            createdRow: function (row, data, dataIndex) {
+                                // เพิ่ม attribute ให้กับแถว (tr)
+                                $(row).attr('data-index', data.idmenu_sub);
+                                $(row).attr('data-position', "");
+                                $(row).addClass('ms-auto item');
+                            }
+                        });
+                    }
+                }
+
+            });
+        }
+
+    </script>
+
+    <script>
+        const group_menu = eval('<%- JSON.stringify(group_us) %>')
+        const menusub_all = eval('<%- JSON.stringify(menu_sub) %>')
+        let array1 = group_menu.map((key, value) => ({ "tag": group_menu[value].idgroup_us, "value": group_menu[value].name_group }))
+        let input_save = document.getElementById('input_group_mm');
+        save_tagify_ms = new Tagify(input_save, {
+            originalInputValueFormat: array1 => array1.map(item => item.tag).join(','),
+            whitelist: array1,
+            enforceWhitelist: true,
+            dropdown: {
+                classname: "color-blue",
+                enabled: 0,
+                // maxItems      : 5,
+                position: "text",
+                closeOnSelect: false,
+                highlightFirst: true
+            }
+        });
+
+        let input_update = document.getElementById('edit_input_group_mm');
+        update_tagify_ms = new Tagify(input_update, {
+            originalInputValueFormat: array1 => array1.map(item => item.tag).join(','),
+            whitelist: array1,
+            enforceWhitelist: true,
+            dropdown: {
+                classname: "color-blue",
+                enabled: 0,
+                // maxItems      : 5,
+                position: "text",
+                closeOnSelect: false,
+                highlightFirst: true
+            }
+        });
+
+        const group_menu_ps = eval('<%- JSON.stringify(group_ps) %>')
+        let array2 = group_menu_ps.map((key, value) => ({ "tag": group_menu_ps[value].idgroup_ps, "value": group_menu_ps[value].gname_ps }))
+        let input_save_ps = document.getElementById('input_group_mm_ps');
+        save_tagify_ms1 = new Tagify(input_save_ps, {
+            originalInputValueFormat: array2 => array2.map(item => item.tag).join(','),
+            whitelist: array2,
+            enforceWhitelist: true,
+            dropdown: {
+                classname: "color-blue",
+                enabled: 0,
+                // maxItems      : 5,
+                position: "text",
+                closeOnSelect: false,
+                highlightFirst: true
+            }
+        });
+
+        let input_update1 = document.getElementById('edit_input_group_mm_ps');
+        update_tagify_ms1 = new Tagify(input_update1, {
+            originalInputValueFormat: array2 => array2.map(item => item.tag).join(','),
+            whitelist: array2,
+            enforceWhitelist: true,
+            dropdown: {
+                classname: "color-blue",
+                enabled: 0,
+                // maxItems      : 5,
+                position: "text",
+                closeOnSelect: false,
+                highlightFirst: true
+            }
+        });
+
+        
+
+        $('div.amsify-suggestags-list').css("width", "542px")
+    </script>
+    <script>
+        function delete_ms(id) {
+            $.ajax({
+                url: '/menus/check_ms',
+                type: 'POST',
+                data: { id },
+                success: (data) => {
+                    $('#delete_icon_mm').attr('src', '/image_default/' + data.data[0].icon_ms)
+                    $('#delete-name_mm').html('ต้องการลบกลุ่ม ' + data.data[0].name_ms + ' ?')
+                    $('#delete-order_mm').val(data.data[0].order_ms)
+                    $('#delete-idmain_menu').val(id)
+                }
+            });
+        }
+    </script>
+    <%- include ("../_footer") %>

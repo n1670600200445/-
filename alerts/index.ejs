@@ -1,0 +1,72 @@
+<%- include ("../_headerusers") %>
+    <link rel="stylesheet" href="/dist/css/user_menu.css">
+    <%if(data[0].phone_us.length < 10 ){%>
+        <form action="/loginusers" method="POST">
+            <div class="modal fade" id="modal_editphone_us" data-backdrop="static" tabindex="-1" role="dialog"
+                aria-labelledby="modal_editphone_us" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modal_editphone_us">กรุณากรอกเบอร์โทรศัพท์</h5>
+                        </div>
+                        <div class="modal-body">
+                            <input type="text" minlength="10" maxlength="10" name="new_phone_us"
+                                placeholder="กรอกเบอร์โทรศัพท์" class="form-control" required>
+                            <input type="hidden" name="idusers" value="<%=data[0].idusers%>" class="form-control">
+                            <input type="hidden" name="idcard_us" value="<%=data[0].idcard_us%>" class="form-control">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="summit" class="btn btn-primary">บันทึก</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <%}%>
+            
+            <div class="container-fluid mt-4">
+                <div class="menulist-con">
+                    <%if(menu_data){%>
+                        <% for(var i=0; i<menu_data.length;i++ ){ %>
+                            <%if(menu_data[i].type_radio==1){%>
+                                <a href="/alerts/menu<%=menu_data[i].idmenu_main%>">
+                                    <div class="menulist-item">
+                                        <div class="menulist-item-info">
+                                            <div class="menulist-img">
+                                                <img src="/image_default/<%=menu_data[i].icon_mm%>" alt="">
+                                            </div>
+                                            <div class="menulist-name_mm">
+                                                <b>
+                                                    <%=menu_data[i].name_mm%>
+                                                </b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <%}else{%>
+                                    <a href="/alerts/add_m<%=menu_data[i].idmenu_main%>">
+                                        <div class="menulist-item">
+                                            <div class="menulist-item-info">
+                                                <div class="menulist-img">
+                                                    <img src="/image_default/<%=menu_data[i].icon_mm%>" alt="">
+                                                </div>
+                                                <div class="menulist-name_mm">
+                                                    <b>
+                                                        <%=menu_data[i].name_mm%>
+                                                    </b>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <%}%>
+                                        <%}%>
+                                            <%}%>
+                </div>
+            </div>
+
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#modal_editphone_us').modal('show');
+                });
+            </script>
+            <%- include ("../_footerusers") %>

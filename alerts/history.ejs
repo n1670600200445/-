@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>ประวัติการแจ้งเหตุ</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="../logo/logo.png"/>
+<!--===============================================================================================-->
+<link href="../vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
+<!--===============================================================================================-->
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+<link href="../vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
+<!--===============================================================================================-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+</head>
+<body>
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-4">
+					<h2 class="heading-section">ประวัติการแจ้งเหตุ</h2>
+				</div>
+			</div>
+			<a href="/alerts" class="btn btn-success" ><i class="fas fa-arrow-circle-left"></i>กลับ</a>
+			<div class="row">
+				<div class="col-md-12">
+					<h3 class="h5 mb-4 text-center">คุณ<%=users.fname_us%> <%=users.lname_us%></h3>
+					<div class="table-wrap">
+						<table class="table table-info" id="tablealertstype">
+						  <thead class="thead-primary">
+						    <tr>
+						    	<th align="center">แจ้งเหตุ <i class="fas fa-ambulance"></i></th>
+						    </tr>
+						  </thead>
+						  <tbody>
+<% JSON.stringify(alerts) %>
+<%if(alerts){%>
+  <%for(var i=0; i<alerts.length;i++){%>
+	  <tr class="alert" role="alert">
+		  <td>
+				ประเภทการแจ้งเหตุ: <%= alerts[i].name_alty %> <br>
+                เมื่อ<%= timealerts[i].date %> <br> <%= timealerts[i].time %> <br>
+                รายละเอียด:<%= alerts[i].detail_al %> <br>
+				<% if(alerts[i].status_al == 1){ %>
+					<p style="color: darkorange;"><%= alerts[i].statusalerts %> <i class="fas fa-cloud-upload-alt"></i></p>
+	<%}else if(alerts[i].status_al == 2) {%>
+	  <p style="color: darkblue;"><%= alerts[i].statusalerts %> <i class="fas fa-sync-alt"></i></p>
+	<%}else if(alerts[i].status_al == 3) {%>
+	  <p style="color: darkgreen;"><%= alerts[i].statusalerts %> <i class="fas fa-check-circle"></i></p>ปิดงาน:<%= timealerts[i].closejob %>
+	<%}else if(alerts[i].status_al == 4) {%>
+	 <p style="color: red;"> <%= alerts[i].statusalerts %> <i class="fas fa-ban"></i></p>ปิดงาน:<%= timealerts[i].closejob %>
+   <% }%> <br>
+   <a href="/img_alerts/<%=alerts[i].img_al%>" class="btn btn-info" target="_blank"><i class="fas fa-image"></i> รูปภาพ</a>
+                <a href="https://www.google.com/maps/search/?api=1&query= <%= alerts[i].latitude %> , <%= alerts[i].longitude %>&@<%= alerts[i].latitude %>,<%= alerts[i].longitude %>,z=17" class="btn btn-warning" target="_blank"><i class="fas fa-map-marker-alt"></i> แผนที่</a>
+                
+			</td>
+					</tr>
+          <%}%>
+       <% }%>
+	</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+  $('#tablealertstype').DataTable();
+} );
+</script>
+<style>
+	body{
+		background-color: cornflowerblue;
+	}
+	h2{
+		background-color: floralwhite;
+		padding-bottom: 10px;
+	}
+</style>
+
+	
+
+<!--===============================================================================================-->	
+	<script src="../vendor_moblie/jquery/jquery-3.2.1.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+<!--===============================================================================================-->
+	<script src="../vendor_moblie/bootstrap/js/popper.js"></script>
+	<script src="../vendor_moblie/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script src="../vendor_moblie/js/main.js"></script>
+
+</body>
+</html>

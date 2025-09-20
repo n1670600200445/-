@@ -1,0 +1,170 @@
+<%- include ("../_headerusers") %>
+    <link rel="stylesheet" href="/dist/css/user_menu.css">
+    <div class="container-fluid mt-4">
+        <div id="back-tomenu_main" hidden>
+            <a href="/indexusers" class="btn btn-secondary"><i class="fas fa-arrow-circle-left"></i> กลับ</a>
+        </div>
+        <div id="back-tomenu_sub" hidden>
+            <a href="" class="btn btn-secondary"><i class="fas fa-arrow-circle-left"></i> กลับ</a>
+        </div>
+
+        <div class="views-form mt-4" hidden>
+            <div class="v-fields">
+
+            </div>
+        </div>
+
+        <div class="questions-form mt-4 " hidden>
+            <form id="action-q-form" action="/alerts/save" enctype="multipart/form-data" method="post">
+                <div class="q-fields">
+
+                </div>
+                <button type="submit" class="btn btn-success align-center">บันทึกข้อมูล</button>
+            </form>
+        </div>
+
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="../script/get.js"></script>
+    <script>
+        const mn = eval('<%- JSON.stringify(mn) %>')
+        const mn_id = eval('<%- JSON.stringify(mn_id) %>')
+
+        $.ajax({
+            url: '/alerts/create',
+            type: 'POST',
+            data: { mn, mn_id },
+            success: (data) => {
+                if (mn == 1) {
+                    document.querySelector('#back-tomenu_main').hidden = false;
+                } else {
+                    document.querySelector('#back-tomenu_sub').hidden = false;
+                    document.querySelector('#back-tomenu_sub a').setAttribute('href', '/alerts/menu' + data.mm[0].mm_id)
+                }
+
+                if (data.f[0].forms_type == 1) {
+                    const forms_hidden = document.querySelector('.questions-form');
+                    const forms = document.querySelector('.q-fields');
+                    forms_hidden.hidden = false;
+                    const form_act = document.getElementById('action-q-form')
+
+                    if (data.mm[0].mm_id) {
+                        form_act.setAttribute('action', '/alerts/save' + data.mn[0] + 'menu' + data.mm[0].idmenu_sub)
+                        console.log(form_act);
+                    } else {
+                        form_act.setAttribute('action', '/alerts/save' + data.mn[0] + 'menu' + data.mm[0].idmenu_main)
+                        console.log(form_act);
+                    }
+
+                    console.log(data.mm[0]);
+                    for (var i = 0; i < data.ff.length; i++) {
+                        if (data.ff[i].field_type == "Headerfield_q") {
+                            forms.innerHTML += `${data.ff[i].tt_name ? `<h4 class="card-title mb-0 mt-2">${data.ff[i].tt_name}</h4>` : ``}`
+                        }
+                        if (data.ff[i].field_type == "Shorttextfield_q") {
+                            forms.innerHTML += `<div class="mb-3 mt-2"><label>${data.ff[i].label_inputname ? `${data.ff[i].label_inputname}` : ``}</label > <input type="text" id="${data.ff[i].idfield}" name="${data.ff[i].idfield}" class="form-control" placeholder="${data.ff[i].placeholder_field}" ${data.ff[i].validate == 1 ? `required` : ``}></div>`
+                        }
+
+                        if (data.ff[i].field_type == "Longtextfield_q") {
+                            forms.innerHTML += `<div class="mb-3 mt-2"><label>${data.ff[i].label_longtext ? `${data.ff[i].label_longtext}` : ``}</label > <input type="text" id="${data.ff[i].idfield}" name="${data.ff[i].idfield}" class="form-control" placeholder="${data.ff[i].placeholder_longtext}" ${data.ff[i].validate == 1 ? `required` : ``}></div>`
+                        }
+
+                        if (data.ff[i].field_type == "Linkfield_q") {
+                            forms.innerHTML += `<div class="mb-3 mt-2"><a href="${data.ff[i].link_q}" target="_blank">${data.ff[i].linktext_q ? `${data.ff[i].linktext_q}` : `${data.ff[i].link_q}`}</a></div>`
+                        }
+
+                        if (data.ff[i].field_type == "Dropdownfield_q") {
+                            let set_choice_dropdown = "";
+                            const choice_dropdown_text = data.ff[i].choice_dropdown;
+                            if (data.ff[i].choice_dropdown) {
+                                const sort_choice_dd = choice_dropdown_text.split(',');
+                                set_choice_dropdown += '<option>เลือก...</option>'
+                                for (var j = 0; j < sort_choice_dd.length; j++) {
+                                    set_choice_dropdown += '<option>' + sort_choice_dd[j] + '</option>'
+                                }
+                            }
+                            forms.innerHTML += `<div class="mb-3 mt-2">${data.ff[i].label_dropdown ? `<label>${data.ff[i].label_dropdown}</label>` : ``} 
+                                    ${data.ff[i].choice_dropdown ? `<select class="form-control" name="${data.ff[i].idfield}">${set_choice_dropdown}</select>` : `<option>เลือก...</option>`} </div>`
+                        }
+                        if (data.ff[i].field_type == "Radiofield_q") {
+                            let set_choice_radio = "";
+                            const choice_radio_text = data.ff[i].choice_radio;
+                            if (data.ff[i].choice_radio) {
+                                const sort_choice_rd = choice_radio_text.split(',');
+                                console.log("radio", sort_choice_rd);
+                                for (var k = 0; k < sort_choice_rd.length; k++) {
+                                    set_choice_radio += '<div class="form-check"><input class="form-check-input" name="' + data.ff[i].idfield + '" type="radio" value="' + sort_choice_rd[k] + '" id="flexCheckDefault"><label class="form-check-label" for="flexCheckDefault">' + sort_choice_rd[k] + '</label></div>'
+                                }
+                            }
+                            forms.innerHTML += `<div class="mb-3 mt-2">${data.ff[i].label_radio ? `<label>${data.ff[i].label_radio}</label>` : ``} 
+                                    ${data.ff[i].choice_radio ? `<div class="card-body">${set_choice_radio}</div>` : `<p class="card-title mb-0">ไม่มีข้อมูล</p>`} </div>`
+                        }
+
+                        if (data.ff[i].field_type == "Checkboxfield_q") {
+                            let set_choice_checkbox = "";
+                            const choice_checkbox_text = data.ff[i].choice_checkbox;
+                            if (data.ff[i].choice_checkbox) {
+                                const sort_choice_cb = choice_checkbox_text.split(',');
+                                for (var k = 0; k < sort_choice_cb.length; k++) {
+                                    set_choice_checkbox += '<div class="form-check"><input class="form-check-input" name="' + data.ff[i].idfield + '" type="checkbox" value="' + sort_choice_cb[k] + '" id="flexCheckDefault"><label class="form-check-label" for="flexCheckDefault">' + sort_choice_cb[k] + '</label></div>'
+                                }
+                            }
+                            forms.innerHTML += `<div class="mb-3 mt-2">${data.ff[i].label_checkbox ? `<label>${data.ff[i].label_checkbox}</label>` : ``} 
+                                    ${data.ff[i].choice_checkbox ? `<div class="card-body">${set_choice_checkbox}</div>` : `<p class="card-title mb-0">ไม่มีข้อมูล</p>`}</div>`
+                        }
+
+                        if (data.ff[i].field_type == "Imagefield_q") {
+                            forms.innerHTML += `<div class="mb-3 mt-2">${data.ff[i].label_inputimage ? `<label>${data.ff[i].label_inputimage}</label>` : ``} 
+                                <input type="file" name="${data.ff[i].idfield}" class="form-control" onchange="document.getElementById('previewImg${data.ff[i].idfield}').src = window.URL.createObjectURL(this.files[0])"><br><img id="previewImg${data.ff[i].idfield}" width="100%"/><br></div>`
+                        }
+                        if (data.ff[i].field_type == "Imagefield_show") {
+                            forms.innerHTML += `<div class="mb-3 mt-2">${data.ff[i].image_file ? `<img src="/image_fields/${data.ff[i].image_file}" width="85%" height="85%"/></div>` : ''}`
+                        }
+                        if (data.ff[i].field_type == "Vdofield_show") {
+                            let getyoutube_link = data.ff[i].youtube_link
+                            let newURL = getyoutube_link.replace("watch?v=", "embed/");
+                            forms.innerHTML += '<div class="mb-3 mt-2"><iframe  src="' + newURL + '" frameborder="0"></iframe></div>'
+                        }
+                        if (data.ff[i].field_type == "Datetimefield_q") {
+                            forms.innerHTML += `<div class="mb-3 mt-2">${data.ff[i].label_datetime ? `<label>${data.ff[i].label_datetime}</label>` : ``} 
+                                <input type="date" name="${data.ff[i].idfield}" class="form-control"></div>`
+                        }
+
+                        if (data.ff[i].field_type == "Gpsfield_q") {
+                            forms.innerHTML += `<a class="btn btn-warning" onclick="get.getLocation('${data.ff[i].idfield}')"><i class="fas fa-map-marker-alt"></i> คลิกเพื่อระบุตำแหน่งที่อยู่</a>
+                                                <br>
+                                                <input type="hidden" id="${data.ff[i].idfield}" value="" name="${data.ff[i].idfield}" >
+                                                <div id="gmap_canvas${data.ff[i].idfield}"></div>`
+                        }
+                    }
+                } else {
+                    const forms_hidden = document.querySelector('.views-form');
+                    const forms = document.querySelector('.v-fields');
+                    forms_hidden.hidden = false;
+
+                    for (var i = 0; i < data.ff.length; i++) {
+                        if (data.ff[i].field_type == "Headerfield_show") {
+                            forms.innerHTML += `<div>${data.ff[i].tt_name ? `<h4>${data.ff[i].tt_name}</h4>` : ''}</div>`
+                        }
+                        if (data.ff[i].field_type == "Linkfield_show") {
+                            forms.innerHTML += `<div>${data.ff[i].link && data.ff[i].name_link ? `<a href="${data.ff[i].link}" target="_blank">${data.ff[i].name_link}</a>` : ''}</div>`
+                        }
+                        if (data.ff[i].field_type == "Vdofield_show") {
+                            let getyoutube_link = data.ff[i].youtube_link
+                            let newURL = getyoutube_link.replace("watch?v=", "embed/");
+                            forms.innerHTML += '<iframe  src="' + newURL + '" frameborder="0"></iframe>'
+                        }
+                        if (data.ff[i].field_type == "Imagefield_show") {
+                            forms.innerHTML += `${data.ff[i].image_file ? `<img src="/image_fields/${data.ff[i].image_file}" width="85%" height="85%"/>` : ''}`
+                        }
+                        if (data.ff[i].field_type == "Imageandlinkfield_show") {
+                            forms.innerHTML += `<div>${data.ff[i].link && data.ff[i].name_link ? `<a href="${data.ff[i].link}" target="_blank">${data.ff[i].name_link}</a>` : ''}</div>
+                            ${data.ff[i].image_file ? `<img src="/image_fields/${data.ff[i].image_file}" width="85%" height="85%"/>` : ''}`
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+    <%- include ("../_footerusers") %>

@@ -1,0 +1,107 @@
+<%- include ("../_header") %>
+<section id="main-content">
+    <section class="wrapper">
+      <div class="row">
+        <div class="col-lg-12">
+          <h3 class="page-header"><i class="fa fa-files-o"></i> PROFILE INFORMATION</h3>
+          <ol class="breadcrumb">
+            <li><i class="fa fa-home"></i><a href="/index">Dashboard</a></li>
+            <li><i class="icon_document_alt"></i> Profile</li>
+          </ol>
+        </div>
+      </div>
+<!-- profile -->
+<div class="row">
+    <!-- profile-widget -->
+    <div class="col-lg-12">
+      <div class="profile-widget profile-widget-info">
+        <div class="panel-body">
+          <div class="col-lg-2 col-sm-2">
+            <div class="follow-ava">
+              <img src="logo/logo.png" alt="">
+            </div>
+            <h4><%= name %></h4>
+          </div>
+          <div class="col-lg-4 col-sm-4 follow-info">
+            <p>ยินดีต้อนรับเข้าสู่ระบบจัดการหลังบ้านของ<%=name%></p>
+            <p><i class="fa fa-user-circle-o" aria-hidden="true"> </i> ผู้ดูแลระบบ <%=session.nameadminf%> <%=session.nameadminl%></p>
+            <h6>
+                              <span><i class="icon_clock_alt"></i>เวลา: <%=hours%>:<%=minutes%></span>
+                              <span><i class="icon_calendar"></i>วันที่:<%=date%>-<%=month%>-<%=year%></span>
+                          </h6>
+          </div>
+          <div class="col-lg-2 col-sm-6 follow-info weather-category">
+              <a class="btn btn-success" onclick="document.getElementById('popup-logo').style.display='block'">
+                <i class="fa fa-cloud-upload fa-2x" aria-hidden="true"></i><br> เพิ่มโลโก้เทศบาล
+        </a>
+        <a class="btn btn-warning" onclick="document.getElementById('popup-name').style.display='block'">
+            <i class="fa fa-wrench fa-2x" aria-hidden="true"></i><br> เปลี่ยนชื่อเทศบาล
+        </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="popup-logo" class="modal">
+    <form class="form-validate modal-content animate" id="myform" action="/profile/uploadlogo" enctype="multipart/form-data" method="POST" >
+        <div class="imgcontainer">
+            <span onclick="document.getElementById('popup-logo').style.display='none'" class="close" title="Close Modal">&times;</span>  
+        </div>
+        <div class="container">
+            <p align="center"><b> อัพโหลดโลโก้เทศบาล</b></p><br>
+            <label for="uname"><b>อัพโหลดรูป</b></label>
+            <div class="form-group" align="center">
+              <br>
+              <img id="blah" src="http://100dayscss.com/codepen/upload.svg" width="200px" height="120px" />
+              <br>
+              <label class="mt-3 label danger" for="img_xx"><i
+                  style="cursor: pointer;"
+                  >คลิกเพื่อเลือกรูปภาพ</i></label>
+              <input type="file" name="filename" accept="image/png" multiple id="img_xx" class="btn btn-info" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
+          </div>
+            <button type="submit" class="btn btn-success">เพิ่มข้อมูล</button>
+        </div>
+
+    </form>
+</div>
+
+<div id="popup-name" class="modal">
+    <form class="form-validate modal-content animate" id="myform" action="/profile/updatename" method="POST" data-toggle="validator" >
+        <div class="imgcontainer">
+            <span onclick="document.getElementById('popup-name').style.display='none'" class="close" title="Close Modal">&times;</span>  
+        </div>
+        <div class="container">
+            <p align="center"><b> เพิ่มชื่อเทศบาล</b></p><br>
+            <label for="uname"><b>ชื่อเทศบาล</b></label>
+            <input type="text" name="name_pst" class="form-control" id="fname" placeholder="กรุณากรอกชื่อเทศบาล" data-rule="minlen:4" data-msg="Please enter at least 4 chars" required/>
+            <button type="submit" class="btn btn-success">เพิ่มข้อมูล</button>
+        </div>
+
+    </form>
+</div>
+  </section>
+  </section>
+  <script>
+    // Get the modal
+    var modal = document.getElementById('popup-logo');
+  
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+  </script>
+  
+  <script>
+    // Get the modal
+    var modal = document.getElementById('popup-name');
+  
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+  </script>
+<%- include ("../_footer") %>

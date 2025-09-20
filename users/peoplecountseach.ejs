@@ -1,0 +1,158 @@
+<%- include ("../_header") %>
+<link rel="stylesheet" href="tabs.css">
+
+<section id="main-content">
+    <section class="wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+             
+              <ol class="breadcrumb">
+                <li><i class="fa fa-home"></i><a href="/index">Dashboard</a></li>
+                <li><i class="icon_document_alt"></i>จำนวนผู้ที่ลงทะเบียน</li>
+              </ol>
+            </div>
+          </div>
+          
+          <section class="panel">
+            <header class="panel-heading tab-bg-primary tab">
+               <ul class="nav nav-tabs">
+                    <li class="">
+                      <button class="tablinks" onclick="openCity(event, 'wait')"><b>จำนวนประชาชนเพศชายที่ลงทะเบียน <%= count1[0].count %> คน</b></button>
+                    </li>
+                    <li class="">
+                      <button class="tablinks" onclick="openCity(event, 'do')"><b>จำนวนประชาชนเพศหญิงที่ลงทะเบียน <%= count2[0].count %> คน</b></button>
+                    </li>
+                    <li class="">
+                      <button class="tablinks" onclick="openCity(event, 'success')"><b>จำนวนประชาชนที่ลงทะเบียนแล้ว <%= count3[0].count %> คน</b></button>
+                    </li>
+                    <li class="">
+                      <button class="tablinks" onclick="openCity(event, 'fails')"><b>จำนวนประชาชนที่รออนุมัติลงทะเบียน <%= count4[0].count %> คน</b></button>
+                    </li>
+                  </ul>
+                  <br>
+                  <div align="center">
+                    <tr>
+                        <td>
+                            <form action="/seach" method="post">
+                               
+        
+                                    <label style="font-size:18px" for="memberornot"> วันที่</label>
+                                    <input type="date" value="" name="dateA" class="form-control"
+                                        style="display: inline-block; width: 15%;">
+        
+        
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+                                    <label style="font-size:18px" for="memberornot">ถึง วันที่</label>
+                                    <input type="date" value="" name="dateB" class="form-control"
+                                        style="display: inline-block; width: 15%;">
+
+                                    <!-- <button type="submit" class="btn btn-primary" id="seach"> ค้นหา</button> -->
+                                    <button type="submit" id="seach" class="btn btn-primary"> ค้นหา </button>
+                                    
+                
+                                      
+                            </form>
+                        </td>
+                    </tr>
+           
+                  </div>
+                  <br>
+            </header>
+            <div class="panel-body">
+              <div class="tab-content">
+                <header class="panel-heading">  
+                      <b style="font-size: large;"> จำนวนผู้ที่ลงทะเบียน </b>
+                    </header>
+                    <div class="panel-body">
+                      <table id="tablelist_notify1" id="member" class="table table-bordered table-striped" >
+                        <thead>
+                        <tr>
+                            <th><i class="fa fa-list-ol" aria-hidden="true"></i> ลำดับ</th>
+                            <th><i class="fa fa-users" aria-hidden="true"></i> เพศ</th>
+                            <th><i class="fa fa-list-alt" aria-hidden="true"></i> ชื่อ-นามสกุล</th>
+                            <th><i class="fa fa-phone-square" aria-hidden="true"></i> เบอร์ติดต่อ</th>
+                            <th><i class="fa fa-calendar" aria-hidden="true"></i> ที่อยู่</th>
+                            <th><i class="fa fa-info-circle" aria-hidden="true"></i> สถานะ</th>
+                           
+                            
+                          </tr>
+                        </thead>
+                          <tbody>
+                          
+                            <%if(data){%>
+                              <% for(var i=0; i<data.length;i++ ) {%>
+                          
+                          <tr>
+                            <td><%= i+1 %></td>
+                              <td><b><font color="#000000"><%= data[i].name_sex%></font></b></td>
+                            <td><%= data[i].fname_us%> <%= data[i].lname_us%></td>
+                            <td><%= data[i].phone_us%> </td>
+                            <td><%= data[i].address_us%> หมู่ที่ <%= data[i].name_village%></td>
+                            <td><font color="#008000"><%= data[i].status_name%></font></td>
+                                
+                           
+                          </tr>
+                          <%}%>
+                          <%}%>
+                        
+                      </tbody>
+  
+            </table>
+            </div>
+        </div>
+    </div>
+                  </section>
+               
+             
+               
+                
+                </div>
+            </div>
+          </section>
+
+
+
+<script>
+    // Get the modal
+    var modal = document.getElementById('popup');
+  
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+  </script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+  $('#tablelist_notify1').DataTable();
+} );
+</script>
+<script>
+  $(document).ready(function() {
+  $('#tablelist_notify2').DataTable();
+} );
+</script>
+<script>
+  $(document).ready(function() {
+  $('#tablelist_notify_success').DataTable();
+} );
+</script>
+<script>
+  $(document).ready(function() {
+  $('#tablelist_notify_failed').DataTable();
+} );
+</script>
+ 
+<script src="script/activetablenotify.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ 
+
+<%- include ("../_footer") %>

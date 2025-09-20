@@ -1,0 +1,74 @@
+<%- include ("../_header") %>
+
+<section id="main-content">
+    <section class="wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+              <h3 class="page-header"><i class="fa fa-files-o"></i> SCREENING INFORMATION</h3>
+              
+              <ol class="breadcrumb">
+                <li><i class="fa fa-home"></i><a href="/index">Dashboard</a></li>
+                <li><i class="icon_document_alt"></i>แจ้งเหตุล่าสุดทั่วไป และ สมาชิก</li>
+              </ol>
+            </div>
+          </div>
+        <div class="col-lg-3"></div>
+       
+<% JSON.stringify() %>
+<div class="row">
+  <div class=" col-sm-12" >
+    <section class="panel">    
+        <table  id="tablepersonnel" class="table table-bordered table-striped" >       
+            <tr >
+                <td><h4><a href="/listalerts1" style="color: rgb(107, 102, 95);"> แจ้งเหตุล่าสุดสมาชิก</a></h4></td>
+                <th><h4><a href="/listalerts2" style="color: rgb(107, 102, 95);" > แจ้งเหตุล่าสุดทั่วไป</a></h4></th>  
+              </tr>            
+        </table>
+      <div class="panel-body">
+      
+        <b style="font-size: large;"> แจ้งเหตุล่าสุดทั่วไป </b>
+      <table id="tablepersonnel" class="table table-bordered table-striped" >
+        <thead>
+            <b>
+          <tr>
+              <!-- <th><i class="fa fa-list-ol" aria-hidden="true"></i> ลำดับ</th> -->
+              <!-- <th><i class="fa fa-newspaper-o" aria-hidden="true"></i> ชื่อวัคซีน</th> -->
+              <td><i class="icon_cogs"></i> ประเภทแจ้งเหตุ</td>
+              <td><i class="icon_cogs"></i> จำนวนแจ้งเหตุ</td>
+            </tr>
+        </b>
+          </thead>
+                <tbody>
+                   
+                    <%if(village1){%>
+                        <% for(var i=0; i<village1.length;i++ ){ %>
+                    <tr>
+                       
+                        <td><%= village1[i].name_alty%></td>
+                        <td style="color: rgb(0, 0, 0);" ><%= village1[i].xx%></td>
+                        <%}%>
+                      <%}%>
+                      </tr>    
+   
+        </tbody>       
+</table>
+</div>
+    </section>
+  </div>
+</div>
+
+<!--*************************************************************************-->
+
+
+
+</section>
+</section>
+
+
+ 
+
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ 
+
+
+<%- include ("../_footer") %>

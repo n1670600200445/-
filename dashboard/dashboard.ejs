@@ -1,0 +1,103 @@
+<%- include ("../_header") %>
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-md-5 align-self-center">
+                <h3 class="page-title">แดชบอร์ด</h3>
+                <div class="d-flex align-items-center">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="row ">
+                <div class="col-sm-3">
+                    <div class="card card-body">
+                        <!-- Row -->
+                        <a href="/forms_res">
+                            <div class="row pt-2 pb-2">
+                                <!-- Column -->
+                                <div class="col pr-0">
+                                    <h1 class="fw-light"><%=num_value_res%></h1>
+                                    <h6 class="text-muted">การตอบกลับ</h6>
+                                </div>
+                                <!-- Column -->
+                                <div class="col text-end align-self-center">
+                                    <div data-label="100%" class="css-bar mb-0 css-bar-primary css-bar-20"><i
+                                            class="mdi mdi-comment-check"></i></div>
+                                </div>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+                <!-- Column -->
+                <div class="col-sm-3">
+                    <div class="card card-body">
+                        <!-- Row -->
+                        <a href="/users">
+                            <div class="row pt-2 pb-2">
+                                <!-- Column -->
+                                <div class="col pr-0">
+                                    <h1 class="fw-light"><%=num_user%></h1>
+                                    <h6 class="text-muted">ประชาชน</h6>
+                                </div>
+                                <!-- Column -->
+                                <div class="col text-end align-self-center">
+                                    <div data-label="100%" class="css-bar mb-0 css-bar-danger css-bar-20"><i
+                                            class="mdi mdi-account-circle"></i></div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="card card-body">
+                        <!-- Row -->
+                        <a href="/forms">
+                            <div class="row pt-2 pb-2">
+                                <!-- Column -->
+                                <div class="col pr-0">
+                                        <h1 class="fw-light">
+                                            <%=num_form%>
+                                        </h1>
+                                            <h6 class="text-muted">แบบฟอร์ม</h6>
+                                </div>
+                                <!-- Column -->
+                                <div class="col text-end align-self-center">
+                                    <div data-label="100%" class="css-bar mb-0 css-bar-primary css-bar-20"><i
+                                            class="mdi mdi-file"></i></div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!-- Column -->
+                <div class="col-sm-3">
+                    <div class="card card-body">
+                        <a href="/menus">
+                            <div class="row pt-2 pb-2">
+                                <!-- Column -->
+                                <div class="col pr-0">
+                                    <h1 class="fw-light"><%=num_menu%></h1>
+                                    <h6 class="text-muted">เมนู</h6>
+                                </div>
+                                <!-- Column -->
+                                <div class="col text-end align-self-center">
+                                    <div data-label="100%" class="css-bar mb-0 css-bar-danger css-bar-20"><i
+                                            class="mdi mdi-microsoft"></i></div>
+                                </div>
+                            </div>
+                        </a>
+                        <!-- Row -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <%- include ("../_footer") %>

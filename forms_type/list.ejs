@@ -1,0 +1,223 @@
+<%- include ("../_header") %>
+
+  <style>
+    p {
+      text-align: center !important;
+    }
+  </style>
+
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-md-5 align-self-center">
+        <h3 class="page-title">ประเภทแบบฟอร์ม</h3>
+        <div class="d-flex align-items-center mt-1">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">แดชบอร์ด</a></li>
+              <li class="breadcrumb-item active" aria-current="page">ประเภทแบบฟอร์ม</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Container fluid  -->
+  <!-- ============================================================== -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="d-flex border-bottom title-part-padding align-items-center">
+            <div>
+              <h4 class="card-title mb-0">ประเภทแบบฟอร์ม</h4>
+            </div>
+            <div class="ms-auto flex-shrink-0">
+              <a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#add-formstype-modal"><svg
+                  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-plus fill-white feather-sm">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>เพิ่มประเภทแบบฟอร์ม</a>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="table-responsive">
+              <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <table id="zero_config" class="table table-striped table-bordered dataTable" role="grid"
+                      aria-describedby="zero_config_info">
+                      <thead>
+                        <tr role="row">
+                          <th class="sorting_asc" tabindex="0" aria-controls="zero_config" rowspan="1" colspan="1"
+                            aria-sort="ascending" aria-label="Name: activate to sort column descending"
+                            style="width: 0px;">ลำดับ</th>
+                          <th class="sorting" tabindex="0" aria-controls="zero_config" rowspan="1" colspan="1"
+                            aria-label="Position: activate to sort column ascending" style="width: 0px;">ชื่อแบบฟอร์ม
+                          </th>
+                          <th class="sorting" tabindex="0" aria-controls="zero_config" rowspan="1" colspan="1"
+                            aria-label="Office: activate to sort column ascending" style="width: 0px;">แสดง</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <%if(forms_type){%>
+                          <% for(var i=0; i<forms_type.length;i++ ){ %>
+                            <tr>
+                              <td>
+                                <%= i+1 %>
+                              </td>
+                              <td>
+                                <%= forms_type[i].name_forms_type%>
+                              </td>
+                              <td>
+                                <div class="btn-group">
+                                  <a id="<%= forms_type[i].idforms_type%>" href="#" onclick="edit_formstype(this.id)"
+                                    class="btn btn-warning" data-bs-toggle="modal"
+                                    data-bs-target="#edit-formstype-modal"><i class="fas fa-pencil-alt fa-x"></i>
+                                    แก้ไขข้อมูล</a>
+                                  <a id="<%= forms_type[i].idforms_type%>" href="#" onclick="delete_formstype(this.id)"
+                                    class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#delete-formstype-modal"><i class="fas fa-trash-alt fa-x"></i>
+                                    ลบข้อมูล</a>
+                                </div>
+
+                              </td>
+                            </tr>
+                            <%}%>
+                              <%}%>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+  <form action="/formstype/save" method="POST">
+    <div id="add-formstype-modal" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md"
+      style="display: none;" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header d-flex align-items-center border-bottom">
+            <h4 class="modal-title" id="myModalLabel">เพิ่มประเภทแบบฟอร์ม</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body mb row">
+            <label for="fname" class="col-sm-3  text-start control-label col-form-label"> ประเภทแบบฟอร์ม</label>
+            <div class="col-sm-9">
+              <input type="text" name="name_forms_type" placeholder="กรอกชื่อประเภทแบบฟอร์ม" class="form-control"
+                required>
+            </div>
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button type="submit" class="btn btn-success font-weight-medium waves-effect">บันทึกข้อมูล</button>
+            <button type="button" class="btn btn-secondary font-weight-medium waves-effect"
+              data-bs-dismiss="modal">ปิด</button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+  </form>
+
+
+  <form action="/formstype/update" method="POST">
+    <div id="edit-formstype-modal" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md"
+      style="display: none;" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header d-flex align-items-center border-bottom">
+            <h4 class="modal-title" id="myModalLabel">แก้ไขประเภทแบบฟอร์ม</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body mb row">
+            <label for="fname" class="col-sm-3  text-start control-label col-form-label"> ชื่อประเภทแบบฟอร์ม</label>
+            <div class="col-sm-9">
+              <input type="text" id="edit_name_forms_type" name="name_forms_type" placeholder="กรอกชื่อประเภทแบบฟอร์ม" class="form-control"
+                required>
+                <input type="hidden" id="edit_forms_type_id" name="idforms_type" class="form-control"
+                required>
+            </div>
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button type="submit" class="btn btn-success font-weight-medium waves-effect">บันทึกข้อมูล</button>
+            <button type="button" class="btn btn-secondary font-weight-medium waves-effect"
+              data-bs-dismiss="modal">ปิด</button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+  </form>
+
+  <form action="/formtype/delete" method="POST">
+    <div id="delete-formstype-modal" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md"
+      style="display: none;" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header d-flex align-items-center border-bottom">
+            <h4 class="modal-title" id="myModalLabel">ยืนยันการลบประเภทแบบฟอร์ม</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body mb row">
+            <p id="delete_name_forms_type"></p>
+            <input type="hidden" id="delete_forms_type_id" name="idforms_type" class="form-control"
+                required>
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button type="submit" class="btn btn-success font-weight-medium waves-effect">ยืนยัน</button>
+            <button type="button" class="btn btn-secondary font-weight-medium waves-effect"
+              data-bs-dismiss="modal">ปิด</button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+  </form>
+
+
+  <script>
+      function edit_formstype(id) {
+        $.ajax({
+          url: '/formstype/edit',
+          type: 'POST',
+          data: { id },
+          success: (data) => {
+            console.log(data);
+            $('#edit_name_forms_type').val(data.data[0].name_forms_type)
+            $('#edit_forms_type_id').val(data.data[0].idforms_type)
+          }
+        });
+      }
+
+      function delete_formstype(id) {
+        $.ajax({
+          url: '/formstype/check',
+          type: 'POST',
+          data: { id },
+          success: (data) => {
+            console.log(data);
+            $('#delete_name_forms_type').text(`ต้องการลบประเภทแบบฟอร์ม `+data.data[0].name_forms_type+` ?`)
+            $('#delete_forms_type_id').val(data.data[0].idforms_type)
+          }
+        });
+      }
+  </script>
+
+  <%- include ("../_footer") %>

@@ -1,0 +1,1398 @@
+<%- include ("../_header") %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+
+    <style>
+        #previewImg {
+            width: 100%;
+        }
+
+        .all_image_default img {
+            width: 80%;
+        }
+
+        .add_choice_field {
+            float: right;
+            margin-top: -4px;
+        }
+
+
+    </style>
+    <div id="map" style="height: 10px; width: 100%;"></div>
+
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-md-5 align-self-center">
+                <h3 class="page-title">หน้าแบบฟอร์ม</h3>
+                <div class="d-flex align-items-center mt-1">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/forms">แบบฟอร์ม</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">หน้าแบบฟอร์ม</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="d-flex border-bottom title-part-padding align-items-center">
+                        <div>
+                            <h4 class="card-title mb-0">หน้าแบบฟอร์ม</h4>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-3" style="overflow-y: auto;height: 600px;">
+                                <div class="card">
+                                    <ul class="nav nav-pills nav-fill mt-2" role="tablist">
+                                        <li class="nav-item col-md-6">
+                                            <a id="field_list" class="nav-link active" data-bs-toggle="tab"
+                                                href="#navpill-111" role="tab" aria-selected="true"
+                                                onclick="showfields()">
+                                                <span>อุปกรณ์</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item col-md-6">
+                                            <a id="field_edit" class="nav-link" href="#navpill-222" role="tab"
+                                                aria-selected="false">
+                                                <span>จัดการอุปกรณ์</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <div class="card-body show-inputfields" id="show-inputfields">
+                                        <div class="row">
+                                            <%if(forms[0].forms_type==1){%>
+                                                <div class="col-6 mb-3">
+                                                    <a href="#" id="Headerfield_q/<%=forms[0].idforms%>"
+                                                        onclick="addfieldInput(this.id)"
+                                                        class="text-center rounded-3 border py-3 d-block">
+                                                        <i class="mdi mdi-format-title display-6 text-info"></i>
+                                                        <span class="text-muted d-block">หัวข้อ</span>
+                                                    </a>
+                                                </div>
+                                                <div class="col-6 mb-3">
+                                                    <a href="#" id="Shorttextfield_q/<%=forms[0].idforms%>"
+                                                        onclick="addfieldInput(this.id)"
+                                                        class="text-center rounded-3 border py-3 d-block">
+                                                        <i class="mdi mdi-file-document display-6 text-primary"></i>
+                                                        <span class="text-muted d-block">ข้อความสั้น</span>
+                                                    </a>
+                                                </div>
+                                                <div class="col-6 mb-3">
+                                                    <a href="#" id="Longtextfield_q/<%=forms[0].idforms%>"
+                                                        onclick="addfieldInput(this.id)"
+                                                        class="text-center rounded-3 border py-3 d-block">
+                                                        <i class="mdi mdi-file-document display-6 text-primary"></i>
+                                                        <span class="text-muted d-block">ข้อความยาว</span>
+                                                    </a>
+                                                </div>
+                                                <div class="col-6 mb-3">
+                                                    <a href="#" id="Linkfield_q/<%=forms[0].idforms%>"
+                                                        onclick="addfieldInput(this.id)"
+                                                        class="text-center rounded-3 border py-3 d-block">
+                                                        <i class="mdi mdi-link-variant display-6 text-primary"></i>
+                                                        <span class="text-muted d-block">ลิ้ง</span>
+                                                    </a>
+                                                </div>
+                                                <div class="col-6 mb-3">
+                                                    <a href="#" id="Dropdownfield_q/<%=forms[0].idforms%>"
+                                                        onclick="addfieldInput(this.id)"
+                                                        class="text-center rounded-3 border py-3 d-block">
+                                                        <i class="mdi mdi-menu-down display-6 text-primary"></i>
+                                                        <span class="text-muted d-block">dropdown</span>
+                                                    </a>
+                                                </div>
+                                                <div class="col-6 mb-3">
+                                                    <a href="#" id="Checkboxfield_q/<%=forms[0].idforms%>"
+                                                        onclick="addfieldInput(this.id)"
+                                                        class="text-center rounded-3 border py-3 d-block">
+                                                        <i class="mdi mdi-checkbox-marked display-6 text-primary"></i>
+                                                        <span class="text-muted d-block">เพิ่ม Checkbox</span>
+                                                    </a>
+                                                </div>
+                                                <div class="col-6 mb-3">
+                                                    <a href="#" id="Radiofield_q/<%=forms[0].idforms%>"
+                                                        onclick="addfieldInput(this.id)"
+                                                        class="text-center rounded-3 border py-3 d-block">
+                                                        <i class="mdi mdi-radiobox-marked display-6 text-primary"></i>
+                                                        <span class="text-muted d-block">เพิ่ม radio </span>
+                                                    </a>
+                                                </div>
+                                                <div class="col-6 mb-3">
+                                                    <a href="#" id="Imagefield_q/<%=forms[0].idforms%>"
+                                                        onclick="addfieldInput(this.id)"
+                                                        class="text-center rounded-3 border py-3 d-block">
+                                                        <i class="mdi mdi-image-filter display-6 text-primary"></i>
+                                                        <span class="text-muted d-block">เพิ่มรูปภาพ</span>
+                                                    </a>
+                                                </div>
+                                                <div class="col-6 mb-3">
+                                                    <a href="#" id="Imagefield_show/<%=forms[0].idforms%>"
+                                                        onclick="addfieldInput(this.id)"
+                                                        class="text-center rounded-3 border py-3 d-block">
+                                                        <i class="mdi mdi-image-filter display-6 text-primary"></i>
+                                                        <span class="text-muted d-block">รูปภาพ</span>
+                                                    </a>
+                                                </div>
+                                                <div class="col-6 mb-3">
+                                                    <a href="#" id="Vdofield_show/<%=forms[0].idforms%>"
+                                                        onclick="addfieldInput(this.id)"
+                                                        class="text-center rounded-3 border py-3 d-block">
+                                                        <i
+                                                            class="mdi mdi-play-box-outline display-6 text-primary"></i>
+                                                        <span class="text-muted d-block">วิดีโอ</span>
+                                                    </a>
+                                                </div>
+                                                <div class="col-6 mb-3">
+                                                    <a href="#" id="Datetimefield_q/<%=forms[0].idforms%>"
+                                                        onclick="addfieldInput(this.id)"
+                                                        class="text-center rounded-3 border py-3 d-block">
+                                                        <i class="mdi mdi-calendar-clock display-6 text-primary"></i>
+                                                        <span class="text-muted d-block">เพิ่มวันเวลา</span>
+                                                    </a>
+                                                </div>
+                                                <div class="col-6 mb-3">
+                                                    <a href="#" id="Gpsfield_q/<%=forms[0].idforms%>"
+                                                        onclick="addfieldInput(this.id)"
+                                                        class="text-center rounded-3 border py-3 d-block">
+                                                        <i class="mdi  mdi-crosshairs-gps display-6 text-primary"></i>
+                                                        <span class="text-muted d-block">เพิ่มตำแหน่ง</span>
+                                                    </a>
+                                                </div>
+                                                <%}else{%>
+                                                    <div class="col-6 mb-3">
+                                                        <a href="#" id="Headerfield_show/<%=forms[0].idforms%>"
+                                                            onclick="addfieldInput(this.id)"
+                                                            class="text-center rounded-3 border py-3 d-block">
+                                                            <i class="mdi mdi-format-title display-6 text-info"></i>
+                                                            <span class="text-muted d-block">หัวข้อ</span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-6 mb-3">
+                                                        <a href="#" id="Linkfield_show/<%=forms[0].idforms%>"
+                                                            onclick="addfieldInput(this.id)"
+                                                            class="text-center rounded-3 border py-3 d-block">
+                                                            <i class="mdi mdi-link-variant display-6 text-primary"></i>
+                                                            <span class="text-muted d-block">ลิ้ง</span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-6 mb-3">
+                                                        <a href="#" id="Imagefield_show/<%=forms[0].idforms%>"
+                                                            onclick="addfieldInput(this.id)"
+                                                            class="text-center rounded-3 border py-3 d-block">
+                                                            <i class="mdi mdi-image-filter display-6 text-primary"></i>
+                                                            <span class="text-muted d-block">รูปภาพ</span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-6 mb-3">
+                                                        <a href="#" id="Imageandlinkfield_show/<%=forms[0].idforms%>"
+                                                            onclick="addfieldInput(this.id)"
+                                                            class="text-center rounded-3 border py-3 d-block">
+                                                            <i class="mdi mdi-image-filter display-6 text-primary"></i>
+                                                            <span class="text-muted d-block">รูปภาพและลิ้ง</span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-6 mb-3">
+                                                        <a href="#" id="Vdofield_show/<%=forms[0].idforms%>"
+                                                            onclick="addfieldInput(this.id)"
+                                                            class="text-center rounded-3 border py-3 d-block">
+                                                            <i
+                                                                class="mdi mdi-play-box-outline display-6 text-primary"></i>
+                                                            <span class="text-muted d-block">วิดีโอ</span>
+                                                        </a>
+                                                    </div>
+                                                    <%}%>
+                                        </div>
+                                    </div>
+                                    <div class="card-body showEdit-inputfields" id="showEdit-inputfields">
+                                        <div id="detail-editfields">
+
+                                        </div>
+                                        <div class="mt-4">
+                                            <button onclick="update_editfield()"
+                                                class="btn btn-success">บันทึกข้อมูล</button>
+                                        </div>
+                                        <div class="all_image_default mt-2" hidden>
+                                            <label class="col-form-label control-label">รูปที่มีอยู่</label>
+                                            <div class="row">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-9" style="max-height: 600px;overflow-y: auto;height: 600px;">
+                                <div class="p-3 border-bottom">
+                                    <div class="d-md-flex align-items-center">
+                                        <div>
+                                            <h4>
+                                                <%=forms[0].name_forms%>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <input type="hidden" id="setfield_idforms" value="<%=forms[0].idforms%>">
+                                            <%if(forms[0].forms_type){%>
+                                                <%if(forms[0].forms_type==1){%>
+                                                    <div class="card-body all-fieldsinform wrapper">
+                                                        
+                                                    </div>
+                                                    <%}else{%>
+                                                        <div class="card-body all-fieldsinform wrapper">
+
+                                                        </div>
+                                                        <%}%>
+                                                            <%}%>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+        integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
+        integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
+    <script>
+        $('.wrapper').sortable({
+            update: function (event, ui) {
+                event.preventDefault()
+                $(this).children().each(function (index) {
+                    if ($(this).attr('data-position') != (index + 1)) {
+                        $(this).attr('data-position', (index + 1)).addClass('updated');
+                    }
+                });
+                saveNewPositions();
+            }
+        })
+
+        function saveNewPositions() {
+            var positions = [];
+            $('.updated').each(function () {
+                positions.push([$(this).attr('data-index'), $(this).attr('data-position')]);
+                $(this).removeClass('updated');
+            })
+
+            const field_length = positions.length;
+            $.ajax({
+                url: '/formsfield/updateposition',
+                type: 'POST',
+                data: {
+                    update: 1,
+                    positions: positions,
+                    field_length,
+                },
+                success: (data) => {
+                    $('.all-fieldsinform').html("");
+                    fetch_fields()
+                }
+            });
+        }
+    </script>
+    <script>
+        document.getElementById("showEdit-inputfields").hidden = true;
+        function editfield(id) {
+            document.getElementById("show-inputfields").hidden = true;
+            document.getElementById("showEdit-inputfields").hidden = false;
+            var field_list_action = document.getElementById("field_list");
+            field_list_action.classList.remove("active");
+            var field_edit_action = document.getElementById("field_edit");
+            field_edit_action.classList.add("active");
+            console.log(id);
+            $.ajax({
+                url: '/formsfield/fetch_editfield',
+                type: 'POST',
+                data: { id },
+                success: (data) => {
+                    $('#detail-editfields').html("");
+                    $('.all_image_default .row').html("");
+                    $('#previewImg').attr('src', '');
+                    document.querySelector('.all_image_default').hidden = true;
+                    if (data.single_field[0].field_type == "Headerfield_show") {
+                        if (data.single_field[0].tt_name) {
+                            $('#detail-editfields').append('<input type="hidden" id="idfield" name="idfield" value="' + id + '" class="form-control">');
+                            $('#detail-editfields').append('<input type="hidden" id="name_fieldtype" name="field_type" value="' + data.single_field[0].field_type + '" class="form-control">');
+                            $('#detail-editfields').append('<label class="control-label col-form-label">หัวข้อ</label> <input type="text" name="label_field" id="labelname_show" value="' + data.single_field[0].tt_name + '" class="form-control"  placeholder="กรอกชื่อหัวข้อ" required>');
+                        } else {
+                            $('#detail-editfields').append('<input type="hidden" id="idfield" name="idfield" value="' + id + '" class="form-control">');
+                            $('#detail-editfields').append('<input type="hidden" id="name_fieldtype" name="field_type" value="' + data.single_field[0].field_type + '" class="form-control">');
+                            $('#detail-editfields').append('<label class="control-label col-form-label">หัวข้อ</label> <input type="text" name="label_field" id="labelname_show" class="form-control"  placeholder="กรอกชื่อหัวข้อ" required>');
+                        }
+                    }
+                    if (data.single_field[0].field_type == "Linkfield_show") {
+                        $('#detail-editfields').append('<input type="hidden" id="idfield" name="idfield" value="' + id + '" class="form-control">');
+                        $('#detail-editfields').append('<input type="hidden" id="name_fieldtype" name="field_type" value="' + data.single_field[0].field_type + '" class="form-control">');
+                        if (data.single_field[0].name_link) {
+                            $('#detail-editfields').append('<label class="control-label col-form-label">ข้อความที่ใช้แสดง</label> <input id="name_link_show" type="text" name="name_link" value="' + data.single_field[0].name_link + '" class="form-control"  placeholder="กรอกข้อความที่ใช้แสดง" required>');
+                        } else {
+                            $('#detail-editfields').append('<label class="control-label col-form-label">ข้อความที่ใช้แสดง</label> <input id="name_link_show" type="text" name="name_link" class="form-control"  placeholder="กรอกข้อความที่ใช้แสดง" required>');
+                        }
+                        if (data.single_field[0].link) {
+                            $('#detail-editfields').append('<label class="control-label col-form-label">ลิ้ง</label><input id="link_show" type = "text" name = "link" value="' + data.single_field[0].link + '" class= "form-control" placeholder="กรอกลิ้งที่ต้องการเชื่อมต่อ" required>');
+                        } else {
+                            $('#detail-editfields').append('<label class="control-label col-form-label">ลิ้ง</label><input id="link_show" type = "text" name = "link" value="" class= "form-control" placeholder="กรอกลิ้งที่ต้องการเชื่อมต่อ" required>');
+                        }
+                    }
+                    if (data.single_field[0].field_type == "Vdofield_show") {
+                        $("iframe").hide()
+                        $('#detail-editfields').append('<input type="hidden" id="idfield" name="idfield" value="' + id + '" class="form-control">');
+                        $('#detail-editfields').append('<input type="hidden" id="name_fieldtype" name="field_type" value="' + data.single_field[0].field_type + '" class="form-control">');
+                        if (data.single_field[0].youtube_link) {
+                            $('#detail-editfields').append('<label for="" class="col-form-label control-label">Youtube URL</label>'
+                                + '<div class="d-flex mb-2"> '
+                                + ' <input type="text" class="form-control" id="youtube_link_show" name="youtube_link" value="' + data.single_field[0].youtube_link + '" placeholder="กรอก Youtube URL" required>'
+                                + ' <button class="btn btn-warning text-white" onclick="showVDO()" type="button">ค้นหา</button></div>'
+                                + ' <iframe id="showpreviewVDO" src="" frameborder="0"></iframe>');
+                            showVDO()
+                        } else {
+                            $('#detail-editfields').append('<label for="" class="col-form-label control-label">Youtube URL</label>'
+                                + '<div class="d-flex mb-2"> '
+                                + ' <input type="text" class="form-control" id="youtube_link_show" name="youtube_link" value="" placeholder="กรอก Youtube URL" required>'
+                                + ' <button class="btn btn-warning text-white" onclick="showVDO()" type="button">ค้นหา</button></div>'
+                                + ' <iframe id="showpreviewVDO" src="" frameborder="0"></iframe>');
+                            $('.all-fieldsinform').html("");
+                            fetch_fields()
+                        }
+                    }
+                    if (data.single_field[0].field_type == "Imagefield_show") {
+                        $('#value_image_default').val = '';
+                        if (data.single_field[0].image_file) {
+                            $('#detail-editfields').append(`<label  class="col-form-label control-label">อัพโหลดรูปภาพ</label>
+                                <form enctype="multipart/form-data"><input accept="image/*" type="file" class="form-control" id="Imagefile_s" name="file123456" onchange="previewImage(event)"></form>
+                                <br>
+                                <img id="previewImg" src="/image_fields/${data.single_field[0].image_file}" stype="width:50%;"/>
+                                <input type="hidden" name="image_default" id="value_image_default">`);
+                            image_default()
+                        } else {
+                            $('#detail-editfields').append(`<div class="form-group">
+                                <label  class="col-form-label control-label">อัพโหลดรูปภาพ</label>
+                                <form enctype="multipart/form-data"><input accept="image/*" type="file" class="form-control" id="Imagefile_s" name="file123456" onchange="previewImage(event)"></form>
+                                <br>
+                                <img id="previewImg" stype="width:50%;"/></div>
+                                <input type="hidden" name="image_default" id="value_image_default">`);
+                            image_default()
+                        }
+                        $('#detail-editfields').append('<input type="hidden" id="idfield" name="idfield" value="' + id + '" class="form-control">');
+                        $('#detail-editfields').append('<input type="hidden" id="name_fieldtype" name="field_type" value="' + data.single_field[0].field_type + '" class="form-control">');
+                    }
+                    if (data.single_field[0].field_type == "Imageandlinkfield_show") {
+                        $('#detail-editfields').append(`
+                                <label class="control-label col-form-label">ข้อความที่ใช้แสดง</label> <input id="name_link_show" type="text" name="name_link" value="${data.single_field[0].name_link ? `${data.single_field[0].name_link}` : ''}" class="form-control"  placeholder="กรอกข้อความที่ใช้แสดง" required>
+                                <label class="control-label col-form-label">ลิ้ง</label><input id="link_show" type = "text" name = "link" value="${data.single_field[0].link ? `${data.single_field[0].link}` : ''}" class= "form-control" placeholder="กรอกลิ้งที่ต้องการเชื่อมต่อ" required>
+                                <label  class="col-form-label control-label">อัพโหลดรูปภาพ</label>
+                                <form enctype="multipart/form-data"><input accept="image/*" type="file" class="form-control" id="Imagefile_s" name="file123456" onchange="previewImage(event)"></form>
+                                <br>
+                                <img id="previewImg" src="${data.single_field[0].image_file ? `/image_fields/${data.single_field[0].image_file}` : ''}" stype="width:50%;"/>
+                                <input type="hidden" name="image_default" id="value_image_default">`);
+                        image_default()
+                        $('#detail-editfields').append('<input type="hidden" id="idfield" name="idfield" value="' + id + '" class="form-control">');
+                        $('#detail-editfields').append('<input type="hidden" id="name_fieldtype" name="field_type" value="' + data.single_field[0].field_type + '" class="form-control">');
+                    }
+                    if (data.single_field[0].field_type == "Headerfield_q") {
+                        if (data.single_field[0].tt_name) {
+                            $('#detail-editfields').append('<input type="hidden" id="idfield" name="idfield" value="' + id + '" class="form-control">');
+                            $('#detail-editfields').append('<input type="hidden" id="name_fieldtype" name="field_type" value="' + data.single_field[0].field_type + '" class="form-control">');
+                            $('#detail-editfields').append('<label class="control-label col-form-label">หัวข้อ</label> <input type="text" name="label_field" id="labelname_show" value="' + data.single_field[0].tt_name + '" class="form-control"  placeholder="กรอกชื่อหัวข้อ" required>');
+                        } else {
+                            $('#detail-editfields').append('<input type="hidden" id="idfield" name="idfield" value="' + id + '" class="form-control">');
+                            $('#detail-editfields').append('<input type="hidden" id="name_fieldtype" name="field_type" value="' + data.single_field[0].field_type + '" class="form-control">');
+                            $('#detail-editfields').append('<label class="control-label col-form-label">หัวข้อ</label> <input type="text" name="label_field" id="labelname_show" class="form-control"  placeholder="กรอกชื่อหัวข้อ" required>');
+                        }
+                    }
+                    if (data.single_field[0].field_type == "Shorttextfield_q") {
+                        $('#detail-editfields').append(`<input type="hidden" id="idfield" name="idfield" value="${id}" class="form-control">
+                            <input type="hidden" id="name_fieldtype" name="field_type" value="${data.single_field[0].field_type}" class="form-control">
+                            <label class="control-label col-form-label">ป้ายชื่อ</label> ${data.single_field[0].label_inputname ? `<input id="label_inputname" type="text" name="label_inputname" value="${data.single_field[0].label_inputname}" class="form-control"  placeholder="กรอกข้อความที่ใช้แสดง" required>` : `<input id="label_inputname" type="text" name="label_inputname" class="form-control"  placeholder="กรอกข้อความที่ใช้แสดง" required>`}
+                            <label class="control-label col-form-label">ข้อความในช่อง</label> ${data.single_field[0].placeholder_field ? `<input id="placeholder_field" type= "text" name="placeholder_field" value="${data.single_field[0].placeholder_field}" class="form-control" placeholder="กรอกข้อความที่แสดงในช่อง">` : `<input id="placeholder_field" type="text" name="placeholder_field" class="form-control" placeholder="กรอกข้อความที่แสดงในช่อง">`}
+                            <label class="col-sm-3 text-start control-label col-form-label">ความสำคัญ</label>
+                            <div class= "col-sm-12" > <select id="validate_select" name="validate" class="form-control" required><option selected disabled value="">  เลือก.. </option> ${data.single_field[0].validate == 1 ? `<option value="1" selected="selected">สำคัญ</option><option value="0">ไม่สำคัญ</option>` : `<option value="1">สำคัญ</option><option value="0"  selected="selected">ไม่สำคัญ</option>`}</select> </div>`);
+                    }
+                    if (data.single_field[0].field_type == "Longtextfield_q") {
+                        $('#detail-editfields').append(`<input type="hidden" id="idfield" name="idfield" value="${id}" class="form-control">
+                            <input type="hidden" id="name_fieldtype" name="field_type" value="${data.single_field[0].field_type}" class="form-control">
+                            <label class="control-label col-form-label">ป้ายชื่อ</label> ${data.single_field[0].label_longtext ? `<input id="label_longtext" type="text" name="label_longtext" value="${data.single_field[0].label_longtext}" class="form-control"  placeholder="กรอกข้อความที่ใช้แสดง" required>` : `<input id="label_longtext" type="text" name="label_inputname" class="form-control"  placeholder="กรอกข้อความที่ใช้แสดง" required>`}
+                            <label class="control-label col-form-label">ข้อความในช่อง</label> ${data.single_field[0].placeholder_longtext ? `<input id="placeholder_longtext" type= "text" name="placeholder_longtext" value="${data.single_field[0].placeholder_longtext}" class="form-control" placeholder="กรอกข้อความที่แสดงในช่อง">` : `<input id="placeholder_longtext" type="text" name="placeholder_field" class="form-control" placeholder="กรอกข้อความที่แสดงในช่อง">`}
+                            <label class="col-sm-3 text-start control-label col-form-label">ความสำคัญ</label>
+                            <div class= "col-sm-12" > <select id="validate_select" name="validate" class="form-control" required><option selected disabled value="">  เลือก.. </option> ${data.single_field[0].validate == 1 ? `<option value="1" selected="selected">สำคัญ</option><option value="0">ไม่สำคัญ</option>` : `<option value="1">สำคัญ</option><option value="0"  selected="selected">ไม่สำคัญ</option>`}</select> </div>`);
+                    }
+                    if (data.single_field[0].field_type == "Linkfield_q") {
+                        $('#detail-editfields').append(`<input type="hidden" id="idfield" name="idfield" value="${id}" class="form-control">
+                            <input type="hidden" id="name_fieldtype" name="field_type" value="${data.single_field[0].field_type}" class="form-control">
+                            <label class="control-label col-form-label">ข้อความที่ใช้แสดง</label> ${data.single_field[0].linktext_q ? `<input id="linktext_q" type="text" name="linktext_q" value="${data.single_field[0].linktext_q}" class="form-control"  placeholder="กรอกข้อความที่ใช้แสดง" required>` : `<input id="linktext_q" type="text" name="linktext_q" class="form-control"  placeholder="กรอกข้อความที่ใช้แสดง" required>`}
+                            <label class="control-label col-form-label">ลิ้ง</label> ${data.single_field[0].link_q ? `<input id="link_q" type="text" name="link_q" value="${data.single_field[0].link_q}" class="form-control" placeholder="กรอกข้อความที่แสดงในช่อง" required>` : `<input id="link_q" type="text" name="link_q" class="form-control" placeholder="กรอกข้อความที่แสดงในช่อง" required>`}`);
+                    }
+                    if (data.single_field[0].field_type == "Dropdownfield_q") {
+                        $('#detail-editfields').append(`<input type="hidden" id="idfield" name="idfield" value="${id}" class="form-control">
+                            <input type="hidden" id="name_fieldtype" name="field_type" value="${data.single_field[0].field_type}" class="form-control">
+                            <label class="control-label col-form-label">ป้ายชื่อ</label> ${data.single_field[0].label_dropdown ? `<input id="label_dropdown" type="text" name="label_dropdown" value="${data.single_field[0].label_dropdown}" class="form-control"  placeholder="กรอกป้ายชื่อ" required>` : `<input id="label_dropdown" type="text" name="label_dropdown" class="form-control"  placeholder="กรอกป้ายชื่อ" required>`}
+                            <div class="mt-3 title_choice">ตัวเลือก <span onclick="add_choiceDropdown()" class="btn btn-success font-weight-medium btn-sm add_choice_field">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus fill-white feather-sm">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>เพิ่มตัวเลือก</span></div>
+                                <div class="mt-2 choice_dropdown_list">
+
+                                </div>
+                                <label class="col-sm-3 text-start control-label col-form-label">ความสำคัญ</label>
+                            <div class= "col-sm-12" > <select id="validate_select" name="validate" class="form-control" required><option selected disabled value="">  เลือก.. </option> ${data.single_field[0].validate == 1 ? `<option value="1" selected="selected">สำคัญ</option><option value="0">ไม่สำคัญ</option>` : `<option value="1">สำคัญ</option><option value="0"  selected="selected">ไม่สำคัญ</option>`}</select> </div>
+                            `);
+                        getchoice_dropdown()
+                    }
+                    if (data.single_field[0].field_type == "Imagefield_q") {
+                        $('#detail-editfields').append(`<input type="hidden" id="idfield" name="idfield" value="${id}" class="form-control">
+                            <input type="hidden" id="name_fieldtype" name="field_type" value="${data.single_field[0].field_type}" class="form-control">
+                            <label class="control-label col-form-label">ป้ายชื่อ</label> ${data.single_field[0].label_inputimage ? `<input id="label_inputimage" type="text" name="label_inputimage" value="${data.single_field[0].label_inputimage}" class="form-control"  placeholder="กรอกข้อความที่ใช้แสดง">` : `<input id="label_inputimage" type="text" name="label_inputimage" class="form-control"  placeholder="กรอกข้อความที่ใช้แสดง">`}
+                            <label class="col-sm-3 text-start control-label col-form-label">ความสำคัญ</label>
+                            <div class= "col-sm-12" > <select id="validate_select" name="validate" class="form-control" required><option selected disabled value="">  เลือก.. </option> ${data.single_field[0].validate == 1 ? `<option value="1" selected="selected">สำคัญ</option><option value="0">ไม่สำคัญ</option>` : `<option value="1">สำคัญ</option><option value="0"  selected="selected">ไม่สำคัญ</option>`}</select> </div>`);
+                    }
+                    if (data.single_field[0].field_type == "Datetimefield_q") {
+                        $('#detail-editfields').append(`<input type="hidden" id="idfield" name="idfield" value="${id}" class="form-control">
+                            <input type="hidden" id="name_fieldtype" name="field_type" value="${data.single_field[0].field_type}" class="form-control">
+                            <label class="control-label col-form-label">ป้ายชื่อ</label> ${data.single_field[0].label_datetime ? `<input id="label_datetime" type="text" name="label_datetime" value="${data.single_field[0].label_datetime}" class="form-control"  placeholder="กรอกข้อความที่ใช้แสดง">` : `<input id="label_datetime" type="text" name="label_datetime" class="form-control"  placeholder="กรอกข้อความที่ใช้แสดง">`}
+                            <label class="col-sm-3 text-start control-label col-form-label">ความสำคัญ</label>
+                            <div class= "col-sm-12" > <select id="validate_select" name="validate" class="form-control" required><option selected disabled value="">  เลือก.. </option> ${data.single_field[0].validate == 1 ? `<option value="1" selected="selected">สำคัญ</option><option value="0">ไม่สำคัญ</option>` : `<option value="1">สำคัญ</option><option value="0"  selected="selected">ไม่สำคัญ</option>`}</select> </div>`);
+                    }
+                    if (data.single_field[0].field_type == "Checkboxfield_q") {
+                        $('#detail-editfields').append(`<input type="hidden" id="idfield" name="idfield" value="${id}" class="form-control">
+                            <input type="hidden" id="name_fieldtype" name="field_type" value="${data.single_field[0].field_type}" class="form-control">
+                            <label class="control-label col-form-label">ป้ายชื่อ</label> ${data.single_field[0].label_checkbox ? `<input id="label_checkbox" type="text" name="label_checkbox" value="${data.single_field[0].label_checkbox}" class="form-control"  placeholder="กรอกป้ายชื่อ">` : `<input id="label_checkbox" type="text" name="label_checkbox" class="form-control"  placeholder="กรอกป้ายชื่อ">`}
+                            <div class="mt-3 title_choice">ตัวเลือก <span onclick="add_choiceCheckbox()" class="btn btn-success font-weight-medium btn-sm add_choice_field">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus fill-white feather-sm">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>เพิ่มตัวเลือก</span></div>
+                                <div class="mt-2 choice_checkbox_list">
+
+                                </div>
+                                <label class="col-sm-3 text-start control-label col-form-label">ความสำคัญ</label>
+                            <div class= "col-sm-12" > <select id="validate_select" name="validate" class="form-control" required><option selected disabled value="">  เลือก.. </option> ${data.single_field[0].validate == 1 ? `<option value="1" selected="selected">สำคัญ</option><option value="0">ไม่สำคัญ</option>` : `<option value="1">สำคัญ</option><option value="0"  selected="selected">ไม่สำคัญ</option>`}</select> </div>
+                            `);
+                        getchoice_checkbox()
+                    }
+
+                    if (data.single_field[0].field_type == "Radiofield_q") {
+                        $('#detail-editfields').append(`<input type="hidden" id="idfield" name="idfield" value="${id}" class="form-control">
+                            <input type="hidden" id="name_fieldtype" name="field_type" value="${data.single_field[0].field_type}" class="form-control">
+                            <label class="control-label col-form-label">ป้ายชื่อ</label> ${data.single_field[0].label_radio ? `<input id="label_radio" type="text" name="label_radio" value="${data.single_field[0].label_radio}" class="form-control"  placeholder="กรอกป้ายชื่อ">` : `<input id="label_radio" type="text" name="label_radio" class="form-control"  placeholder="กรอกป้ายชื่อ">`}
+                            <div class="mt-3 title_choice">ตัวเลือก <span onclick="add_choiceRadio()" class="btn btn-success font-weight-medium btn-sm add_choice_field">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus fill-white feather-sm">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>เพิ่มตัวเลือก</span></div>
+                                <div class="mt-2 choice_radio_list">
+
+                                </div>
+                                <label class="col-sm-3 text-start control-label col-form-label">ความสำคัญ</label>
+                            <div class= "col-sm-12" > <select id="validate_select" name="validate" class="form-control" required><option selected disabled value="">  เลือก.. </option> ${data.single_field[0].validate == 1 ? `<option value="1" selected="selected">สำคัญ</option><option value="0">ไม่สำคัญ</option>` : `<option value="1">สำคัญ</option><option value="0"  selected="selected">ไม่สำคัญ</option>`}</select> </div>
+                            `);
+                        getchoice_radio()
+                    }
+                }
+            });
+        }
+        function image_default() {
+            $('.all_image_default').attr("hidden", false);
+            $.ajax({
+                url: '/formsfield/image_default',
+                method: 'POST',
+                success: (image_default) => {
+                    const image_infolder = image_default.image_default;
+                    if (image_infolder) {
+                        for (var i = 0; i < image_infolder.length; i++) {
+                            $('.all_image_default .row').append('<div class="col-6 mb-3"> <a href="#" id="' + image_infolder[i] + '" onclick="change_imageDefault(this.id)" class="text-center rounded-3 border py-3 d-block"><img src="/image_fields/' + image_infolder[i] + '" alt=""> </a></div>');
+                        }
+                    }
+                }
+            })
+        }
+        function change_imageDefault(id) {
+            $("#ImageInput").val('');
+            $('#value_image_default').val(id);
+            $("#previewImg").attr("src", '/image_fields/' + id);
+        }
+
+        function previewImage(event) {
+            let file = event.target.files[0];
+            let reader = new FileReader();
+            $('#value_image_default').val("pass");
+            reader.onload = function (e) {
+                let previewImg = document.getElementById("previewImg");
+                previewImg.src = e.target.result;
+            };
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function showVDO() {
+            let getURL = $('#youtube_link_show').val()
+            let newURL = getURL.replace("watch?v=", "embed/");
+            $("#showpreviewVDO").attr("src", newURL).show()
+            $('.all-fieldsinform').html("");
+            fetch_fields()
+        }
+        function showfields() {
+            document.getElementById("show-inputfields").hidden = false;
+            document.getElementById("showEdit-inputfields").hidden = true;
+            var field_edit_action = document.getElementById("field_edit");
+            field_edit_action.classList.remove("active");
+            var field_list_action = document.getElementById("field_list");
+            field_list_action.classList.add("active");
+        }
+        function getchoice_dropdown() {
+            const idfield = $('#idfield').val()
+            const choice_dropdowns = $('.choice_dropdown_list')
+            $.ajax({
+                url: '/formsfield/getchoice_dropdown_list',
+                method: 'post',
+                data: {
+                    idfield,
+                },
+                success: (data) => {
+                    choice_dropdowns.html('')
+                    if (data.single_field[0].choice_dropdown) {
+                        const choice_dropdown_sort = data.single_field[0].choice_dropdown.split(',');
+                        console.log(choice_dropdown_sort);
+                        for (var i = 0; i < choice_dropdown_sort.length; i++) {
+                            choice_dropdowns.append(`<div class="choice_dropdown_item removechoice_dropdown${i} row">
+                            <div class="col-sm-9 mt-1"> <div class="form-group"> <input type="text" class="form-control" value="${choice_dropdown_sort[i]}" id="choice_dropdown" name="choice_dropdown" placeholder="กรอกตัวเลือก" > </div></div>
+                            <div class="col-sm-3 mt-1"> <div class="form-group"> <button class="btn btn-danger" type="button" onclick="remove_choiceDropdown(${i});"> <i class="fa fa-minus btn-sm"></i> </button> </div></div>
+                            </div>`)
+                        }
+                    } else {
+                        choice_dropdowns.append(`<div class="choice_dropdown_item removechoice_dropdown1 row">
+                        <div class="col-sm-9 mt-1"> <div class="form-group"> <input type="text" class="form-control" id="choice_dropdown" name="choice_dropdown" placeholder="กรอกตัวเลือก"> </div></div>
+                        <div class="col-sm-3 mt-1"> <div class="form-group"> <button class="btn btn-danger" type="button" onclick="remove_choiceDropdown(1);"> <i class="fa fa-minus btn-sm"></i> </button> </div></div>
+                        </div>`)
+                    }
+                }
+            })
+        }
+        function getchoice_checkbox() {
+            const idfield = $('#idfield').val()
+            const choice_checkboxs = $('.choice_checkbox_list')
+            $.ajax({
+                url: '/formsfield/getchoice_checkbox_list',
+                method: 'post',
+                data: {
+                    idfield,
+                },
+                success: (data) => {
+                    choice_checkboxs.html('')
+                    if (data.single_field[0].choice_checkbox) {
+                        const choice_checkbox_sort = data.single_field[0].choice_checkbox.split(',');
+                        for (var i = 0; i < choice_checkbox_sort.length; i++) {
+                            choice_checkboxs.append(`<div class="choice_checkbox_item removechoice_checkbox${i} row">
+                            <div class="col-sm-9 mt-1"> <div class="form-group"> <input type="text" class="form-control" value="${choice_checkbox_sort[i]}" id="choice_checkbox" name="choice_checkbox" placeholder="กรอกตัวเลือก" > </div></div>
+                            <div class="col-sm-3 mt-1"> <div class="form-group"> <button class="btn btn-danger" type="button" onclick="remove_choiceCheckbox(${i});"> <i class="fa fa-minus btn-sm"></i> </button> </div></div>
+                            </div>`)
+                        }
+                    } else {
+                        choice_checkboxs.append(`<div class="choice_checkbox_item removechoice_checkbox1 row">
+                        <div class="col-sm-9 mt-1"> <div class="form-group"> <input type="text" class="form-control" id="choice_checkbox" name="choice_checkbox" placeholder="กรอกตัวเลือก"> </div></div>
+                        <div class="col-sm-3 mt-1"> <div class="form-group"> <button class="btn btn-danger" type="button" onclick="remove_choiceCheckbox(1);"> <i class="fa fa-minus btn-sm"></i> </button> </div></div>
+                        </div>`)
+                    }
+                }
+            })
+        }
+        function add_choiceCheckbox() {
+            const choice_checkbox = $('.choice_checkbox_list')
+            const max_choice_checkbox = $('.choice_checkbox_item').length
+            choice_checkbox.append(`<div class="choice_checkbox_item removechoice_checkbox${max_choice_checkbox + 1} row">
+                                        <div class="col-sm-9 mt-1"> <div class="form-group"> <input type="text" class="form-control" id="choice_checkbox" name="choice_checkbox" placeholder="กรอกตัวเลือก"> </div></div>
+                                        <div class="col-sm-3 mt-1"> <div class="form-group"> <button class="btn btn-danger" type="button" onclick="remove_choiceCheckbox(${max_choice_checkbox + 1});"> <i class="fa fa-minus btn-sm"></i> </button> </div></div>
+                                    </div>`);
+        }
+        function remove_choiceCheckbox(choice_checkbox_id) {
+            const num_choice_checkbox = $('.choice_checkbox_item').length
+            if (num_choice_checkbox > 1) {
+                $(`.choice_checkbox_list .removechoice_checkbox${choice_checkbox_id}`).remove();
+            } else {
+                alert('ไม่สามารถลบได้')
+            }
+        }  
+        function add_choiceDropdown() {
+            const choice_dropdown = $('.choice_dropdown_list')
+            const max_choice_dropdown = $('.choice_dropdown_item').length
+            choice_dropdown.append(`<div class="choice_dropdown_item removechoice_dropdown${max_choice_dropdown + 1} row">
+                                        <div class="col-sm-9 mt-1"> <div class="form-group"> <input type="text" class="form-control" id="choice_dropdown" name="choice_dropdown" placeholder="กรอกตัวเลือก"> </div></div>
+                                        <div class="col-sm-3 mt-1"> <div class="form-group"> <button class="btn btn-danger" type="button" onclick="remove_choiceDropdown(${max_choice_dropdown + 1});"> <i class="fa fa-minus btn-sm"></i> </button> </div></div>
+                                    </div>`);
+        }
+        function remove_choiceDropdown(choice_dropdown_id) {
+            const num_choice_dropdown = $('.choice_dropdown_item').length
+            console.log(num_choice_dropdown);
+            if (num_choice_dropdown > 1) {
+                $(`.choice_dropdown_list .removechoice_dropdown${choice_dropdown_id}`).remove();
+            } else {
+                alert('ไม่สามารถลบได้')
+            }
+        }
+
+        function add_choiceRadio() {
+            const choice_radio = $('.choice_radio_list')
+            const max_choice_radio = $('.choice_radio_item').length
+            choice_radio.append(`<div class="choice_radio_item removechoice_radio${max_choice_radio + 1} row">
+                                        <div class="col-sm-9 mt-1"> <div class="form-group"> <input type="text" class="form-control" id="choice_radio" name="choice_radio" placeholder="กรอกตัวเลือก"> </div></div>
+                                        <div class="col-sm-3 mt-1"> <div class="form-group"> <button class="btn btn-danger" type="button" onclick="remove_choiceRadio(${max_choice_radio + 1});"> <i class="fa fa-minus btn-sm"></i> </button> </div></div>
+                                    </div>`);
+        }
+        function remove_choiceRadio(choice_radio_id) {
+            const num_choice_radio = $('.choice_radio_item').length
+            if (num_choice_radio > 1) {
+                $(`.choice_radio_list .removechoice_radio${choice_radio_id}`).remove();
+            } else {
+                alert('ไม่สามารถลบได้')
+            }
+        }
+
+        function getchoice_radio() {
+            const idfield = $('#idfield').val()
+            const choice_radios = $('.choice_radio_list')
+            $.ajax({
+                url: '/formsfield/getchoice_radio_list',
+                method: 'post',
+                data: {
+                    idfield,
+                },
+                success: (data) => {
+                    choice_radios.html('')
+                    if (data.single_field[0].choice_radio) {
+                        const choice_radio_sort = data.single_field[0].choice_radio.split(',');
+                        for (var i = 0; i < choice_radio_sort.length; i++) {
+                            choice_radios.append(`<div class="choice_radio_item removechoice_radio${i} row">
+                            <div class="col-sm-9 mt-1"> <div class="form-group"> <input type="text" class="form-control" value="${choice_radio_sort[i]}" id="choice_radio" name="choice_radio" placeholder="กรอกตัวเลือก" > </div></div>
+                            <div class="col-sm-3 mt-1"> <div class="form-group"> <button class="btn btn-danger" type="button" onclick="remove_choiceRadio(${i});"> <i class="fa fa-minus btn-sm"></i> </button> </div></div>
+                            </div>`)
+                        }
+                    } else {
+                        choice_radios.append(`<div class="choice_radio_item removechoice_radio1 row">
+                        <div class="col-sm-9 mt-1"> <div class="form-group"> <input type="text" class="form-control" id="choice_radio" name="choice_radio" placeholder="กรอกตัวเลือก"> </div></div>
+                        <div class="col-sm-3 mt-1"> <div class="form-group"> <button class="btn btn-danger" type="button" onclick="remove_choiceRadio(1);"> <i class="fa fa-minus btn-sm"></i> </button> </div></div>
+                        </div>`)
+                    }
+                }
+            })
+        }
+
+        $(".all-fieldsinform .single-fieldedit").hover(function () {
+            $(this).css("background-color", "#ededed");
+        }, function () {
+            $(this).removeAttr('style');
+        });
+        fetch_fields()
+        function fetch_fields() {
+            const setfield_idforms = document.getElementById('setfield_idforms').value;
+            $.ajax({
+                url: '/formsfield/fetchfield',
+                type: 'POST',
+                data: { setfield_idforms },
+                success: (data) => {
+                    console.log(data);
+                    const boxfields = data.forms_field
+                    for (i in boxfields) {
+                        if (boxfields[i].field_type == "Headerfield_show") {
+                            console.log(boxfields);
+                            if (boxfields[i].tt_name) {
+                                $('.all-fieldsinform').append('<div class="ms-auto item" data-positon="" data-index="' + boxfields[i].idfield + '">'
+                                    + '<div class="dropdown"> <a href="#" class="link" id="new" data-bs-toggle="dropdown"  aria-expanded="false">  <div class="row mt-3 single-fieldedit rounded border">   <div class="col-12"><div class="mb-3 mt-3">'
+                                    + '  <p class="card-title mb-0">' + boxfields[i].tt_name + '</p>  </div>  </div> </div> </a>'
+                                    + '  <ul class="dropdown-menu" aria-labelledby="new"> '
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="editfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-pencil"></i> แก้ไข</a></li>'
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="copyfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-content-copy"></i> คัดลอก</a></li>'
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="deletefield(this.id)" class="dropdown-item"  href="#"><i class="mdi mdi-delete"></i> ลบ</a> </li>'
+                                    + '</ul> </div> </div>');
+                            } else {
+                                $('.all-fieldsinform').append('<div class="ms-auto item" data-positon="" data-index="' + boxfields[i].idfield + '">'
+                                    + '<div class="dropdown"> <a href="#" class="link" id="new" data-bs-toggle="dropdown"  aria-expanded="false">  <div class="row mt-3 single-fieldedit rounded border">   <div class="col-12"><div class="mb-3 mt-3">'
+                                    + '  <p class="card-title mb-0"> หัวข้อ </p>  </div>  </div> </div> </a>'
+                                    + '  <ul class="dropdown-menu" aria-labelledby="new"> '
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="editfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-pencil"></i> แก้ไข</a></li>'
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="copyfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-content-copy"></i> คัดลอก</a></li>'
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="deletefield(this.id)" class="dropdown-item"  href="#"><i class="mdi mdi-delete"></i> ลบ</a> </li>'
+                                    + '</ul> </div> </div>');
+                            }
+                        }
+                        if (boxfields[i].field_type == "Shorttextfield_q") {
+                            $('.all-fieldsinform').append(`<div class="ms-auto item" data-positon="" data-index="${boxfields[i].idfield}">
+                                    <div class="dropdown"> <a href="#" class="link" id="new" data-bs-toggle="dropdown"  aria-expanded="false">  <div class="row mt-3 single-fieldedit rounded border">   <div class="col-12"><div class="mb-3 mt-3">
+                                    ${boxfields[i].label_inputname ? `<label>${boxfields[i].label_inputname}</label>` : ``} 
+                                    ${boxfields[i].placeholder_field ? `<input type="text" class="form-control" placeholder="${boxfields[i].placeholder_field}">` : `<p class="card-title mb-0"> ไม่มีข้อความสั้น </p>`}  </div>  </div> </div> </a>
+                                    <ul class="dropdown-menu" aria-labelledby="new"> 
+                                    <li><a id="${boxfields[i].idfield}" onclick="editfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-pencil"></i> แก้ไข</a></li>
+                                    <li><a id="${boxfields[i].idfield}" onclick="copyfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-content-copy"></i> คัดลอก</a></li>
+                                    <li><a id="${boxfields[i].idfield}" onclick="deletefield(this.id)" class="dropdown-item"  href="#"><i class="mdi mdi-delete"></i> ลบ</a> </li>
+                                    </ul> </div> </div>`);
+                        }
+                        if (boxfields[i].field_type == "Longtextfield_q") {
+                            $('.all-fieldsinform').append(`<div class="ms-auto item" data-positon="" data-index="${boxfields[i].idfield}">
+                                    <div class="dropdown"> <a href="#" class="link" id="new" data-bs-toggle="dropdown"  aria-expanded="false">  <div class="row mt-3 single-fieldedit rounded border">   <div class="col-12"><div class="mb-3 mt-3">
+                                    ${boxfields[i].label_longtext ? `<label>${boxfields[i].label_longtext}</label>` : ``} 
+                                    ${boxfields[i].placeholder_longtext ? `<textarea name="placeholder_longtext" id="placeholder_longtext" class="form-control">${boxfields[i].placeholder_longtext}</textarea>` : `<p class="card-title mb-0"> ไม่มีข้อความยาว </p>`}  </div>  </div> </div> </a>
+                                    <ul class="dropdown-menu" aria-labelledby="new"> 
+                                    <li><a id="${boxfields[i].idfield}" onclick="editfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-pencil"></i> แก้ไข</a></li>
+                                    <li><a id="${boxfields[i].idfield}" onclick="copyfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-content-copy"></i> คัดลอก</a></li>
+                                    <li><a id="${boxfields[i].idfield}" onclick="deletefield(this.id)" class="dropdown-item"  href="#"><i class="mdi mdi-delete"></i> ลบ</a> </li>
+                                    </ul> </div> </div>`);
+                        }
+                        if (boxfields[i].field_type == "Linkfield_q") {
+                            $('.all-fieldsinform').append(`<div class="ms-auto item" data-positon="" data-index="${boxfields[i].idfield}">
+                                    <div class="dropdown"> <a href="#" class="link" id="new" data-bs-toggle="dropdown"  aria-expanded="false">  <div class="row mt-3 single-fieldedit rounded border">   <div class="col-12"><div class="mb-3 mt-3">
+                                    ${boxfields[i].link_q ? `<p id="${boxfields[i].link_q}" onclick="window.open(this.id);" style="width: fit-content;block-size: fit-content;">${boxfields[i].linktext_q} </p> ` : ` <p  style="width: fit-content;block-size: fit-content;"> ไม่มีลิ้ง </p> `} 
+                                    <ul class="dropdown-menu" aria-labelledby="new"> 
+                                    <li><a id="${boxfields[i].idfield}" onclick="editfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-pencil"></i> แก้ไข</a></li>
+                                    <li><a id="${boxfields[i].idfield}" onclick="copyfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-content-copy"></i> คัดลอก</a></li>
+                                    <li><a id="${boxfields[i].idfield}" onclick="deletefield(this.id)" class="dropdown-item"  href="#"><i class="mdi mdi-delete"></i> ลบ</a> </li>
+                                    </ul> </div> </div>`);
+                        }
+                        if (boxfields[i].field_type == "Linkfield_show") {
+                            if (boxfields[i].name_link && boxfields[i].link) {
+                                $('.all-fieldsinform').append('<div class="ms-auto item" data-positon="" data-index="' + boxfields[i].idfield + '">'
+                                    + '<div class="dropdown"> <a href="#" class="link" id="new" data-bs-toggle="dropdown"  aria-expanded="false">  <div class="row mt-3 single-fieldedit rounded border">   <div class="col-12"><div class="mb-3 mt-3">'
+                                    + '  <p id="' + boxfields[i].link + '" onclick="window.open(this.id);" style="width: fit-content;block-size: fit-content;">' + boxfields[i].name_link + ' </p>  </div>  </div> </div> </a>'
+                                    + '  <ul class="dropdown-menu" aria-labelledby="new"> '
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="editfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-pencil"></i> แก้ไข</a></li>'
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="copyfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-content-copy"></i> คัดลอก</a></li>'
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="deletefield(this.id)" class="dropdown-item"  href="#"><i class="mdi mdi-delete"></i> ลบ</a> </li>'
+                                    + '</ul> </div> </div>');
+                            } else {
+                                $('.all-fieldsinform').append('<div class="ms-auto item" data-positon="" data-index="' + boxfields[i].idfield + '">'
+                                    + '<div class="dropdown"> <a href="#" class="link" id="new" data-bs-toggle="dropdown"  aria-expanded="false">  <div class="row mt-3 single-fieldedit rounded border">   <div class="col-12"><div class="mb-3 mt-3">'
+                                    + '  <p  style="width: fit-content;block-size: fit-content;"> ไม่มีลิ้ง </p>  </div>  </div> </div> </a>'
+                                    + '  <ul class="dropdown-menu" aria-labelledby="new"> '
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="editfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-pencil"></i> แก้ไข</a></li>'
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="copyfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-content-copy"></i> คัดลอก</a></li>'
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="deletefield(this.id)" class="dropdown-item"  href="#"><i class="mdi mdi-delete"></i> ลบ</a> </li>'
+                                    + '</ul> </div> </div>');
+                            }
+                        }
+                        if (boxfields[i].field_type == "Imagefield_show") {
+                            if (boxfields[i].image_file) {
+                                $('.all-fieldsinform').append('<div class="ms-auto item" data-positon="" data-index="' + boxfields[i].idfield + '">'
+                                    + '<div class="dropdown"> <a href="#" class="link" id="new" data-bs-toggle="dropdown"  aria-expanded="false">  <div class="row mt-3 single-fieldedit rounded border">   <div class="col-12"><div class="mb-3 mt-3">'
+                                    + ' <img src="/image_fields/' + boxfields[i].image_file + '" width="27.5%" /> </div>  </div> </div> </a>'
+                                    + '  <ul class="dropdown-menu" aria-labelledby="new"> '
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="editfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-pencil"></i> แก้ไข</a></li>'
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="copyfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-content-copy"></i> คัดลอก</a></li>'
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="deletefield(this.id)" class="dropdown-item"  href="#"><i class="mdi mdi-delete"></i> ลบ</a> </li>'
+                                    + '</ul> </div> </div>');
+                            } else {
+                                $('.all-fieldsinform').append('<div class="ms-auto item" data-positon="" data-index="' + boxfields[i].idfield + '">'
+                                    + '<div class="dropdown"> <a href="#" class="link" id="new" data-bs-toggle="dropdown"  aria-expanded="false">  <div class="row mt-3 single-fieldedit rounded border">   <div class="col-12"><div class="mb-3 mt-3">'
+                                    + '  <p class="card-title"> ไม่มีรูป </p>  </div>  </div> </div> </a>'
+                                    + '  <ul class="dropdown-menu" aria-labelledby="new"> '
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="editfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-pencil"></i> แก้ไข</a></li>'
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="copyfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-content-copy"></i> คัดลอก</a></li>'
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="deletefield(this.id)" class="dropdown-item"  href="#"><i class="mdi mdi-delete"></i> ลบ</a> </li>'
+                                    + '</ul> </div> </div>');
+                            }
+                        }
+                        if (boxfields[i].field_type == "Vdofield_show") {
+                            if (boxfields[i].youtube_link) {
+                                const getURL = boxfields[i].youtube_link
+                                const newURL = getURL.replace("watch?v=", "embed/");
+                                $('.all-fieldsinform').append('<div class="ms-auto item" data-positon="" data-index="' + boxfields[i].idfield + '">'
+                                    + '<div class="dropdown"> <a href="#" class="link" id="new" data-bs-toggle="dropdown"  aria-expanded="false">  <div class="row mt-3 single-fieldedit rounded border">   <div class="col-12"><div class="mb-3 mt-3">'
+                                    + '  <iframe id="fetch_vdo' + boxfields[i].idfield + '" src="" frameborder="0"></iframe>  </div>  </div> </div> </a>'
+                                    + '  <ul class="dropdown-menu" aria-labelledby="new"> '
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="editfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-pencil"></i> แก้ไข</a></li>'
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="copyfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-content-copy"></i> คัดลอก</a></li>'
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="deletefield(this.id)" class="dropdown-item"  href="#"><i class="mdi mdi-delete"></i> ลบ</a> </li>'
+                                    + '</ul> </div> </div>');
+                                $("#fetch_vdo" + boxfields[i].idfield).attr("src", newURL)
+                            } else {
+                                $('.all-fieldsinform').append('<div class="ms-auto item" data-positon="" data-index="' + boxfields[i].idfield + '">'
+                                    + '<div class="dropdown"> <a href="#" class="link" id="new" data-bs-toggle="dropdown"  aria-expanded="false">  <div class="row mt-3 single-fieldedit rounded border">   <div class="col-12"><div class="mb-3 mt-3">'
+                                    + '  <p class="card-title">ไม่มีวิดีโอ</p>  </div>  </div> </div> </a>'
+                                    + '  <ul class="dropdown-menu" aria-labelledby="new"> '
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="editfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-pencil"></i> แก้ไข</a></li>'
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="copyfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-content-copy"></i> คัดลอก</a></li>'
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="deletefield(this.id)" class="dropdown-item"  href="#"><i class="mdi mdi-delete"></i> ลบ</a> </li>'
+                                    + '</ul> </div> </div>');
+                            }
+                        }
+                        if (boxfields[i].field_type == "Imageandlinkfield_show") {
+                            if (boxfields[i].image_file) {
+                                $('.all-fieldsinform').append('<div class="ms-auto item" data-positon="" data-index="' + boxfields[i].idfield + '">'
+                                    + '<div class="dropdown"> <a href="#" class="link" id="new" data-bs-toggle="dropdown"  aria-expanded="false">  <div class="row mt-3 single-fieldedit rounded border">   <div class="col-12"><div class="mb-3 mt-3">'
+                                    + ' <p id="' + boxfields[i].link + '" onclick="window.open(this.id);" style="width: fit-content;block-size: fit-content;">' + boxfields[i].name_link + ' </p>'
+                                    + ' <img src="/image_fields/' + boxfields[i].image_file + '" width="27.5%" /> </div>  </div> </div> </a>'
+                                    + ' <ul class="dropdown-menu" aria-labelledby="new"> '
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="editfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-pencil"></i> แก้ไข</a></li>'
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="copyfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-content-copy"></i> คัดลอก</a></li>'
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="deletefield(this.id)" class="dropdown-item"  href="#"><i class="mdi mdi-delete"></i> ลบ</a> </li>'
+                                    + '</ul> </div> </div>');
+                            } else {
+                                $('.all-fieldsinform').append('<div class="ms-auto item" data-positon="" data-index="' + boxfields[i].idfield + '">'
+                                    + '<div class="dropdown"> <a href="#" class="link" id="new" data-bs-toggle="dropdown"  aria-expanded="false">  <div class="row mt-3 single-fieldedit rounded border">   <div class="col-12"><div class="mb-3 mt-3">'
+                                    + '  <p class="card-title"> ไม่มีลิ้งและรูปภาพ </p>  </div>  </div> </div> </a>'
+                                    + '  <ul class="dropdown-menu" aria-labelledby="new"> '
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="editfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-pencil"></i> แก้ไข</a></li>'
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="copyfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-content-copy"></i> คัดลอก</a></li>'
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="deletefield(this.id)" class="dropdown-item"  href="#"><i class="mdi mdi-delete"></i> ลบ</a> </li>'
+                                    + '</ul> </div> </div>');
+                            }
+                        }
+                        if (boxfields[i].field_type == "Headerfield_q") {
+                            console.log(boxfields);
+                            if (boxfields[i].tt_name) {
+                                $('.all-fieldsinform').append('<div class="ms-auto item" data-positon="" data-index="' + boxfields[i].idfield + '">'
+                                    + '<div class="dropdown"> <a href="#" class="link" id="new" data-bs-toggle="dropdown"  aria-expanded="false">  <div class="row mt-3 single-fieldedit rounded border">   <div class="col-12"><div class="mb-3 mt-3">'
+                                    + '  <p class="card-title mb-0">' + boxfields[i].tt_name + '</p>  </div>  </div> </div> </a>'
+                                    + '  <ul class="dropdown-menu" aria-labelledby="new"> '
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="editfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-pencil"></i> แก้ไข</a></li>'
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="copyfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-content-copy"></i> คัดลอก</a></li>'
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="deletefield(this.id)" class="dropdown-item"  href="#"><i class="mdi mdi-delete"></i> ลบ</a> </li>'
+                                    + '</ul> </div> </div>');
+                            } else {
+                                $('.all-fieldsinform').append('<div class="ms-auto item" data-positon="" data-index="' + boxfields[i].idfield + '">'
+                                    + '<div class="dropdown"> <a href="#" class="link" id="new" data-bs-toggle="dropdown"  aria-expanded="false">  <div class="row mt-3 single-fieldedit rounded border">   <div class="col-12"><div class="mb-3 mt-3">'
+                                    + '  <p class="card-title mb-0"> หัวข้อ </p>  </div>  </div> </div> </a>'
+                                    + '  <ul class="dropdown-menu" aria-labelledby="new"> '
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="editfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-pencil"></i> แก้ไข</a></li>'
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="copyfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-content-copy"></i> คัดลอก</a></li>'
+                                    + ' <li><a id="' + boxfields[i].idfield + '" onclick="deletefield(this.id)" class="dropdown-item"  href="#"><i class="mdi mdi-delete"></i> ลบ</a> </li>'
+                                    + '</ul> </div> </div>');
+                            }
+                        }
+                        if (boxfields[i].field_type == "Dropdownfield_q") {
+                            let set_choice_dropdown = "";
+                            const choice_dropdown_text = boxfields[i].choice_dropdown;
+                            if (boxfields[i].choice_dropdown) {
+                                const sort_choice_dd = choice_dropdown_text.split(',');
+                                set_choice_dropdown += '<option>เลือก...</option>'
+                                for (var j = 0; j < sort_choice_dd.length; j++) {
+                                    set_choice_dropdown += '<option>' + sort_choice_dd[j] + '</option>'
+                                }
+                            }
+                            console.log(set_choice_dropdown);
+
+                            $('.all-fieldsinform').append(`<div class="ms-auto item" data-positon="" data-index="${boxfields[i].idfield}">
+                                    <div class="dropdown"> <a href="#" class="link" id="new" data-bs-toggle="dropdown"  aria-expanded="false">  <div class="row mt-3 single-fieldedit rounded border">   <div class="col-12"><div class="mb-3 mt-3">
+                                    ${boxfields[i].label_dropdown ? `<label>${boxfields[i].label_dropdown}</label>` : ``} 
+                                    ${boxfields[i].choice_dropdown ? `<select class="form-control">${set_choice_dropdown}</select>` : `<p class="card-title mb-0">จัดการลิสข้อมูล</p>`}  </div>  </div> </div> </a>
+                                    <ul class="dropdown-menu" aria-labelledby="new"> 
+                                    <li><a id="${boxfields[i].idfield}" onclick="editfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-pencil"></i> แก้ไข</a></li>
+                                    <li><a id="${boxfields[i].idfield}" onclick="copyfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-content-copy"></i> คัดลอก</a></li>
+                                    <li><a id="${boxfields[i].idfield}" onclick="deletefield(this.id)" class="dropdown-item"  href="#"><i class="mdi mdi-delete"></i> ลบ</a> </li>
+                                    </ul> </div> </div>`);
+                        }
+                        if (boxfields[i].field_type == "Imagefield_q") {
+                            $('.all-fieldsinform').append(`<div class="ms-auto item" data-positon="" data-index="${boxfields[i].idfield}">
+                                    <div class="dropdown"> <a href="#" class="link" id="new" data-bs-toggle="dropdown"  aria-expanded="false">  <div class="row mt-3 single-fieldedit rounded border">   <div class="col-12"><div class="mb-3 mt-3">
+                                    ${boxfields[i].label_inputimage ? `<label>${boxfields[i].label_inputimage}</label><input type="file" name="file" class="form-control">` : `<p class="card-title mb-0">จัดการเพิ่มรูปภาพ</p> `}   </div>  </div> </div> </a>
+                                    <ul class="dropdown-menu" aria-labelledby="new"> 
+                                    <li><a id="${boxfields[i].idfield}" onclick="editfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-pencil"></i> แก้ไข</a></li>
+                                    <li><a id="${boxfields[i].idfield}" onclick="copyfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-content-copy"></i> คัดลอก</a></li>
+                                    <li><a id="${boxfields[i].idfield}" onclick="deletefield(this.id)" class="dropdown-item"  href="#"><i class="mdi mdi-delete"></i> ลบ</a> </li>
+                                    </ul> </div> </div>`);
+                        }
+                        if (boxfields[i].field_type == "Gpsfield_q") {
+                            $('.all-fieldsinform').append(`<div class="ms-auto item" data-positon="" data-index="${boxfields[i].idfield}">
+                                    <div class="dropdown"> <a href="#" class="link" id="new" data-bs-toggle="dropdown"  aria-expanded="false">  <div class="row mt-3 single-fieldedit rounded border">   <div class="col-12"><div class="mt-3">
+                                    <p class="btn btn-warning"><i class="fas fa-map-marker-alt"></i> คลิกเพื่อระบุตำแหน่งที่อยู่</p>  </div>  </div> </div> </a>
+                                    <ul class="dropdown-menu" aria-labelledby="new"> 
+                                    <li><a id="${boxfields[i].idfield}" onclick="copyfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-content-copy"></i> คัดลอก</a></li>
+                                    <li><a id="${boxfields[i].idfield}" onclick="deletefield(this.id)" class="dropdown-item"  href="#"><i class="mdi mdi-delete"></i> ลบ</a> </li>
+                                    </ul> </div> </div>`);
+                        }
+                        if (boxfields[i].field_type == "Datetimefield_q") {
+                            $('.all-fieldsinform').append(`<div class="ms-auto item" data-positon="" data-index="${boxfields[i].idfield}">
+                                    <div class="dropdown"> <a href="#" class="link" id="new" data-bs-toggle="dropdown"  aria-expanded="false">  <div class="row mt-3 single-fieldedit rounded border">   <div class="col-12"><div class="mb-3 mt-3">
+                                    ${boxfields[i].label_datetime ? `<label>${boxfields[i].label_datetime}</label><input type="date" name="label_datetime" class="form-control">` : `<p class="card-title mb-0">จัดการเพิ่มวันเดือนปี</p> `}   </div>  </div> </div> </a>
+                                    <ul class="dropdown-menu" aria-labelledby="new"> 
+                                    <li><a id="${boxfields[i].idfield}" onclick="editfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-pencil"></i> แก้ไข</a></li>
+                                    <li><a id="${boxfields[i].idfield}" onclick="copyfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-content-copy"></i> คัดลอก</a></li>
+                                    <li><a id="${boxfields[i].idfield}" onclick="deletefield(this.id)" class="dropdown-item"  href="#"><i class="mdi mdi-delete"></i> ลบ</a> </li>
+                                    </ul> </div> </div>`);
+                        }
+
+                        if (boxfields[i].field_type == "Checkboxfield_q") {
+                            let set_choice_checkbox = "";
+                            const choice_checkbox_text = boxfields[i].choice_checkbox;
+                            if (boxfields[i].choice_checkbox) {
+                                const sort_choice_cb = choice_checkbox_text.split(',');
+                                for (var k = 0; k < sort_choice_cb.length; k++) {
+                                    set_choice_checkbox += '<div class="form-check"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"><label class="form-check-label" for="flexCheckDefault">'+sort_choice_cb[k]+'</label></div>'
+                                }
+                            }
+
+                            $('.all-fieldsinform').append(`<div class="ms-auto item" data-positon="" data-index="${boxfields[i].idfield}">
+                                    <div class="dropdown"> <a href="#" class="link" id="new" data-bs-toggle="dropdown"  aria-expanded="false">  <div class="row mt-3 single-fieldedit rounded border">   <div class="col-12"><div class="mb-3 mt-3">
+                                    ${boxfields[i].label_checkbox ? `<label>${boxfields[i].label_checkbox}</label>` : ``} 
+                                    ${boxfields[i].choice_checkbox ? `<div class="card-body">${set_choice_checkbox}</div>` : `<p class="card-title mb-0">จัดการตัวเลือกหลายตัวเลือก</p>`}  </div>  </div> </div> </a>
+                                    <ul class="dropdown-menu" aria-labelledby="new"> 
+                                    <li><a id="${boxfields[i].idfield}" onclick="editfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-pencil"></i> แก้ไข</a></li>
+                                    <li><a id="${boxfields[i].idfield}" onclick="copyfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-content-copy"></i> คัดลอก</a></li>
+                                    <li><a id="${boxfields[i].idfield}" onclick="deletefield(this.id)" class="dropdown-item"  href="#"><i class="mdi mdi-delete"></i> ลบ</a> </li>
+                                    </ul> </div> </div>`);
+                        }
+
+                        if (boxfields[i].field_type == "Radiofield_q") {
+                            let set_choice_radio = "";
+                            const choice_radio_text = boxfields[i].choice_radio;
+                            if (boxfields[i].choice_radio) {
+                                const sort_choice_rd = choice_radio_text.split(',');
+                                for (var k = 0; k < sort_choice_rd.length; k++) {
+                                    set_choice_radio += '<div class="form-check"><input class="form-check-input" type="radio" value="" id="flexCheckDefault"><label class="form-check-label" for="flexCheckDefault">'+sort_choice_rd[k]+'</label></div>'
+                                }
+                            }
+
+                            $('.all-fieldsinform').append(`<div class="ms-auto item" data-positon="" data-index="${boxfields[i].idfield}">
+                                    <div class="dropdown"> <a href="#" class="link" id="new" data-bs-toggle="dropdown"  aria-expanded="false">  <div class="row mt-3 single-fieldedit rounded border">   <div class="col-12"><div class="mb-3 mt-3">
+                                    ${boxfields[i].label_radio ? `<label>${boxfields[i].label_radio}</label>` : ``} 
+                                    ${boxfields[i].choice_radio ? `<div class="card-body">${set_choice_radio}</div>` : `<p class="card-title mb-0">จัดการตัวเลือกเดี่ยว</p>`}  </div>  </div> </div> </a>
+                                    <ul class="dropdown-menu" aria-labelledby="new"> 
+                                    <li><a id="${boxfields[i].idfield}" onclick="editfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-pencil"></i> แก้ไข</a></li>
+                                    <li><a id="${boxfields[i].idfield}" onclick="copyfield(this.id)" class="dropdown-item" href="#"><i class="mdi mdi-content-copy"></i> คัดลอก</a></li>
+                                    <li><a id="${boxfields[i].idfield}" onclick="deletefield(this.id)" class="dropdown-item"  href="#"><i class="mdi mdi-delete"></i> ลบ</a> </li>
+                                    </ul> </div> </div>`);
+                        }
+                    }
+                }
+            });
+        }
+        function addfieldInput(id) {
+            const datafield = id.split("/")
+            const field_type = datafield[0];
+            const formsid = datafield[1];
+
+            $.ajax({
+                url: '/formsfield/addfield',
+                type: 'POST',
+                data: { formsid, field_type },
+                success: (data) => {
+                    data.message[0]
+                    $('.all-fieldsinform').html("");
+                    fetch_fields()
+                }
+            });
+        };
+        function deletefield(id) {
+            $.ajax({
+                url: '/formsfield/deletefield',
+                type: 'POST',
+                data: { idfield: id },
+                success: (data) => {
+                    data.message[0]
+                    $('.all-fieldsinform').html("");
+                    fetch_fields()
+                }
+            });
+        }
+
+        function update_editfield() {
+            const idfield = $('#idfield').val()
+            const name_fieldtype = $('#name_fieldtype').val()
+            const labelname_show = $('#labelname_show').val()
+            const name_link_show = $('#name_link_show').val()
+            const link_show = $('#link_show').val()
+            const youtube_link_show = $('#youtube_link_show').val()
+            const label_inputname = $('#label_inputname').val()
+            const placeholder_field = $('#placeholder_field').val()
+            const label_longtext = $('#label_longtext').val()
+            const placeholder_longtext = $('#placeholder_longtext').val()
+            const link_q = $('#link_q').val()
+            const linktext_q = $('#linktext_q').val()
+            const label_dropdown = $('#label_dropdown').val()
+            const label_inputimage = $('#label_inputimage').val()
+            const label_datetime = $('#label_datetime').val()
+            const label_checkbox = $('#label_checkbox').val()
+            const label_radio = $('#label_radio').val()
+            const validate_select = $("#validate_select");
+            const validateOption = validate_select.val();
+
+
+            if (name_fieldtype == "Headerfield_show") {
+                $.ajax({
+                    url: '/formsfield/update_Headerfield_show',
+                    method: 'post',
+                    data: {
+                        idfield,
+                        labelname_show
+                    },
+                    success: (data) => {
+                        $('.all-fieldsinform').html("");
+                        fetch_fields()
+                    }
+                })
+            }
+
+            if (name_fieldtype == "Linkfield_show") {
+                $.ajax({
+                    url: '/formsfield/update_Linkfield_show',
+                    method: 'post',
+                    data: {
+                        idfield,
+                        name_link_show,
+                        link_show,
+                    },
+                    success: (data) => {
+                        $('.all-fieldsinform').html("");
+                        fetch_fields()
+                    }
+                })
+            }
+
+            if (name_fieldtype == "Vdofield_show") {
+                $.ajax({
+                    url: '/formsfield/update_Vdofield_show',
+                    method: 'post',
+                    data: {
+                        idfield,
+                        youtube_link_show,
+                    },
+                    success: (data) => {
+                        $('.all-fieldsinform').html("");
+                        fetch_fields()
+                    }
+                })
+            }
+
+            if (name_fieldtype == "Imagefield_show") {
+                const image_check = $('#value_image_default').val();
+                console.log(image_check);
+                if (image_check) {
+                    if (image_check == "pass") {
+                        uploadFile(idfield)
+                    } else {
+                        $.ajax({
+                            url: '/formsfield/update_Imagedefault_show',
+                            method: 'post',
+                            data: {
+                                idfield,
+                                image_check,
+                            },
+                            success: (data) => {
+                                $('.all-fieldsinform').html("");
+                                fetch_fields()
+                            }
+                        })
+                    }
+                }
+            }
+
+            if (name_fieldtype == "Imageandlinkfield_show") {
+                const image_check = document.getElementById('value_image_default').value;
+                console.log(image_check);
+                if (image_check) {
+                    if (image_check == "pass") {
+                        uploadFileandlink(idfield, name_link_show, link_show)
+                    } else {
+                        $.ajax({
+                            url: '/formsfield/update_Imagedefaultandlinkfield_show',
+                            method: 'post',
+                            data: {
+                                idfield,
+                                image_check,
+                                name_link: name_link_show,
+                                link: link_show
+                            },
+                            success: (data) => {
+                                $('.all-fieldsinform').html("");
+                                fetch_fields()
+                            }
+                        })
+                    }
+                }
+            }
+
+            if (name_fieldtype == "Headerfield_q") {
+                $.ajax({
+                    url: '/formsfield/update_Headerfield_show',
+                    method: 'post',
+                    data: {
+                        idfield,
+                        labelname_show
+                    },
+                    success: (data) => {
+                        $('.all-fieldsinform').html("");
+                        fetch_fields()
+                    }
+                })
+            }
+
+            if (name_fieldtype == "Shorttextfield_q") {
+                $.ajax({
+                    url: '/formsfield/update_Shorttextfield_q',
+                    method: 'post',
+                    data: {
+                        idfield,
+                        label_inputname,
+                        placeholder_field,
+                        validateOption
+                    },
+                    success: (data) => {
+                        $('.all-fieldsinform').html("");
+                        fetch_fields()
+                    }
+                })
+            }
+            if (name_fieldtype == "Longtextfield_q") {
+                $.ajax({
+                    url: '/formsfield/update_Longtextfield_q',
+                    method: 'post',
+                    data: {
+                        idfield,
+                        label_longtext,
+                        placeholder_longtext,
+                        validateOption
+                    },
+                    success: (data) => {
+                        $('.all-fieldsinform').html("");
+                        fetch_fields()
+                    }
+                })
+            }
+            if (name_fieldtype == "Linkfield_q") {
+                $.ajax({
+                    url: '/formsfield/update_Linkfield_q',
+                    method: 'post',
+                    data: {
+                        idfield,
+                        link_q,
+                        linktext_q
+                    },
+                    success: (data) => {
+                        $('.all-fieldsinform').html("");
+                        fetch_fields()
+                    }
+                })
+            }
+            if (name_fieldtype == "Dropdownfield_q") {
+                const option_dropdown = []
+                $('.choice_dropdown_list .choice_dropdown_item #choice_dropdown').each(function (index, element) {
+                    if (element.value === null || element.value === undefined || element.value === '') {
+                        console.log('ไม่ได้กรอกข้อมูล');
+                    } else {
+                        option_dropdown.push(element.value);
+                    }
+                });
+                console.log('id :', idfield, 'label_dropdown :', label_dropdown, 'option :', option_dropdown);
+                console.log(option_dropdown.length);
+                if (option_dropdown.length > 0) {
+                    $.ajax({
+                        url: '/formsfield/update_Dropdownfield_q',
+                        method: 'post',
+                        data: {
+                            idfield,
+                            label_dropdown,
+                            option_dropdown,
+                            validateOption,
+                        },
+                        success: (data) => {
+                            $('.all-fieldsinform').html("");
+                            fetch_fields()
+                            getchoice_dropdown()
+                        }
+                    })
+                } else {
+                    $.ajax({
+                        url: '/formsfield/update_Dropdownfield_q',
+                        method: 'post',
+                        data: {
+                            idfield,
+                            label_dropdown,
+                            option_dropdown: 0,
+                            validateOption,
+                        },
+                        success: (data) => {
+                            $('.all-fieldsinform').html("");
+                            fetch_fields()
+                            getchoice_dropdown()
+                        }
+                    })
+                }
+            }
+
+            if (name_fieldtype == "Imagefield_q") {
+                $.ajax({
+                    url: '/formsfield/update_Imagefield_q',
+                    method: 'post',
+                    data: {
+                        idfield,
+                        label_inputimage,
+                        validateOption,
+                    },
+                    success: (data) => {
+                        $('.all-fieldsinform').html("");
+                        fetch_fields()
+                    }
+                })
+            }
+
+            if (name_fieldtype == "Datetimefield_q") {
+                $.ajax({
+                    url: '/formsfield/update_Datetimefield_q',
+                    method: 'post',
+                    data: {
+                        idfield,
+                        label_datetime,
+                        validateOption,
+                    },
+                    success: (data) => {
+                        $('.all-fieldsinform').html("");
+                        fetch_fields()
+                    }
+                })
+            }
+            if (name_fieldtype == "Checkboxfield_q") {
+                const choice_checkbox = []
+                $('.choice_checkbox_list .choice_checkbox_item #choice_checkbox').each(function (index, element) {
+                    if (element.value === null || element.value === undefined || element.value === '') {
+                        console.log('ไม่ได้กรอกข้อมูล');
+                    } else {
+                        choice_checkbox.push(element.value);
+                    }
+                });
+
+                if (choice_checkbox.length > 0) {
+                    $.ajax({
+                        url: '/formsfield/update_Checkboxfield_q',
+                        method: 'post',
+                        data: {
+                            idfield,
+                            label_checkbox,
+                            choice_checkbox,
+                            validateOption,
+                        },
+                        success: (data) => {
+                            $('.all-fieldsinform').html("");
+                            fetch_fields()
+                            getchoice_checkbox()
+                        }
+                    })
+                } else {
+                    $.ajax({
+                        url: '/formsfield/update_Checkboxfield_q',
+                        method: 'post',
+                        data: {
+                            idfield,
+                            label_dropdown,
+                            choice_checkbox: 0,
+                            validateOption,
+                        },
+                        success: (data) => {
+                            $('.all-fieldsinform').html("");
+                            fetch_fields()
+                            getchoice_checkbox()
+                        }
+                    })
+                }
+            }
+            if (name_fieldtype == "Radiofield_q") {
+                const choice_radio = []
+                $('.choice_radio_list .choice_radio_item #choice_radio').each(function (index, element) {
+                    if (element.value === null || element.value === undefined || element.value === '') {
+                        console.log('ไม่ได้กรอกข้อมูล');
+                    } else {
+                        choice_radio.push(element.value);
+                    }
+                });
+
+                if (choice_radio.length > 0) {
+                    $.ajax({
+                        url: '/formsfield/update_Radiofield_q',
+                        method: 'post',
+                        data: {
+                            idfield,
+                            label_radio,
+                            choice_radio,
+                            validateOption,
+                        },
+                        success: (data) => {
+                            $('.all-fieldsinform').html("");
+                            fetch_fields()
+                            getchoice_radio()
+                        }
+                    })
+                } else {
+                    $.ajax({
+                        url: '/formsfield/update_Radiofield_q',
+                        method: 'post',
+                        data: {
+                            idfield,
+                            label_radio,
+                            choice_radio: 0,
+                            validateOption,
+                        },
+                        success: (data) => {
+                            $('.all-fieldsinform').html("");
+                            fetch_fields()
+                            getchoice_radio()
+                        }
+                    })
+                }
+            }
+        }
+
+        async function uploadFile(idfield) {
+            let fileupload = document.getElementById("Imagefile_s");
+            let formData = new FormData();
+            formData.append("file", fileupload.files[0]);
+            formData.append("idfield", idfield);
+
+            try {
+                const response = await fetch('/formsfield/update_Imagefield_show', {
+                    method: "POST",
+                    body: formData,
+                });
+
+                if (response.ok) {
+                    $('.all-fieldsinform').html("");
+                    fetch_fields()
+                } else {
+                    console.log(response);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        async function uploadFileandlink(idfield, name_link_show, link_show) {
+            console.log(name_link_show, link_show);
+            let fileupload = document.getElementById("Imagefile_s");
+            let formData = new FormData();
+            formData.append("file", fileupload.files[0]);
+            formData.append("idfield", idfield);
+            formData.append("name_link", name_link_show);
+            formData.append("link", link_show);
+
+            try {
+                const response = await fetch('/formsfield/update_Imageandlinkfield_show', {
+                    method: "POST",
+                    body: formData,
+                });
+
+                if (response.ok) {
+                    $('.all-fieldsinform').html("");
+                    fetch_fields()
+                } else {
+                    console.log(response);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    </script>
+
+
+
+
+    <%- include ("../_footer") %>

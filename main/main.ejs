@@ -1,0 +1,646 @@
+<%- include ("../main/_headerhomepage") %>
+<style>
+    a {
+    color: #003358;
+    text-decoration: none;
+}
+
+#hero .icon-box .description {
+    font-size: 17px;
+    line-height: 28px;
+    margin-bottom: 0;
+}
+
+#hero .icon-box .title {
+    font-weight: 700;
+    margin-bottom: auto;
+    font-size: 17px;
+}
+
+
+#hero .icon-box {
+    padding: 50px 30px;
+    position: relative;
+    overflow: hidden;
+    background: #e5eeff; /* ใช้พื้นหลังของปุ่ม */
+    box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.4),
+                inset 0px -4px 0px 0px rgba(0, 0, 0, 0.2),
+                0px 0px 0px 4px rgba(255, 255, 255, 0.2),
+                0px 0px 180px 0px transparent; /* ใช้เอฟเฟกต์เงาจากปุ่ม */
+    transition: all 0.3s ease-in-out;
+    border-radius: 3em; /* เพิ่มการโค้งมน */
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer; /* เพิ่ม cursor เมื่อ hover */
+}
+
+#hero .icon-box:hover {
+    background: linear-gradient(0deg, #A47CF3, #683FEA); /* ใช้ gradient จากปุ่มเมื่อ hover */
+    box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.4),
+                inset 0px -4px 0px 0px rgba(0, 0, 0, 0.2),
+                0px 0px 0px 4px rgba(255, 255, 255, 0.2),
+                0px 0px 180px 0px #9917FF; /* เอฟเฟกต์เงาตอน hover */
+    transform: translateY(-2px); /* เลื่อนขึ้นเล็กน้อยเมื่อ hover */
+}
+
+#hero .icon-box .title {
+    font-weight: 600;
+    color: #110f0f;
+    font-size: medium;
+    transition: color 0.3s ease;
+}
+
+#hero .icon-box:hover .title {
+    color: white; /* เปลี่ยนสีข้อความเป็นสีขาวเมื่อ hover */
+}
+
+
+.scrollable-image-container {
+    width: 100%; /* ใช้ความกว้างเต็มของหน้าจอ */
+    overflow-x: auto; /* เปิดการเลื่อนแนวนอน */
+}
+
+.wide-image {
+    width: 1200px; /* กำหนดความกว้างของรูปมากกว่าความกว้างของหน้าจอ */
+    height: auto; /* ปรับความสูงตามอัตราส่วน */
+}
+
+.scrollable-image-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.scrollable-image-container::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+.scrollable-image-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+
+.kanit-thin {
+  font-family: "Kanit", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.kanit-extralight {
+  font-family: "Kanit", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.kanit-light {
+  font-family: "Kanit", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.kanit-regular {
+  font-family: "Kanit", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.kanit-medium {
+  font-family: "Kanit", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.kanit-semibold {
+  font-family: "Kanit", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.kanit-bold {
+  font-family: "Kanit", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.kanit-extrabold {
+  font-family: "Kanit", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+}
+
+.kanit-black {
+  font-family: "Kanit", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.kanit-thin-italic {
+  font-family: "Kanit", sans-serif;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.kanit-extralight-italic {
+  font-family: "Kanit", sans-serif;
+  font-weight: 200;
+  font-style: italic;
+}
+
+.kanit-light-italic {
+  font-family: "Kanit", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.kanit-regular-italic {
+  font-family: "Kanit", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.kanit-medium-italic {
+  font-family: "Kanit", sans-serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.kanit-semibold-italic {
+  font-family: "Kanit", sans-serif;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.kanit-bold-italic {
+  font-family: "Kanit", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.kanit-extrabold-italic {
+  font-family: "Kanit", sans-serif;
+  font-weight: 800;
+  font-style: italic;
+}
+
+.kanit-black-italic {
+  font-family: "Kanit", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+}
+
+.contact-info {
+    position: fixed;
+    top: 20px; /* กำหนดระยะห่างจากด้านบน */
+    right: 20px; /* กำหนดระยะห่างจากด้านขวา */
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* ทำให้มั่นใจว่าส่วนนี้อยู่เหนือเนื้อหาอื่น */
+    top: 70%;
+}
+
+.contact-info h3, .contact-info p {
+    margin: 0;
+    text-align: right; /* จัดตำแหน่งข้อความให้อยู่ที่ขวา */
+}
+
+.contact-info p {
+    margin-top: 10px;
+}
+
+
+
+
+.admin-box {
+    background: #007bff; /* สีพื้นหลังสำหรับกล่องผู้ดูแล */
+}
+
+.user-box, .personnel-box {
+    background: #50b6ff; /* สีพื้นหลังสำหรับกล่องประชาชนและเจ้าหน้าที่ */
+}
+
+.icon-box:hover {
+    background: linear-gradient(0deg, #A47CF3, #683FEA); /* ใช้ gradient จากปุ่มเมื่อ hover */
+    box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.4),
+                inset 0px -4px 0px 0px rgba(0, 0, 0, 0.2),
+                0px 0px 0px 4px rgba(255, 255, 255, 0.2),
+                0px 0px 180px 0px #9917FF;
+    transform: translateY(-2px);
+}
+
+
+
+.icon-box:hover .title {
+    color: white;
+}
+
+
+
+/* ปรับให้กล่องเล็กลงเมื่อหน้าจอเล็กลง */
+@media (max-width: 767px) {
+    .row.icon-boxes {
+        margin-left: 0; /* ลบ margin สำหรับหน้าจอเล็ก */
+    }
+}
+
+/* ขยับแถวสำหรับผู้ดูแลไปทางขวา 10px */
+.row.icon-boxes.admin-row {
+    margin-left: 100%; /* ขยับไปทางขวา 10px */
+}
+
+.banner::before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: url(/img/pattern.png);
+}
+
+
+/*สีพื้นหลัง*/
+.banner {
+    background-color: #83baff; /* สีพื้นหลังม่วงอ่อน */
+    padding: 90px 0; /* เพิ่ม padding เพื่อทำให้มีระยะห่างภายใน */
+    position: relative; /* ตั้งค่า position เป็น relative */
+    margin-top: 0px; /* ขยับลงมาจากด้านบน 0px */
+}
+
+.svg-wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%; /* ยืดความกว้างให้ครอบคลุมทั้งความกว้างของ .banner */
+    margin-top: 0px;
+}
+
+.svg-hero {
+    display: block; /* ทำให้ img ไม่มีช่องว่างด้านล่าง */
+    height: 250px; /* ปรับความสูงตามที่ต้องการ */
+    width: auto; /* ปรับอัตราส่วนของความกว้างให้เหมาะสม */
+}
+
+
+
+
+.facebook {
+            width: 50px; /* กำหนดความกว้างเป็น 50px */
+            height: 50px; /* กำหนดความสูงเป็น 50px */
+            object-fit: cover; /* ให้ภาพไม่ถูกบิดเบี้ยวหรือยืดเกินไป */
+        }
+
+        /* ตรวจสอบลิงก์ */
+        a {
+            display: inline-block; /* ให้แน่ใจว่าลิงก์สามารถคลิกได้ */
+        }
+
+
+        .icon-boxes {
+        position: relative;
+        top: -450px; /* ปรับให้สูงขึ้น 50px หรือปรับตามต้องการ */
+    }
+
+    .icon-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        text-align: center;
+        border-radius: 5px;
+        background: #f8f9fa; /* เปลี่ยนสีพื้นหลังตามต้องการ */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .icon-box .icon img {
+        max-width: 100%;
+    }
+
+    .icon-box .title {
+        margin: 15px 0;
+        font-size: 16px;
+    }
+    
+
+    .center-text {
+    text-align: center;
+    margin: 0 auto;
+  
+}
+
+.line::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    width: 150px;
+    height: 2px;
+    border-bottom: 2px dashed #3d5b98;
+    margin-left: -75px;
+}
+
+.line {
+    height: 2px;
+    width: 50px;
+    background: #8100ff;
+    display: block;
+    margin: 20px auto 20px;
+}
+
+.banner-overlay {
+  z-index: 1; /* ให้ z-index ต่ำกว่าลิงก์ */
+  position: relative;
+}
+
+.banner-text a {
+  z-index: 1000; /* ให้ z-index สูงกว่าองค์ประกอบอื่น */
+  position: relative;
+}
+
+
+ul {
+    list-style: none; /* ซ่อนจุดหรือสัญลักษณ์ข้างหน้ารายการ */
+    padding: 0; /* ปรับขอบซ้ายให้ชิด */
+}
+
+
+
+
+</style>
+
+
+
+<!-- End Navbar --> 
+<!-------Banner Start------->
+<section class="banner" data-scroll-index='0'>
+  <div class="banner-overlay">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-sm-12">
+          <div class="banner-text">
+            <h2 class="kanit-bold">ระบบบริการสาธารณสุขการจัดการข้อมูลสุขภาพประชาชน </h2>
+            <h6 class="kanit-bold">ตำบลเวียงแม่จัน  อำเภอแม่จัน จังหวัดเชียงราย  </h6>
+            <p class="kanit-bold">
+                เบอร์ติดต่อ: 053-771876 <span style="margin-left: 20px;">อีเมลล์: maechandho@hotmail.com</span>
+            </p>
+            <p  class="kanit-bold" style="font-size: 0.8rem; margin-top: -10px;">
+              Contact us at คณะเทคโนโลยีดิจิทัล มร.ชร. สาขา วิศวกรรมคอมเตอร์
+            </p>
+            
+            
+            <div style="display: flex; align-items: center; gap: 30px; padding: 0;">
+              <ul style="list-style: none; padding: 0; margin: 0;">
+                  <li>
+                      <a href="https://www.facebook.com/p/%E0%B8%AA%E0%B8%B3%E0%B8%99%E0%B8%B1%E0%B8%81%E0%B8%87%E0%B8%B2%E0%B8%99%E0%B8%AA%E0%B8%B2%E0%B8%98%E0%B8%B2%E0%B8%A3%E0%B8%93%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%AD%E0%B8%B3%E0%B9%80%E0%B8%A0%E0%B8%AD%E0%B9%81%E0%B8%A1%E0%B9%88%E0%B8%88%E0%B8%B1%E0%B8%99-100068322682563/">
+                          <img src="/logo/facebook.png" class="wow fadeInUp" data-wow-delay="0.4s" style="width: 50px; height: 50px;" />
+                      </a>
+                  </li>
+              </ul>
+              <!-- <ul style="list-style: none; padding: 0; margin: 0;">
+                  <li>
+                      <a href="https://x.com/pr_moph?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">
+                          <img src="/logo/twitter.png" class="wow fadeInUp" data-wow-delay="0.4s" style="width: 50px; height: 50px;" />
+                      </a>
+                  </li>
+              </ul>
+          </div> -->
+
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li>
+                <a href="https://www.tiktok.com/@healthmoph">
+                    <img src="/logo/tiktok.png" class="wow fadeInUp" data-wow-delay="0.4s" style="width: 50px; height: 50px;" />
+                </a>
+            </li>
+        </ul>
+    </div>
+          
+           
+            
+            
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-12"> <img src="/logo/doctor.png" class="img-fluid wow fadeInUp"/> </div>
+      </div>
+    </div>
+  </div>
+  <span class="svg-wave"> <img class="svg-hero" src="/img/applight-wave.svg"> </span> </section>
+
+
+<div style="margin-top: 60px; text-align: center;">
+  <h3  class="kanit-bold">เข้าสู่ระบบ</h3>
+ 
+  <span class="line"></span>
+  <!-- <p>เลือกเข้าสู่ระบบ</p> -->
+</div>
+
+
+    <!-- ======= Hero Section ======= -->
+    <section id="hero" class="d-flex align-items-center">
+        <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
+            <div class="row justify-content-center">
+                <div class="col-xl-7 col-lg-9 text-center">
+                    <!-- <h3 class="kanit-bold">ระบบบริการสาธารณสุข จัดการข้อมูลสุขภาพประชาชน และ อสม</h3>
+                    <h3 class="kanit-bold">เทศบาลตำบลแม่จัน</h3> -->
+                </div>
+            </div>
+
+           
+
+            
+
+<!-- แถวสำหรับผู้ดูแล, ประชาชน, และเจ้าหน้าที่ -->
+<!-- <div class="container">
+    <div class="row icon-boxes justify-content-center text-center">
+        <div class="col-md-4 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="400">
+            <a href="/loginadmin">
+                <div class="icon-box btn admin-box">
+                    <h4 class="title">เข้าสู่ระบบผู้ดูแลสาธารณสุข</h4>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="400">
+            <a href="/index_menu">
+                <div class="icon-box btn user-box">
+                    <h4 class="title">เข้าสู่ระบบประชาชน</h4>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="400">
+            <a href="/loginpersonnel">
+                <div class="icon-box btn personnel-box">
+                    <h4 class="title">เข้าสู่ระบบเจ้าหน้าที่ อสม.</h4>
+                </div>
+            </a>
+        </div>
+    </div>
+</div> -->
+
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+           
+           
+            <!-- <div class="contact-info">
+                <h3 class="kanit-bold">สาธารณสุขตำบลแม่จัน</h3>
+                <p class="kanit-bold">
+                    เทศบาลตำบลแม่จัน <br>
+                    หมู่ 4 ตำบลเวียงแม่จัน<br>
+                    อำเภอแม่จัน, จังหวัดเชียงราย, 57110<br><br>
+                    <strong class="kanit-bold">เบอร์ติดต่อ:</strong>  053-771876<br>
+                    <strong class="kanit-bold">อีเมลล์:</strong> maechandho@hotmail.com<br>
+                </p>
+            </div>
+             -->
+
+
+            <!-- แถวสำหรับรูปแนวยาวเลื่อนได้ -->
+
+
+
+
+            
+            
+            <div class="row icon-boxes justify-content-center text-center">
+                <!-- <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in"
+                    data-aos-delay="200">
+                    <a href="/index_menu">
+                        <div class="icon-box" style="width: 200px;height: 150px;"> 
+                            <div class="icon"><img src="/logo/people-together.png" alt="" style="width: 150px;"></div>
+                            <h4 class="title">เข้าสู่ระบบประชาชน</h4>
+                            <p class="description"></p>
+                        </div>
+                    </a>
+                </div> -->
+             
+
+                <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in"
+                data-aos-delay="300" >
+                <a href="/index_menu">
+                    <div class="icon-box" style="width:250px; height: 118px; left:  50px;">
+                    <!-- <div class="icon-box" style="width: 300px;height: 318px;"> -->
+                        <!-- <div class="icon"><img src="/logo/people-together.png" alt="" style="width: 150px;"></div> -->
+                        <h4 class="title description">เข้าสู่ระบบ ประชาชน</h4> 
+                        <p class="description"></p> 
+                     </div> 
+                </a>
+            </div>
+
+                <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in"
+                    data-aos-delay="300">
+                    
+                    <a href="/loginpersonnel">
+                        <div class="icon-box" style="width:250px; height: 118px; left:  50px;">
+                        <!-- <div class="icon-box" style="width: 300px;height: 318px;"> -->
+                            <!-- <div class="icon"><img src="/logo/nurse.png" alt="" style="width: 150px;"></div> -->
+                            <h4 class="title description">เข้าสู่ระบบเจ้าหน้าที่ อสม.</h4> 
+                            <p class="description"></p> 
+                         </div> 
+
+                    </a>
+               
+                </div>
+           
+                
+               <br>
+
+              <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in"
+                    data-aos-delay="400">
+                    <a href="/loginadmin">
+                        <div class="icon-box" style="width:250px; height: 118px; left:  50px;">
+                        <!-- <div class="icon-box" style="width: 300px;height: 318px;"> -->
+                            <!-- <div class="icon"><img src="/logo/cogs01.png" alt="" style="width: 150px;"></div> -->
+                            <h4 class="title">เข้าสู่ระบบผู้ดูแลสาธารณสุข</h4> 
+                            <p class="description">
+                        </p> 
+                       </div>
+                    </a>
+                </div>
+
+
+            </div>
+        </div>
+
+
+   
+
+
+    </section><!-- End Hero -->
+
+
+    <main id="main">
+        <!-- ======= Contact Section ======= -->
+
+
+    </main><!-- End #main -->
+
+  
+
+    
+    <section class="team section-padding" data-scroll-index='3' style="background-color: #83baff;  margin-top: -350px;">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="sectioner-header text-center">
+                <h3 class="kanit-bold">เบอร์ติดต่อฉุกเฉิน</h3>
+                <span class="line"></span>
+                <!-- <p>เบอร์ติดต่อฉุกเฉิน</p> -->
+              </div>
+              <div class="section-content text-center">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="team-detail wow bounce" data-wow-delay="0.2s"> <img src="/logo/telemedicine.png" class="img-fluid" style="width: 150px;"/>
+                  
+                        <h4  class="kanit-bold">1669</h4>
+                      <p>หน่วยแพทย์ฉุกเฉิน</p>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="team-detail wow bounce" data-wow-delay="0.4s"> <img src="/logo/police-car.png" class="img-fluid" style="width: 150px;"/>
+                      <h4  class="kanit-bold" >191</h4>
+                      <p>เหตุด่วน-เหตุร้าย</p>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="team-detail wow bounce" data-wow-delay="0.6s"> <img src="/logo/extinguisher.png" class="img-fluid" style="width:  150px;"/>
+                      <h4  class="kanit-bold">199</h4>
+                      <p>ไฟไหม้ - ดับเพลิง</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      
+
+
+    
+
+
+
+  
+
+    
+    
+
+    
+
+
+    <%- include ("../main/_footerhomepage") %>

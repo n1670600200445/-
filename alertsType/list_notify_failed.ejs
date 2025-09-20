@@ -1,0 +1,108 @@
+<%- include ("../_header") %>
+
+<section id="main-content">
+    <section class="wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+              <h3 class="page-header"><i class="fa fa-files-o"></i>ALERTS INFORMATION</h3>
+              
+              <ol class="breadcrumb">
+                <li><i class="fa fa-home"></i><a href="/index">Dashboard</a></li>
+                <li><i class="icon_document_alt"></i><a href="/admin/alerts"> จัดการข้อมูลเมนูการแจ้งเหตุ</a></li>
+                <li><i class="fa fa-list-alt" aria-hidden="true"></i>รายการการแจ้งเหตุไม่สำเร็จ</li>
+              </ol>
+            </div>
+          </div>
+          </section>
+</section>
+                            
+        <div class="col-lg-8"></div>
+        <section id="main-content">
+            <section class="wrapper">
+<div class="row">
+    <div class="col-lg-1"></div>
+    <div class=" col-lg-10" >
+        <div class="col-lg-2"></div>
+      <section class="panel">
+        <header class="panel-heading">  
+          <b style="font-size: large;"> รายละเอียดการแจ้งเหตุ<%= namealerts.name_alty%>ที่ไม่สำเร็จ </b>
+        </header>
+        
+    <% JSON.stringify(datetime) %>
+        <div class="panel-body">
+        <table id="tablelist_notify_failed" class="table table-bordered table-striped" >
+          <thead>
+            <tr>
+                <th><i class="fa fa-list-ol" aria-hidden="true"></i> ลำดับ</th>
+                <th><i class="fa fa-ambulance" aria-hidden="true"></i> ชื่อผู้แจ้งเหตุ</th>
+                <th><i class="fa fa-phone-square" aria-hidden="true"></i> เบอร์ติดต่อ</th>
+                <th><i class="fa fa-calendar" aria-hidden="true"></i> วันที่/เวลาแจ้งเหตุ</th>
+                <th><i class="fa fa-hourglass-start" aria-hidden="true"></i>  วันที่/เวลาแจ้งเหตุไม่สำเร็จ</th>
+                <th><i class="fa fa-info-circle" aria-hidden="true"></i> รายละเอียด</th>
+                <th><i class="fa fa-address-book-o" aria-hidden="true"></i> ผู้ดูแล</th>
+                <th><i class="icon_cogs"></i> Action</th>
+              </tr>
+            </thead>
+              <tbody>
+              <%if(alertstype){%>
+                <% for(var i=0; i<alertstype.length;i++ ){ %>
+            
+            <tr>
+                <td><%= i+1 %></td>
+              <td><%= alertstype[i].fname_us%> <%= alertstype[i].lname_us%></td>
+              <td><%= alertstype[i].phone_us%> </td>
+              <td><%= datetime[i].date%> <%= datetime[i].time%></td>
+              <td><%= datetime[i].date_success%> <%= datetime[i].time_success%> </td>
+              <td><%= alertstype[i].detail_al%></td>
+              <td><%= alertstype[i].fname_ps%>  <%= alertstype[i].lname_ps%></td>
+                  
+              <td>
+                <div class="btn-group">
+                   
+                    <a href="https://www.google.com/maps/search/?api=1&query= <%= alertstype[i].latitude %> , <%= alertstype[i].longitude %>&@<%= alertstype[i].latitude %>,<%= alertstype[i].longitude %>,z=17" target="_blank" class="btn btn-warning">
+                      <i class="fa fa-map-marker" aria-hidden="true"></i> แผนที่</a>
+                    <%if(alertstype[i].img_al){%>
+                    <a href="/img_alerts/<%=alertstype[i].img_al%>" class="btn btn-info" target="_blank"><i class="fa fa-picture-o" aria-hidden="true"></i> ดูรูปภาพ</a>
+                    <%}%>
+                    <a class="btn btn-danger" onclick="return confirm('ต้องการลบข้อมูลนี้หรือไม่??!? ลบเหตุลำดับที่: <%= i+1 %>  ผู้แจ้ง:<%= alertstype[i].fname_us%> <%= alertstype[i].lname_us%>');" href="admin/alerts/notify/failed<%= alertstype[i].idalertstype%>/delete<%= alertstype[i].idalerts%>"><i class="icon_close_alt2"></i> ลบข้อมูล</a>
+                    
+
+                   </div>
+              </td>
+            </tr>
+            <%}%>
+            <%}%>
+          </tbody>
+</table>
+</div>
+      </section>
+    </div>
+  </div>
+</section>
+</section>
+
+<script>
+    // Get the modal
+    var modal = document.getElementById('popup');
+  
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+  </script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <script>
+    $(document).ready(function() {
+    $('#tablelist_notify_failed').DataTable();
+} );
+  </script>
+ 
+
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ 
+
+<%- include ("../_footer") %>

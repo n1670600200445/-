@@ -1,0 +1,301 @@
+<%- include ("../_header") %>
+<link rel="stylesheet" href="tabs.css">
+
+<section id="main-content">
+    <section class="wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+              <h3 class="page-header"><i class="fa fa-files-o"></i>ALERTS INFORMATION</h3>
+              <ol class="breadcrumb">
+                <li><i class="fa fa-home"></i><a href="/index">Dashboard</a></li>
+                <li><i class="icon_document_alt"></i><a href="/admin/alerts"> จัดการข้อมูลเมนูการแจ้งเหตุ</a></li>
+                <li><i class="fa fa-list-alt" aria-hidden="true"></i>รายการการแจ้งเหตุ</li>
+              </ol>
+            </div>
+          </div>
+          
+          <section class="panel">
+            <header class="panel-heading tab-bg-primary tab">
+              <ul class="nav nav-tabs">
+                <li class="">
+                  <button class="tablinks active" onclick="openCity(event, 'wait')">รอการดำเนินการ</button>
+                </li>
+                <li class="">
+                  <button class="tablinks" onclick="openCity(event, 'do')">กำลังดำเนินการ</button>
+                </li>
+                <li class="">
+                  <button class="tablinks" onclick="openCity(event, 'success')">ดำเนินการสำเร็จ</button>
+                </li>
+                <li class="">
+                  <button class="tablinks" onclick="openCity(event, 'fails')">ดำเนินการไม่สำเร็จ</button>
+                </li>
+              </ul>
+            </header>
+            <div class="panel-body">
+              <div class="tab-content">
+            <div class="row tabcontent d-block" id="wait">
+                <div class=" col-lg-12" >
+                  <div class="col-lg-2"></div>
+                  <section class="panel">
+                    <header class="panel-heading">  
+                      <b style="font-size: large;"> รายละเอียดการแจ้งเหตุ<%= namealerts.name_alty%>รอการดำเนินการ </b>
+                    </header>
+                    <div class="panel-body">
+                    <table id="tablelist_notify1" class="table table-bordered table-striped" >
+                      <thead>
+                        <tr>
+                            <th><i class="fa fa-list-ol" aria-hidden="true"></i> ลำดับ</th>
+                            <th><i class="fa fa-ambulance" aria-hidden="true"></i> ชื่อผู้แจ้งเหตุ</th>
+                            <th><i class="fa fa-home" aria-hidden="true"></i> ชื่อหมู่บ้าน</th>
+                            <th><i class="fa fa-phone-square" aria-hidden="true"></i> เบอร์ติดต่อ</th>
+                            <th><i class="fa fa-calendar" aria-hidden="true"></i> วันที่/เวลาแจ้งเหตุ</th>
+                            <th><i class="fa fa-info-circle" aria-hidden="true"></i> รายละเอียด</th>
+                            <th><i class="fa fa-hourglass-start" aria-hidden="true"></i> สถานะ</th>
+                            <th><i class="icon_cogs"></i> Action</th>
+                          </tr>
+                        </thead>
+                          <tbody>
+                          <%if(alertstype1){%>
+                            <% for(var i=0; i<alertstype1.length;i++ ){ %>
+                              <% JSON.stringify(alertstype1) %>
+                        <tr>
+                            <td><%= i+1 %></td>
+                          <td><%= alertstype1[i].fname_us%> <%= alertstype1[i].lname_us%></td>
+                          <td><%= alertstype1[i].name_village%> </td>
+                          <td><%= alertstype1[i].phone_us%> </td>
+                          <td><%= datetime1[i].date%> <%= datetime1[i].time%></td>
+                          <td><%= alertstype1[i].detail_al%> </td>
+                          <td><%= alertstype1[i].statusalerts%></td>
+                              
+                          <td>
+                            <div class="btn-group">
+                              <!--<a href="/admin/alerts/report/<%= alertstype1[i].idalerts%>" class="btn btn-primary"><i class="fa fa-check-circle-o" aria-hidden="true"></i>รีพอต</a>-->
+                              <a href="/admin/alerts/notifydetail/<%= alertstype1[i].idalerts%>" class="btn btn-primary"><i class="fa fa-check-circle-o" aria-hidden="true"></i>รายละเอียดเพิ่มเติม</a>
+                                <a href="/admin/alerts/notify<%= alertstype1[i].idalertstype%>/add<%= namealerts.personnel_type_alty%>/<%= alertstype1[i].idalerts%>" class="btn btn-success"><i class="fa fa-check-circle-o" aria-hidden="true"></i>เพิ่มผู้ดูแล</a>
+                             <!--  <a href="https://www.google.com/maps/search/?api=1&query= <%= alertstype1[i].latitude %> , <%= alertstype1[i].longitude %>&@<%= alertstype1[i].latitude %>,<%= alertstype1[i].longitude %>,z=17" target="_blank" class="btn btn-warning">
+                                <i class="fa fa-map-marker" aria-hidden="true"></i> แผนที่</a>
+                                <%if(alertstype1[i].img_al){%>
+                                  <a href="/img_alerts/<%=alertstype1[i].img_al%>" class="btn btn-info" target="_blank"><i class="fa fa-picture-o" aria-hidden="true"></i> ดูรูปภาพ</a>
+                                  <%}%> -->
+                               <a class="btn btn-danger" onclick="return confirm('ต้องการลบข้อมูลนี้หรือไม่??!? ลบเหตุลำดับที่: <%= i+1 %>  ผู้แจ้ง:<%= alertstype1[i].fname_us%> <%= alertstype1[i].lname_us%>');" href="admin/alerts/notify<%= alertstype1[i].idalertstype%>/delete<%= alertstype1[i].idalerts%>"><i class="icon_close_alt2"></i> ลบข้อมูล</a>
+                               </div>
+                          </td>
+                        </tr>
+                        <%}%>
+                        <%}%>
+                      </tbody>
+            </table>
+            </div>
+                  </section>
+                </div>
+              </div>
+              <div class="row tabcontent" id="do">
+                  <div class=" col-lg-12" >
+                      <div class="col-lg-2"></div>
+                    <section class="panel">
+                      <header class="panel-heading">  
+                        <b style="font-size: large;"> รายละเอียดการแจ้งเหตุ<%= namealerts.name_alty%>รอการดำเนินการ </b>
+                      </header>
+                      <div class="panel-body">
+                      <table id="tablelist_notify2" class="table table-bordered table-striped" >
+                        <thead>
+                          <tr>
+                              <th><i class="fa fa-list-ol" aria-hidden="true"></i> ลำดับ</th>
+                              <th><i class="fa fa-ambulance" aria-hidden="true"></i> ชื่อผู้แจ้งเหตุ</th>
+                              <th><i class="fa fa-phone-square" aria-hidden="true"></i> เบอร์ติดต่อ</th>
+                              <th><i class="fa fa-calendar" aria-hidden="true"></i> วันที่/เวลาแจ้งเหตุ</th>
+                              <th><i class="fa fa-info-circle" aria-hidden="true"></i> รายละเอียด</th>
+                              <th><i class="fa fa-hourglass-start" aria-hidden="true"></i> สถานะ</th>
+                              <th><i class="fa fa-address-book-o" aria-hidden="true"></i> ผู้ดูแล</th>
+                              <th><i class="icon_cogs"></i> Action</th>
+                            </tr>
+                          </thead>
+                            <tbody>
+                            <%if(alertstype2){%>
+                              <% for(var i=0; i<alertstype2.length;i++ ){ %>
+                          
+                          <tr>
+                              <td><%= i+1 %></td>
+                            <td><%= alertstype2[i].fname_us%> <%= alertstype2[i].lname_us%></td>
+                            <td><%= alertstype2[i].phone_us%> </td>
+                            <td><%= datetime2[i].date%> <%= datetime2[i].time%></td>
+                            <td><%= alertstype2[i].detail_al%> </td>
+                                <td><%= alertstype2[i].statusalerts%></td>
+                                <td><%= alertstype2[i].fname_ps%>  <%= alertstype2[i].lname_ps%></td>
+                                
+                            <td>
+                              <div class="btn-group">
+                                <a href="/admin/alerts/notifydetail/<%= alertstype2[i].idalerts%>" class="btn btn-primary"><i class="fa fa-check-circle-o" aria-hidden="true"></i>รายละเอียดเพิ่มเติม</a>
+                               <!-- <a href="https://www.google.com/maps/search/?api=1&query= <%= alertstype2[i].latitude %> , <%= alertstype2[i].longitude %>&@<%= alertstype2[i].latitude %>,<%= alertstype2[i].longitude %>,z=17" target="_blank" class="btn btn-warning">
+                                  <i class="fa fa-map-marker" aria-hidden="true"></i> แผนที่</a>
+                                  <%if(alertstype2[i].img_al){%>
+                                    <a href="/img_alerts/<%=alertstype2[i].img_al%>" class="btn btn-info" target="_blank"><i class="fa fa-picture-o" aria-hidden="true"></i> ดูรูปภาพ</a>
+                                    <%}%> -->
+                                 <a class="btn btn-danger" onclick="return confirm('ต้องการลบข้อมูลนี้หรือไม่??!? ลบเหตุลำดับที่: <%= i+1 %>  ผู้แจ้ง:<%= alertstype2[i].fname_us%> <%= alertstype2[i].lname_us%>');" href="admin/alerts/notify<%= alertstype2[i].idalertstype%>/delete<%= alertstype2[i].idalerts%>"><i class="icon_close_alt2"></i> ลบข้อมูล</a>
+                                 </div>
+                            </td>
+                          </tr>
+                          <%}%>
+                          <%}%>
+                        </tbody>
+              </table>
+              </div>
+                    </section>
+                  </div>
+                </div>
+                <div class="row tabcontent" id="success">
+                  <div class=" col-lg-12" >
+                      <div class="col-lg-2"></div>
+                    <section class="panel">
+                      <header class="panel-heading">  
+                        <b style="font-size: large;"> รายละเอียดการแจ้งเหตุ<%= namealerts.name_alty%>ที่สำเร็จ </b>
+                      </header>
+                      <div class="panel-body">
+                      <table id="tablelist_notify_success" class="table table-bordered table-striped" >
+                        <thead>
+                          <tr>
+                              <th><i class="fa fa-list-ol" aria-hidden="true"></i> ลำดับ</th>
+                              <th><i class="fa fa-ambulance" aria-hidden="true"></i> ชื่อผู้แจ้งเหตุ</th>
+                              <th><i class="fa fa-phone-square" aria-hidden="true"></i> เบอร์ติดต่อ</th>
+                              <th><i class="fa fa-calendar" aria-hidden="true"></i> วันที่/เวลาแจ้งเหตุ</th>
+                              <th><i class="fa fa-hourglass-start" aria-hidden="true"></i>  วันที่/เวลาแจ้งเหตุสำเร็จ</th>
+                              <th><i class="fa fa-info-circle" aria-hidden="true"></i> รายละเอียด</th>
+                              <th><i class="fa fa-address-book-o" aria-hidden="true"></i> ผู้ดูแล</th>
+                              <th><i class="icon_cogs"></i> Action</th>
+                            </tr>
+                          </thead>
+                            <tbody>
+                            <%if(alertstype3){%>
+                              <% for(var i=0; i<alertstype3.length;i++ ){ %>
+                          
+                          <tr>
+                              <td><%= i+1 %></td>
+                            <td><%= alertstype3[i].fname_us%> <%= alertstype3[i].lname_us%></td>
+                            <td><%= alertstype3[i].phone_us%> </td>
+                            <td><%= datetime3[i].date%> <%= datetime3[i].time%></td>
+                            <td><%= datetime3[i].date_success%> <%= datetime3[i].time_success%> </td>
+                            <td><%= alertstype3[i].detail_al%></td>
+                            <td><%= alertstype3[i].fname_ps%>  <%= alertstype3[i].lname_ps%></td>
+                                
+                            <td>
+                              <div class="btn-group">
+                                <a href="/admin/alerts/notifydetail/<%= alertstype3[i].idalerts%>" class="btn btn-primary"><i class="fa fa-check-circle-o" aria-hidden="true"></i>รายละเอียดเพิ่มเติม</a>
+                                  <!--  <a href="https://www.google.com/maps/search/?api=1&query= <%= alertstype3[i].latitude %> , <%= alertstype3[i].longitude %>&@<%= alertstype3[i].latitude %>,<%= alertstype3[i].longitude %>,z=17" target="_blank" class="btn btn-warning">
+                                    <i class="fa fa-map-marker" aria-hidden="true"></i> แผนที่</a>
+                                  <%if(alertstype3[i].img_al){%>
+                                  <a href="/img_alerts/<%=alertstype3[i].img_al%>" class="btn btn-info" target="_blank"><i class="fa fa-picture-o" aria-hidden="true"></i> ดูรูปภาพ</a>
+                                  <%}%>-->
+                                  <a class="btn btn-danger" onclick="return confirm('ต้องการลบข้อมูลนี้หรือไม่??!? ลบเหตุลำดับที่: <%= i+1 %>  ผู้แจ้ง:<%= alertstype3[i].fname_us%> <%= alertstype3[i].lname_us%>');" href="admin/alerts/notify/success<%= alertstype3[i].idalertstype%>/delete<%= alertstype3[i].idalerts%>"><i class="icon_close_alt2"></i> ลบข้อมูล</a>
+                                 </div>
+                            </td>
+                          </tr>
+                          <%}%>
+                          <%}%>
+                        </tbody>
+              </table>
+              </div>
+                    </section>
+                  </div>
+                </div>
+                <div class="row tabcontent" id="fails">
+                  <div class=" col-lg-12" >
+                      <div class="col-lg-2"></div>
+                    <section class="panel">
+                      <header class="panel-heading">  
+                        <b style="font-size: large;"> รายละเอียดการแจ้งเหตุ<%= namealerts.name_alty%>ที่ไม่สำเร็จ </b>
+                      </header>
+                      <div class="panel-body">
+                      <table id="tablelist_notify_failed" class="table table-bordered table-striped" >
+                        <thead>
+                          <tr>
+                              <th><i class="fa fa-list-ol" aria-hidden="true"></i> ลำดับ</th>
+                              <th><i class="fa fa-ambulance" aria-hidden="true"></i> ชื่อผู้แจ้งเหตุ</th>
+                              <th><i class="fa fa-phone-square" aria-hidden="true"></i> เบอร์ติดต่อ</th>
+                              <th><i class="fa fa-calendar" aria-hidden="true"></i> วันที่/เวลาแจ้งเหตุ</th>
+                              <th><i class="fa fa-hourglass-start" aria-hidden="true"></i>  วันที่/เวลาแจ้งเหตุไม่สำเร็จ</th>
+                              <th><i class="fa fa-info-circle" aria-hidden="true"></i> รายละเอียด</th>
+                              <th><i class="fa fa-address-book-o" aria-hidden="true"></i> ผู้ดูแล</th>
+                              <th><i class="icon_cogs"></i> Action</th>
+                            </tr>
+                          </thead>
+                            <tbody>
+                            <%if(alertstype4){%>
+                              <% for(var i=0; i<alertstype4.length;i++ ){ %>
+                          
+                          <tr>
+                              <td><%= i+1 %></td>
+                            <td><%= alertstype4[i].fname_us%> <%= alertstype4[i].lname_us%></td>
+                            <td><%= alertstype4[i].phone_us%> </td>
+                            <td><%= datetime4[i].date%> <%= datetime4[i].time%></td>
+                            <td><%= datetime4[i].date_success%> <%= datetime4[i].time_success%> </td>
+                            <td><%= alertstype4[i].detail_al%></td>
+                            <td><%= alertstype4[i].fname_ps%>  <%= alertstype4[i].lname_ps%></td>
+                                
+                            <td>
+                              <div class="btn-group">
+                                <a href="/admin/alerts/notifydetail/<%= alertstype4[i].idalerts%>" class="btn btn-primary"><i class="fa fa-check-circle-o" aria-hidden="true"></i>รายละเอียดเพิ่มเติม</a>
+                                 <!-- <a href="https://www.google.com/maps/search/?api=1&query= <%= alertstype4[i].latitude %> , <%= alertstype4[i].longitude %>&@<%= alertstype4[i].latitude %>,<%= alertstype4[i].longitude %>,z=17" target="_blank" class="btn btn-warning">
+                                    <i class="fa fa-map-marker" aria-hidden="true"></i> แผนที่</a>
+                                  <%if(alertstype4[i].img_al){%>
+                                  <a href="/img_alerts/<%=alertstype4[i].img_al%>" class="btn btn-info" target="_blank"><i class="fa fa-picture-o" aria-hidden="true"></i> ดูรูปภาพ</a>
+                                  <%}%>-->
+                                  <a class="btn btn-danger" onclick="return confirm('ต้องการลบข้อมูลนี้หรือไม่??!? ลบเหตุลำดับที่: <%= i+1 %>  ผู้แจ้ง:<%= alertstype4[i].fname_us%> <%= alertstype4[i].lname_us%>');" href="admin/alerts/notify/failed<%= alertstype4[i].idalertstype%>/delete<%= alertstype4[i].idalerts%>"><i class="icon_close_alt2"></i> ลบข้อมูล</a>
+                                  
+              
+                                 </div>
+                            </td>
+                          </tr>
+                          <%}%>
+                          <%}%>
+                        </tbody>
+              </table>
+              </div>
+                    </section>
+                  </div>
+                </div>
+                </div>
+            </div>
+          </section>
+
+
+
+<script>
+    // Get the modal
+    var modal = document.getElementById('popup');
+  
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+  </script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+  $('#tablelist_notify1').DataTable();
+} );
+</script>
+<script>
+  $(document).ready(function() {
+  $('#tablelist_notify2').DataTable();
+} );
+</script>
+<script>
+  $(document).ready(function() {
+  $('#tablelist_notify_success').DataTable();
+} );
+</script>
+<script>
+  $(document).ready(function() {
+  $('#tablelist_notify_failed').DataTable();
+} );
+</script>
+ 
+<script src="script/activetablenotify.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ 
+
+<%- include ("../_footer") %>

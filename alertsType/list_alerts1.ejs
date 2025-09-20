@@ -1,0 +1,292 @@
+<%- include ("../_header") %>
+  <link rel="stylesheet" href="tabs.css">
+
+
+
+  <section id="main-content">
+    <section class="wrapper">
+      <div class="row">
+        <div class="col-lg-12">
+          <h3 class="page-header"><i class="fa fa-files-o"></i>ALERTS INFORMATION</h3>
+          <ol class="breadcrumb">
+            <li><i class="fa fa-home"></i><a href="/index">Dashboard</a></li>
+          </ol>
+        </div>
+      </div>
+
+      <section class="panel">
+        <header class="panel-heading tab-bg-primary tab">
+        </header>
+
+        <div align="right">
+          <a class="btn btn-success" onclick="document.getElementById('popup').style.display='block'"><i
+              class="icon_plus_alt2"></i> เพิ่มข้อมูแจ้งเหตุ</a>
+        </div>
+
+        <div class="panel-body">
+          <div class="tab-content">
+            <header class="panel-heading">
+              <b style="font-size: large;"> ข้อมูลการแจ้งเหตุทั่วไป </b>
+            </header>
+            <!-- *********************************************start************************************ -->
+            <!-- Button trigger modal -->
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+            <div id="popup" class="modal">
+              <div class="form-validate modal-content animate" id="myform">
+                <div class="imgcontainer">
+                  <span onclick="document.getElementById('popup').style.display='none'" class="close"
+                    title="Close Modal">&times;</span>
+                </div>
+                <div class="container myform">
+                  <p align="center"><b> เพิ่มข้อมูลการแจ้งเหตุ</b></p><br>
+
+                  <form class="form-vaccine" action="/admin/alertssave2" method="POST">
+                    <div class="form-group d-flex" id="titleVaccine">
+
+                      <div class="col-lg-6">
+                        <label>แจ้งเหตุเรื่อง
+                        </label>
+                        <select name="alertstype_id" class="form-control" required>
+                          <option value=" ">กรุณาเลือกการแจ้งเหตุ</option>
+                          <% if(up1) { %>
+                            <% for(var i=1; i < up1.length; i++){ %>
+                              <option value="<%= up1[i].idalertstype %>">
+                                <%= up1[i].name_alty %>
+                              </option>
+                              <%}%>
+                                <%}%>
+                        </select>
+
+                      </div>
+
+                      <div class="col-lg-6">
+                        <label>สถานะการแจ้งเหตุ</label>
+                        <select name="status_al" class="form-control">
+                          <option value=" ">กรุณาเลือกสถานะ</option>
+                          <% if(up2) { %>
+                            <% for(var i=1; i < up2.length; i++){ %>
+                              <option value="<%= up2[i].idstatusalerts %>">
+                                <%= up2[i].statusalerts %>
+                              </option>
+                              <%}%>
+                                <%}%>
+                        </select>
+
+                      </div>
+                      <div class="col-lg-13">
+                        <label>รายละเอียดการแจ้งเหตุ</label>
+                        <input type="text" value="" name="detail_al" class="form-control">
+                      </div>
+                      <div class="col-lg-13">
+                        <label>วันที่</label>
+                        <input type="date" value="" name="datetime_al" class="form-control">
+                      </div>
+                      <div class="col-lg-13">
+                        <label>ชื่อ-นามสกุล</label>
+                        <input type="text" value="" name="usernamealerts" class="form-control">
+                      </div>
+                      <div class="col-lg-13">
+                        <label>เบอร์โทรติดต่อ</label>
+                        <input type="text" value="" name="phonealerts" class="form-control">
+                      </div>
+
+                      <!-- <div class="form-group" align="center">
+                              <br>
+                              <img id="blah" width="200px" height="120px" />
+                              <br>
+                              <label class="mt-3 label danger" for="img_xx"><i
+                                  style="cursor: pointer;"
+                                  >คลิกเพื่อเลือกรูปภาพ</i></label>
+                              <input type="file" name="filename" accept="image/*" multiple id="img_xx" class="btn btn-info" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
+                          </div> -->
+                      <button type="submit" class="btn btn-success submit">เพิ่มข้อมูล</button><br>
+
+                    </div>
+                  </form>
+
+                </div>
+              </div>
+            </div>
+
+
+
+            <!-- *********************************************end************************************** -->
+            <div class="panel-body">
+              <table id="tablelist_notify1" class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th><i class="fa fa-ambulance" aria-hidden="true"></i> เรื่อง</th>
+                    <th><i class="fa fa-ambulance" aria-hidden="true"></i> ชื่อผู้แจ้งเหตุ</th>
+                    <th><i class="fa fa-phone-square" aria-hidden="true"></i> เบอร์ติดต่อ</th>
+                    <th><i class="fa fa-calendar" aria-hidden="true"></i> วันที่/เวลาแจ้งเหตุ</th>
+                    <th><i class="fa fa-info-circle" aria-hidden="true"></i> รายละเอียด</th>
+                    <th><i class="fa fa-hourglass-start" aria-hidden="true"></i> ที่อยู่ผู้แจ้ง</th>
+                    <th><i class="fa fa-hourglass-start" aria-hidden="true"></i> เพิ่มเติม</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <%if(alertstype){%>
+                    <% for(var i=0; i<alertstype.length;i++ ) {%>
+
+                      <tr>
+                        <td><b>
+                            <font color="#000000">แจ้งเหตุ <%= alertstype[i].name_alty%>
+                            </font>
+                          </b></td>
+                        <td>
+                          <%= alertstype[i].usernamealerts%>
+                        </td>
+                        <td>
+                          <%= alertstype[i].phonealerts%>
+                        </td>
+                        <td>
+                          <%= datetime[i].date%>
+                            <%= datetime[i].time%>
+                        </td>
+                        <td>
+                          <%= alertstype[i].detail_al%>
+                        </td>
+                        <td>
+                          <%= alertstype[i].statusalerts%>
+                        </td>
+
+                        <td>
+
+                          <a href="/admin1/alerts/notifydetail/<%= alertstype[i].idalerts%>" class="btn btn-primary"><i
+                              class="fa fa-check-circle-o" aria-hidden="true"></i>รายละเอียดเพิ่มเติม</a>
+                          <!-- <form action="/alerts/update2/<%= alertstype[i].idalerts%>" method="POST">
+                                  <button type="submit" class="btn btn-danger"><i class="icon_close_alt2"></i>ลบข้อมูล</button>
+                                </form> -->
+                          <form action="/alerts/delete/<%= alertstype[i].idalerts%>" method="POST">
+                            <a class="btn btn-danger" href="/alerts/delete/<%= alertstype[i].idalerts%>"><i
+                                class="icon_close_alt2"></i> ลบข้อมูล</a>
+                          </form>
+
+                        </td>
+                      </tr>
+                      <%}%>
+                        <%}%>
+
+                </tbody>
+
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
+
+      </div>
+      </div>
+    </section>
+
+
+
+    <script>
+      // Get the modal
+      var modal = document.getElementById('popup');
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      }
+    </script>
+
+    <script>
+      var idCard
+      $(document).ready(function () {
+        $('#tablepersonnel').DataTable();
+        hiddenAll()
+      });
+
+      async function checkUsers() {
+        idCard = $('#idCard').val()
+        if (idCard.length == 13) {
+          await searchs()
+          await hiddenAll()
+        } else {
+          $('.submit').remove()
+          $('.form-searchs').remove()
+        }
+      }
+
+      async function searchs() {
+        await $.ajax({
+          type: 'GET',
+          url: '/api/screening/search_idcard/' + idCard,
+          success: function (result) {
+            $('.id-card').append(`<div class="form-group form-searchs">
+              
+              <label><b>ชื่อ-นามสกุล</b></label>
+                <input type="text" class="form-control" value="${result[0].fname_us} ${result[0].lname_us}" disabled/>
+                <input type="text" class="form-control" value="${result[0].address_us} ${result[0].name_village}" disabled/>
+                </div>`)
+            $('.form-vaccine').append(` <input type="hidden" name="userid_al" value="${result[0].idusers}">`)
+            $('.form-vaccine').append(` <button type="submit" class="btn btn-success submit">เพิ่มข้อมูล</button><br>`)
+            console.log(result);
+          },
+          error: function (e) {
+            console.log(e);
+          }
+        })
+      }
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        $('#tablelist_notify1').DataTable();
+      });
+    </script>
+    <script>
+      $(document).ready(function () {
+        $('#tablelist_notify2').DataTable();
+      });
+    </script>
+    <script>
+      $(document).ready(function () {
+        $('#tablelist_notify_success').DataTable();
+      });
+    </script>
+    <script>
+      $(document).ready(function () {
+        $('#tablelist_notify_failed').DataTable();
+      });
+    </script>
+
+    <script src="script/activetablenotify.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+
+    <%- include ("../_footer") %>

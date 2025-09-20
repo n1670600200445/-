@@ -1,0 +1,168 @@
+<%- include ("../_header") %>
+
+<section id="main-content">
+    <section class="wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+              <h3 class="page-header"><i class="fa fa-files-o"></i>ALERTS INFORMATION</h3>
+              
+              <ol class="breadcrumb">
+                <li><i class="fa fa-home"></i><a href="/index">Dashboard</a></li>
+                <li><i class="icon_document_alt"></i>จัดการข้อมูลเมนูการแจ้งเหตุ</li>
+              </ol>
+            </div>
+          </div>
+        <div class="col-lg-8"></div>
+        <a class="btn btn-primary"  onclick="document.getElementById('popup').style.display='block'"><i class="icon_plus_alt2"></i> เพิ่มข้อมูลการแจ้งเหตุ</a>
+        <div id="popup" class="modal">
+            <form class="form-validate modal-content animate" id="myform" action="/admin/alerts/save" enctype="multipart/form-data" method="POST">
+                <div class="imgcontainer">
+                    <span onclick="document.getElementById('popup').style.display='none'" class="close" title="Close Modal">&times;</span>  
+                </div>
+                <div class="container">
+                    <p align="center"><b> เพิ่มข้อมูลการแจ้งเหตุ</b></p><br>
+                    <label for="uname"><b>ชื่อการแจ้งเหตุ</b></label>
+                    <input type="text" name="name_alty" class="form-control" id="fname" placeholder="กรุณากรอกชื่อการแจ้งเหตุ" required/>
+                    <div class="validation"></div>
+                    <label for="uname"><b>หน่วยงานที่รับผิดชอบ</b></label>
+                    <select name="personnel_type_alty" class="form-control" required>
+                        <option value="">กรุณาเลือก</option>
+                        <% if(personneltype) { %>
+                            <% for(var i=0; i < personneltype.length; i++){ %>
+                                <option value="<%= personneltype[i].idpersonneltype %>">
+                                     <%= personneltype[i].name_pst %>
+                                </option>
+                                <%}%>
+                                    <%}%>
+                    </select><br>
+                    <label for="fname"><b>กำหนดสิทธิ์</b></label>
+                    <div class="claim">
+                        <div class="claim-form">
+
+                            <div class="form-check form-check-inline sex-choice .male">
+                                <input class="form-check-input" name="claim" value="0" type="radio" checked>
+                                <label for="male" class="maleLabel"> ทุกคน</label>
+                                <input class="form-check-input" name="claim" value="1" type="radio">
+                                <label for="female">จำกัดเฉพาะประชาชนในเทศบาล</label>
+                            </div>
+
+                        </div>
+                    </div><br>
+                    <label for="fname"><b>สถานะการใช้งาน</b></label>
+                    <div class="enable_alty">
+                        <div class="enable_alty-form">
+
+                            <div class="form-check form-check-inline sex-choice .male">
+                                <input class="form-check-input" name="enable_alty" value="0" type="radio" checked>
+                                <label for="male" class="maleLabel" style="color: green;">เปิด</label>
+                                <input class="form-check-input" name="enable_alty" value="1" type="radio">
+                                <label for="female" style="color: red;">ปิด</label>
+                            </div>
+
+                        </div>
+                    </div><br>
+                      <label for="uname"><b>Line Token</b></label>
+                    <input type="text" name="token_notify" class="form-control" placeholder="กรุณาใส่ Line Token" required/>
+                    
+                    <div class="form-group">
+                        <label for="img" style="font-size: 15px;" >รูปไอคอนแจ้งเหตุ<label for="img"
+                            style="color: red; font-size: 13px;">* นามสกุลไฟล์ .png เท่านั้น</label></label>
+                        <br>
+                        <img id="blah" width="120px" height="120px" />
+                        <input type="file" name="filename" accept="image/png" multiple id="img" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])" required/>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-success">เพิ่มข้อมูล</button>
+                </div>
+
+            </form>
+        </div>
+<div class="row">
+    <div class="col-lg-1"></div>
+    <div class=" col-lg-10" >
+        <div class="col-lg-2"></div>
+      <section class="panel">
+        <header class="panel-heading">  
+          <b style="font-size: large;"> รายชื่อเมนูของการแจ้งเหตุสมาชิก </b>
+          
+          
+        </header>
+        <div class="panel-body">
+        <table id="tablealertstype" class="table table-bordered table-striped" >
+          <thead>
+            <tr>
+                <th><i class="fa fa-list-ol" aria-hidden="true"></i> ลำดับ</th>
+                <th><i class="fa fa-ambulance" aria-hidden="true"></i> ชื่อการแจ้งเหตุ</th>
+                <th><i class="fa fa-building" aria-hidden="true"></i> หน่วยงานที่รับผิดชอบ</th>
+                <th><i class="fa fa-clone" aria-hidden="true"></i> สิทธิ์การแจ้งเหตุ</th>
+                <th><i class="fa fa-random" aria-hidden="true"></i> สถานะ</th>
+                <th><i class="icon_cogs"></i> Action</th>
+              </tr>
+            </thead>
+              <tbody>
+              <%if(alertstype){%>
+                <% for(var i=0; i<alertstype.length;i++ ){ %>
+            <tr>
+                <td><%= i+1 %></td>
+              <td><%= alertstype[i].name_alty%></td>
+              <td><%= alertstype[i].name_pst%></td>
+              <td><% if(alertstype[i].claim == 0) {%>
+                ทุกคน
+              <%}else{%>
+                เฉพาะประชาชนในเทศบาล
+            <%}%>
+                  </td>
+                  <% if(alertstype[i].enable_alty == 0) { %>
+                  <td style="color: green;"><b><i class="fa fa-check-circle" aria-hidden="true"></i> เปิดใช้งาน</b> </td>
+                  <%}else{ %>
+                    <td style="color: red;"><b><i class="fa fa-ban" aria-hidden="true"></i> ปิดใช้งาน</b> </td>
+                 <%}%>
+              <td>
+                <div class="btn-group">
+                  <a class="btn btn-warning"  href="admin/alerts/edit<%= alertstype[i].idalertstype%>"><i class="icon_check_alt2"></i> แก้ไขข้อมูล</a>
+                  <a class="btn btn-danger" onclick="return confirm('ต้องการลบข้อมูลนี้หรือไม่??!? ชื่อการแจ้งเหตุ: <%= alertstype[i].name_alty%>  หน่วยงานที่รับผิดชอบ: <%= alertstype[i].name_pst%>');" href="admin/alerts/delete<%= alertstype[i].idalertstype%>"><i class="icon_close_alt2"></i> ลบข้อมูล</a>
+                  <a class="btn btn-info" href="/admin/alerts/newnotify<%= alertstype[i].idalertstype%>"><i class="fa fa-search" aria-hidden="true"></i> ดูข้อมูลการแจ้งเหตุ</a>
+                  <!-- <a class="btn btn-info" href="admin/alerts/notify<%= alertstype[i].idalertstype%> "><i class="fa fa-dot-circle-o" aria-hidden="true"></i>เหตุกำลังดำเนินการ</a>
+                  <a href="admin/alerts/notify/success<%= alertstype[i].idalertstype%>" class="btn btn-success"><i class="fa fa-check-square" aria-hidden="true"></i> เหตุที่สำเร็จ</a>
+                  <a href="admin/alerts/notify/failed<%= alertstype[i].idalertstype%>" class="btn btn-default"><i class="fa fa-times" aria-hidden="true"></i> เหตุที่ไม่สำเร็จ</a> -->
+                </div>
+                
+              </td>
+            </tr>
+            <%}%>
+            <%}%>
+          </tbody>
+</table>
+</div>
+      </section>
+    </div>
+  </div>
+
+
+<script>
+    // Get the modal
+    var modal = document.getElementById('popup');
+  
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+  </script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+  $('#tablealertstype').DataTable();
+} );
+</script>
+
+
+ 
+
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ 
+
+<%- include ("../_footer") %>

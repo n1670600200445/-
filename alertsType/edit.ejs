@@ -1,0 +1,117 @@
+<%- include ("../_header") %>
+
+<section id="main-content">
+    <section class="wrapper">
+      <div class="row">
+        <div class="col-lg-12">
+          <h3 class="page-header"><i class="fa fa-files-o"></i> EDIT INFORMATION</h3>
+          <ol class="breadcrumb">
+            <li><i class="fa fa-home"></i><a href="/index">Dashboard</a></li>
+            <li><i class="icon_document_alt"></i><a href="/admin/alerts"> จัดการข้อมูลเมนูการแจ้งเหตุ</a></li>
+            <li><i class="fa fa-files-o"></i>แก้ไขข้อมูลการแจ้งเหตุ</li>
+          </ol>
+        </div>
+      </div>
+      <!-- Form validations -->
+      <div class="row">
+        <div class="col-lg-3"> </div>
+        <div class="col-lg-6">
+            <div class="col-lg-3"> </div>
+          <section class="panel">
+            <header class="panel-heading">
+                <b style="font-size: large;"> แก้ไขข้อมูลการแจ้งเหตุ </b>
+                <div class="panel-actions">
+                  <a href="/admin/alerts/edit<%=editalertstype.idalertstype %>" class="btn-setting"><i class="fa fa-rotate-right"></i></a>
+                  <a href="/admin/alerts" class="btn-close"><i class="fa fa-times"></i></a>
+                </div>
+                
+            </header>
+            <% JSON.stringify(personneltype)%>
+            <div class="panel-body">
+              <div class="form">
+                <form class="form-validate form-horizontal" id="feedback_form" method="POST" action="/admin/alerts/update<%=editalertstype.idalertstype %>">
+                  <div class="form-group " style="background-color: rgb(247, 234, 215); padding: 30px; margin: auto;">
+                    <label for="cname" class="control-label col-lg-2"><b> ชื่อการแจ้งเหตุ</b></label>
+                    <div class="col-lg-3">
+                      <input class="form-control" id="cname" value="<%=editalertstype.name_alty%>" name="name_alty"  type="text" required />
+                    </div>
+                    <label for="cname" class="control-label col-lg-3"><b>หน่วยงานที่รับผิดชอบ</b></label>
+                    <div class="col-lg-4">
+                        <select name="personnel_type_alty" class="form-control" required>
+                            <option value="">กรุณาเลือก</option>
+                            <% if(personneltype) { %>
+                                <% for(var i=0; i < personneltype.length; i++){ %>
+                                    <option value="<%= personneltype[i].idpersonneltype %>"<% if(personneltype[i].idpersonneltype == editalertstype.personnel_type_alty){ %>
+                                        selected
+                                    <%} %>>
+                                         <%= personneltype[i].name_pst %>
+                                    </option>
+                                    <%}%>
+                                        <%}%>
+                        </select>
+                    </div>
+                  </div>
+                  <div class="form-group" style="background-color: rgb(247, 234, 215); padding: 30px; margin: auto;">
+                    <label for="cname" class="control-label col-lg-2" ><b>กำหนดสิทธิ์</b> </label>
+                    <div class="claim">
+                        <div class="claim-form">
+                        <% if(editalertstype.claim == 0) {%>
+                            <div class="form-check form-check-inline sex-choice">
+                                <input class="form-check-input" name="claim" value="0" type="radio" checked>
+                                <label for="male" class="maleLabel">ทุกคน</label>
+                                <input class="form-check-input" name="claim" value="1" type="radio">
+                                <label for="female">จำกัดเฉพาะประชาชนในเทศบาล</label>
+                            </div>
+                        <%}else{%>
+                            <div class="form-check form-check-inline sex-choice">
+                                <input class="form-check-input" name="claim" value="0" type="radio">
+                                <label for="male" class="maleLabel">ทุกคน</label>
+                                <input class="form-check-input" name="claim" value="1" type="radio" checked>
+                                <label for="female">จำกัดเฉพาะประชาชนในเทศบาล</label>
+                            </div>
+                        <%}%>
+                        <br>
+                        <label for="cname" class="control-label col-lg-2" ><b>สถานะการใช้งาน</b> </label>
+                            <% if(editalertstype.enable_alty == 0) {%>
+                                <div class="form-check form-check-inline sex-choice">
+                                    <input class="form-check-input" name="enable_alty" value="0" type="radio" checked>
+                                    <label for="male" class="maleLabel" style="color: green;">เปิดใช้งาน</label>
+                                    <input class="form-check-input" name="enable_alty" value="1" type="radio">
+                                    <label for="female"  style="color: red;">ปิดใช้งาน</label>
+                                </div>
+                            <%}else{%>
+                                <div class="form-check form-check-inline sex-choice">
+                                    <input class="form-check-input" name="enable_alty" value="0" type="radio">
+                                    <label for="male" class="maleLabel" style="color: green;">เปิดใช้งาน</label>
+                                    <input class="form-check-input" name="enable_alty" value="1" type="radio" checked>
+                                    <label for="female"  style="color: red;">ปิดใช้งาน</label>
+                                </div>
+                            <%}%>
+                            </div>
+                        
+                    </div>
+                  </div>
+                    
+                  <div class="form-group" style="background-color: rgb(247, 234, 215); padding: 30px; margin: auto;">
+                    <label for="cname" class="control-label col-lg-2" ><b>Line Token</b> </label>
+                    <div class="col-lg-8">
+                        <input class="form-control" id="cname" value="<%=editalertstype.token_notify%>" name="token_notify"  type="text" required />
+                      </div>
+                    </div>
+                    
+                  <div class="form-group">
+                    <div class="col-lg-offset-4 col-lg-4">
+                      <button id="editter" class="btn btn-primary " type="submit">บันทึก</button>
+                      </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+      
+      <!-- page end-->
+    </section>
+  </section>
+  <%- include ("../_footer") %>

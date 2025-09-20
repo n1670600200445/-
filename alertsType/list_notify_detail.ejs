@@ -1,0 +1,143 @@
+<%- include ("../_header") %>
+<link rel="stylesheet" href="tabs.css">
+
+<section id="main-content">
+    <section class="wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+              <h3 class="page-header"><i class="fa fa-files-o"></i>ALERTS INFORMATION</h3>
+              <ol class="breadcrumb">
+                <li><i class="fa fa-home"></i><a href="/index">Dashboard</a></li>
+                <li><i class="icon_document_alt"></i><a href="/admin/alerts"> จัดการข้อมูลเมนูการแจ้งเหตุ</a></li>
+                <li><i class="fa fa-list-alt" aria-hidden="true"></i>รายละเอียดการแจ้งเหตุ</li>
+              </ol>
+            </div>
+          </div>
+          
+          <section class="panel">
+            <header class="panel-heading tab-bg-primary tab">
+         
+            </header>
+            <div class="panel-body">
+              <div class="tab-content">
+                <header class="panel-heading">  
+                      <b style="font-size: large;"> รายละเอียดการแจ้งเหตุ </b>
+                    </header>
+                    <div class="panel-body">
+                        <%if(alertstype1){%>
+                    <table  class="table table-bordered table-striped" >
+                      <thead>
+                          <div>
+                        <tr>
+                            <div align="center">
+                                <img src="/img_alerts/<%= alertstype1.img_al%>" alt="Trulli" style="width:100%">
+          
+                        </tr>
+                    </div>
+                    
+                    <br>
+                    <div>
+                        <tr>
+                            <th><i class="fa fa-bell" aria-hidden="true"></i> เรื่อง</th>
+                            <th>การแจ้งเหตุ <%= alertstype1.name_alty%></th>
+                            
+                          </tr>
+                          <tr>
+                            <th><i class="fa fa-ambulance" aria-hidden="true"></i> ชื่อผู้แจ้งเหตุ</th>
+                            <th><%= alertstype1.fname_us%>  <%= alertstype1.lname_us%></th>
+                          </tr>
+                          <tr>
+                            <th><i class="fa fa-phone-square" aria-hidden="true"></i> เบอร์ติดต่อ</th>
+                            <th><%= alertstype1.phone_us%> </th>
+                          </tr>
+                          <tr>
+                            <%if(datetime1){%>
+                            <th><i class="fa fa-calendar" aria-hidden="true"></i> วันที่/เวลาแจ้งเหตุ</th>
+                            <th><%= datetime1[0].date%> <%= datetime1[0].time%></th>
+                            <%}%>
+                          </tr>
+                          <tr>
+                            <th><i class="fa fa-info-circle" aria-hidden="true"></i> รายละเอียด</th>
+                            <th><%= alertstype1.detail_al%>  </th>
+                          </tr>
+                          <tr>
+                            <th><i class="fa fa-hourglass-start" aria-hidden="true"></i> ที่อยู่ผู้แจ้ง</th>
+                            <th>บ้านเลขที่ <%= alertstype1.address_us%> <%= alertstype1.name_village%></th>
+                          </tr>
+                          <tr >
+                            <th><i class="fa fa-ambulance" aria-hidden="true"></i> สถานะการแจ้งเหตุ</th>
+                            <th><%= alertstype1.statusalerts%></th>
+                          </tr>
+                         <div align="right">
+                            <tr >
+                                <th> <a href="/admin/alerts/jsreport/<%= alertstype1.idalerts%>" class="btn btn-primary"><i class="fa fa-check-circle-o" aria-hidden="true"></i>รายงาน</a> </th>
+                                  <!-- <a href="/alerts/update/<%= alertstype1.idalerts%>" class="btn btn-danger"><i class="icon_close_alt2"></i>ลบข้อมูล</a></th> -->
+                               
+                                    <th>  <a href="https://www.google.com/maps/search/?api=1&query= <%= alertstype1.latitude %> , <%= alertstype1.longitude %>&@<%= alertstype1.latitude %>,<%= alertstype1.longitude %>,z=17" target="_blank" class="btn btn-success">
+                                  <i class="fa fa-map-marker" aria-hidden="true"></i> แผนที่</a></th>
+                                 
+                            </tr>
+                        
+                        </div>
+                   
+                       
+                        </thead>
+                      
+            </table>
+            <%}%>
+            </div>
+        </div>
+       
+    </div>
+   
+                  </section>
+               
+             
+               
+                
+                </div>
+            </div>
+          </section>
+
+
+
+<script>
+    // Get the modal
+    var modal = document.getElementById('popup');
+  
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+  </script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+  $('#tablelist_notify1').DataTable();
+} );
+</script>
+<script>
+  $(document).ready(function() {
+  $('#tablelist_notify2').DataTable();
+} );
+</script>
+<script>
+  $(document).ready(function() {
+  $('#tablelist_notify_success').DataTable();
+} );
+</script>
+<script>
+  $(document).ready(function() {
+  $('#tablelist_notify_failed').DataTable();
+} );
+</script>
+ 
+<script src="script/activetablenotify.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ 
+
+<%- include ("../_footer") %>

@@ -1,0 +1,171 @@
+<%- include ("../_headerpersonnelAlerts") %>
+
+    <style>
+        p {
+            text-align: center !important;
+        }
+    </style>
+
+
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-md-5 align-self-center">
+                <h3 class="page-title">
+                    <%= forms[0].name_forms%>
+                </h3>
+                <div class="d-flex align-items-center mt-1">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/personnelAlerts">แบบฟอร์ม</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                <%= forms[0].name_forms%>
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="d-flex border-bottom title-part-padding align-items-center">
+                        <div>
+                            <h4 class="card-title mb-0">ข้อมูลตอบกลับ</h4>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table id="zero_config" class="table table-striped table-bordered dataTable"
+                                            role="grid" aria-describedby="zero_config_info">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th class="sorting_asc" tabindex="0" aria-controls="zero_config"
+                                                        rowspan="1" colspan="1" aria-sort="ascending"
+                                                        aria-label="Name: activate to sort column descending"
+                                                        style="width: 0px;">ลำดับ</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="zero_config"
+                                                        rowspan="1" colspan="1"
+                                                        aria-label="Position: activate to sort column ascending"
+                                                        style="width: 0px;">รายละเอียด
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="zero_config"
+                                                        rowspan="1" colspan="1"
+                                                        aria-label="Office: activate to sort column ascending"
+                                                        style="width: 0px;">แสดง</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <%if(num_groubvr){%>
+                                                    <% for(var i=0; i<num_groubvr.length;i++ ){ %>
+                                                        <tr>
+                                                            <td>
+                                                                <%= i+1 %>
+                                                            </td>
+                                                            <td>
+                                                                <% for(var j=0; j<forms_field.length;j++ ){ %>
+                                                                    <%if(num_groubvr[i].count_res==forms_field[j].count_res){%>
+                                                                        <%if(forms_field[j].field_type=='Shorttextfield_q'
+                                                                            ){%>
+                                                                            <%= forms_field[j].label_inputname%> : <%=
+                                                                                    forms_field[j].value_res%><br>
+                                                                                    <%}%>
+                                                                                        <%if(forms_field[j].field_type=='Longtextfield_q'
+                                                                                            ){%>
+                                                                                            <%=
+                                                                                                forms_field[j].label_longtext%>
+                                                                                                : <%=
+                                                                                                    forms_field[j].value_res%>
+                                                                                                    <br>
+                                                                                                    <%}%>
+                                                                                                        <%if(forms_field[j].field_type=='Dropdownfield_q'
+                                                                                                            ){%>
+                                                                                                            <%=
+                                                                                                                forms_field[j].label_dropdown%>
+                                                                                                                : <%=
+                                                                                                                    forms_field[j].value_res%>
+                                                                                                                    <br>
+                                                                                                                    <%}%>
+                                                                                                                        <%if(forms_field[j].field_type=='Checkboxfield_q'
+                                                                                                                            ){%>
+                                                                                                                            <%=
+                                                                                                                                forms_field[j].label_checkbox%>
+                                                                                                                                :
+                                                                                                                                <%=
+                                                                                                                                    forms_field[j].value_res%>
+                                                                                                                                    <br>
+                                                                                                                                    <%}%>
+                                                                                                                                        <%if(forms_field[j].field_type=='Radiofield_q'
+                                                                                                                                            ){%>
+                                                                                                                                            <%=
+                                                                                                                                                forms_field[j].label_radio%>
+                                                                                                                                                :
+                                                                                                                                                <%=
+                                                                                                                                                    forms_field[j].value_res%>
+                                                                                                                                                    <br>
+                                                                                                                                                    <%}%>
+                                                                                                                                                        <%if(forms_field[j].field_type=='Datetimefield_q'
+                                                                                                                                                            ){%>
+                                                                                                                                                            <%=
+                                                                                                                                                                forms_field[j].label_datetime%>
+                                                                                                                                                                :
+                                                                                                                                                                <%=
+                                                                                                                                                                    forms_field[j].value_res%>
+                                                                                                                                                                    <br>
+                                                                                                                                                                    <%}%>
+                                                                                                                                                                        <%if(forms_field[j].field_type=='Gpsfield_q'
+                                                                                                                                                                            ){%>
+                                                                                                                                                                            ตำแหน่ง
+                                                                                                                                                                            :
+                                                                                                                                                                            <%=
+                                                                                                                                                                                forms_field[j].value_res%>
+                                                                                                                                                                                <br>
+                                                                                                                                                                                <%}%>
+                                                                                                                                                                                    <%if(forms_field[j].field_type=='Imagefield_q'
+                                                                                                                                                                                        ){%>
+                                                                                                                                                                                        <%=
+                                                                                                                                                                                            forms_field[j].label_inputimage%>
+                                                                                                                                                                                            :
+                                                                                                                                                                                            <br>
+                                                                                                                                                                                            <img src="/image_webapp/g_Imagefield/<%= forms_field[j].value_res %>"
+                                                                                                                                                                                                alt="Image"
+                                                                                                                                                                                                width="150px"><br>
+                                                                                                                                                                                            <%}%>
+                                                                                                                                                                                                <%}%>
+                                                                                                                                                                                                    <%}%>
+                                                            </td>
+                                                            <td>
+                                                                <div class="btn-group">
+
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                        <%}%>
+                                                            <%}%>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <%- include ("../_footerpersonnelAlerts") %>

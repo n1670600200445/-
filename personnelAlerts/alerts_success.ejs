@@ -1,0 +1,72 @@
+<%- include ("../_headerpersonnelAlerts" ) %>
+
+
+
+    <!-- PAGE CONTAINER-->
+    <div class="page-container">
+        <!-- HEADER DESKTOP-->
+        <!-- END HEADER DESKTOP-->
+        <% JSON.stringify(alerts) %>
+        <!-- MAIN CONTENT-->
+        <div class="main-content">
+            <div class="section__content section__content--p30">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <!-- DATA TABLE-->
+                            <h4 class="head" style="color: green;"><i class="fas fa-check-circle" style="color: green;"></i>เหตุที่ดำเนินการแก้ไขสำเร็จแล้ว</h4>
+                            <div class="table-responsive m-b-30">
+                                <table class="table table-borderless table-striped table-earning" id="tablepersonnelalerts_success">
+                                    <thead>
+                                        <tr>
+                                            <th>ลำดับ</th>
+                                            <th>การแจ้งเหตุ</th>
+                                        </tr>
+                                    </thead>
+                                    
+                                    <tbody>
+                                        <% if(alerts) {%>
+                                            <% for(var i=0; i<alerts.length;i++ ){ %>   
+                                        <tr>
+                                            <td> <br>
+                                                <div class="noti__item js-item-menu">
+                                                    <i class="fas fa-chevron-circle-down" style="font-size: 50px; color: aqua;"></i>
+                                                    <p><b>เลือกเมนู</b> </p>
+                                                <div class="mess-dropdown js-dropdown" align="center">
+                                                    <div class="mess__title">
+                                                        <%if(alerts[i].img_al){%>
+                                                    <a href="/img_alerts/<%=alerts[i].img_al%>" class="btn btn-info" target="_blank"><i class="fas fa-image" ></i> รูปภาพแจ้งเหตุ</a>
+                                                    <%}%>
+                                                    <%if(alerts[i].imgen_al){%>
+                                                        <a href="/img_alerts/<%=alerts[i].imgen_al%>" class="btn btn-success" target="_blank"><i class="fas fa-image" ></i> ดูรูปภาพแก้ไขสำเร็จ</a>
+                                                        <%}%>
+                                                    <a href="https://www.google.com/maps/search/?api=1&query= <%= alerts[i].latitude %> , <%= alerts[i].longitude %>&@<%= alerts[i].latitude %>,<%= alerts[i].longitude %>,z=17"" class="btn btn-warning" target="_blank"><i class="fas fa-map-marker-alt"></i> แผนที่</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </td>
+                                            <td><%=alerts[i].name_alty%> <br>รายละเอียด: <%=alerts[i].detail_al%> ชื่อผู้แจ้ง: <%=alerts[i].fname_us%> <%=alerts[i].lname_us%> <%=alerts[i].usernamealerts%>  <br>เบอร์ติดต่อ: <%= alerts[i].phone_us%> <%= alerts[i].phonealerts%> <br> วันที่ปิดงาน: <%=date[i].date%></td>
+                                        </tr>
+                                        <%}%>
+                                     <%}%>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- END DATA TABLE-->
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+    <!-- Row end -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+        $('#tablepersonnelalerts_success').DataTable();
+      } );
+      </script>
+    <%- include("../_footerpersonnelAlerts") %>

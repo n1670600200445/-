@@ -1,0 +1,27 @@
+<%- include ("../_headerpersonnelAlerts" ) %>
+
+<link rel="stylesheet" href="/dist/css/user_menu.css">
+<div class="container-fluid mt-4">
+    <a href="/personnelAlerts" class="btn btn-secondary"><i class="fas fa-arrow-circle-left"></i> กลับ</a>
+    <div class="menulist-con mt-4">
+        <%if(menu_sub){%>
+            <% for(var i=0; i<menu_sub.length;i++ ){ %>
+                <a href="/personnelAlerts/add_s<%=menu_sub[i].idmenu_sub%>">
+                    <div class="menulist-item">
+                        <div class="menulist-item-info">
+                            <div class="menulist-img">
+                                <img src="/image_default/<%=menu_sub[i].icon_ms%>" alt="" >
+                            </div>
+                            <div class="menulist-name_mm">
+                                <b>
+                                    <%=menu_sub[i].name_ms%>
+                                </b>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <%}%>
+                    <%}%>
+    </div>
+</div>
+<%- include("../_footerpersonnelAlerts") %>

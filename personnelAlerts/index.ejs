@@ -1,0 +1,63 @@
+<%- include ("../_headerpersonnelAlerts" ) %>
+    <link rel="stylesheet" href="/dist/css/user_menu.css">
+
+    <div class="container-fluid mt-4">
+        <div class="menulist-con">
+            <a href="/personnelAlerts/list">
+                <div class="menulist-item">
+                    <div class="menulist-item-info">
+                        <div class="menulist-img">
+                            <img src="/logo/document.png" alt="">
+                        </div>
+                        <div class="menulist-name_mm">
+                            <b>
+                                ข้อมูลแจ้งเหตุที่หน่วยงานรับผิดชอบ
+                            </b>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <%if(menu_data){%>
+                <% for(var i=0; i<menu_data.length;i++ ){ %>
+                    <%if(menu_data[i].type_radio==1){%>
+                        <a href="/personnelAlerts/menu<%=menu_data[i].idmenu_main%>">
+                            <div class="menulist-item">
+                                <div class="menulist-item-info">
+                                    <div class="menulist-img">
+                                        <img src="/image_default/<%=menu_data[i].icon_mm%>" alt="">
+                                    </div>
+                                    <div class="menulist-name_mm">
+                                        <b>
+                                            <%=menu_data[i].name_mm%>
+                                        </b>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <%}else{%>
+                            <a href="/personnelAlerts/add_m<%=menu_data[i].idmenu_main%>">
+                                <div class="menulist-item">
+                                    <div class="menulist-item-info">
+                                        <div class="menulist-img">
+                                            <img src="/image_default/<%=menu_data[i].icon_mm%>" alt="">
+                                        </div>
+                                        <div class="menulist-name_mm">
+                                            <b>
+                                                <%=menu_data[i].name_mm%>
+                                            </b>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <%}%>
+                                <%}%>
+                                    <%}%>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#modal_editphone_us').modal('show');
+        });
+    </script>
+    <%- include("../_footerpersonnelAlerts") %>

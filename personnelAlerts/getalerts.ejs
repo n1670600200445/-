@@ -1,0 +1,131 @@
+<%- include ("../_headerpersonnelAlerts" ) %>
+    <!-- PAGE CONTAINER-->
+    <div class="page-container">
+        <!-- HEADER DESKTOP-->
+        <!-- END HEADER DESKTOP-->
+        <% JSON.stringify(alerts) %>
+        <!-- MAIN CONTENT-->
+        <div class="main-content">
+            <div class="section__content section__content--p30">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div id="uploadImage" class="modal col-12">
+                                <form class="modal-content animate uploadImageForm" action="" enctype="multipart/form-data" method="POST">
+                                        <div class="modal-dialog">
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                              <h5 class="modal-title" id="staticBackdropLabel">อัพโหลดรูปภาพปิดงานสำเร็จ</h5>
+                                              <button type="button" class="close"  onclick="document.getElementById('uploadImage').style.display='none'" class="close" title="Close Modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <img id="blah" width="400px" height="240px" />
+                                                <br>
+                                                <label class="mt-3 label danger" for="img_xx"><i
+                                                    style="cursor: pointer;"
+                                                    >คลิกเพื่อเลือกรูปภาพ</i></label>
+                                                <input type="file" name="filename" accept="image/*" multiple id="img_xx" class="btn btn-info" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
+                                                
+                                            </div>
+                                            <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" onclick="document.getElementById('uploadImage').style.display='none'" class="close" title="Close Modal">ปิด</button>
+                                              <button type="submit" class="btn btn-primary">อัพโหลดรูปภาพ</button>
+                                            </div>
+                                          </div>
+                                        </div>
+                                </form>
+                            </div>
+                            <div id="alertsFail" class="modal col-12">
+                                <form class="modal-content animate alertsFailForm" action="" method="POST">
+                                        <div class="modal-dialog">
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                              <h5 class="modal-title" id="staticBackdropLabel">หมายเหตุปิดงานไม่สำเร็จ</h5>
+                                              <button type="button" class="close"  onclick="document.getElementById('alertsFail').style.display='none'" class="close" title="Close Modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <label for="exampleFormControlTextarea1">ระบุหมายเหตุ</label>
+                                                <textarea rows="3" name="comment_al" class="form-control"></textarea>
+                                            </div>
+                                            <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" onclick="document.getElementById('alertsFail').style.display='none'" class="close" title="Close Modal">ปิด</button>
+                                              <button type="submit" class="btn btn-primary">รายงาน</button>
+                                            </div>
+                                          </div>
+                                        </div>
+                                </form>
+                            </div>
+                            <!-- DATA TABLE-->
+                            <h4 class="head" style="color: blue;"><i class="fas fa-suitcase" style="color: blue;"></i> เหตุที่กำลังดำเนินการแก้ไข</h4>
+                            <div class="table-responsive m-b-30">
+                                <table class="table table-borderless table-striped table-earning" id="tablepersonnelgetalerts">
+                                    <thead>
+                                        <tr>
+                                            <th>ลำดับ</th>
+                                            <th>การแจ้งเหตุ</th>
+                                        </tr>
+                                    </thead>
+                                    
+                                    <tbody>
+                                        <% if(alerts) {%>
+                                            <% for(var i=0; i<alerts.length;i++ ){ %>   
+                                        <tr>
+                                            <td><br>
+                                                <div class="noti__item js-item-menu">
+                                                    <i class="fas fa-chevron-circle-down" style="font-size: 50px; color: aqua;"></i>
+                                                    <p><b>เลือกเมนู</b> </p>
+                                                <div class="mess-dropdown js-dropdown" align="center">
+                                                    <div class="mess__title">
+                                                        <%if(alerts[i].img_al){%>
+                                                    <a href="/img_alerts/<%=alerts[i].img_al%>" class="btn btn-info" target="_blank"><i class="fas fa-image" ></i> ดูรูปภาพ</a>
+                                                   <%}%>
+                                                    <a href="https://www.google.com/maps/search/?api=1&query= <%= alerts[i].latitude %> , <%= alerts[i].longitude %>&@<%= alerts[i].latitude %>,<%= alerts[i].longitude %>,z=17"" class="btn btn-warning" target="_blank"><i class="fas fa-map-marker-alt"></i> แผนที่</a>
+                                                    </div>
+                                                    <div class="mess__title">
+                                                        <a onclick="getimageAlerts('<%=alerts[i].idalerts %>')" class="btn btn-success" ><i class="fas fa-check-circle"></i> สำเร็จ</a>
+                                                        <a onclick="alertsFail('<%=alerts[i].idalerts %>')" class="btn btn-danger" onclick="return confirm('ไม่สำเร็จ!! ลำดับที่: <%= i+1 %> <%=alerts[i].name_alty%> รายละเอียด: <%=alerts[i].detail_al%>');"><i class="fas fa-ban"></i> ไม่สำเร็จ</a>
+                                                    </div>
+                                                 
+                                                </div>
+                                            </div>
+                                            </td>
+                                            <td>ประเภทการแจ้งเหตุ: <%=alerts[i].name_alty%> <br>รายละเอียด: <%=alerts[i].detail_al%> <br>ชื่อผู้แจ้ง: <%=alerts[i].fname_us%> <%=alerts[i].lname_us%> <%=alerts[i].usernamealerts%>  <br>เบอร์ติดต่อ: <%= alerts[i].phone_us%> <%= alerts[i].phonealerts%></td>
+                                        </tr>
+                                        <%}%>
+                                     <%}%>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- END DATA TABLE-->
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+    <!-- Row end -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+        $('#tablepersonnelgetalerts').DataTable();
+      } );
+      </script>
+      <script>
+        function getimageAlerts(idAlerts){
+          document.getElementById('uploadImage').style.display='block'
+          $('.uploadImageForm').attr('action',`/personnelAlerts/get/success${idAlerts}`)
+        }
+
+        function alertsFail(idAlerts){
+            document.getElementById('alertsFail').style.display='block'
+            $('.alertsFailForm').attr('action',`/personnelAlerts/get/failed${idAlerts}`)
+        }
+      </script>
+    <%- include("../_footerpersonnelAlerts") %>

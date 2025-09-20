@@ -1,0 +1,47 @@
+<%- include ("../_headernouser") %>
+
+<style>
+    
+</style>
+    <link rel="stylesheet" href="/dist/css/user_menu.css">
+    <div class="container-fluid mt-4">
+        <a href="/index_menu" class="btn btn-info"><i class="fas fa-arrow-circle-left"></i> กลับ</a>
+        <div class="menulist-con mt-4">
+            <%if(menu_data){%>
+                <% for(var i=0; i<menu_data.length;i++ ){ %>
+                    <%if(menu_data[i].type_radio==1){%>
+                        <a href="/alertsnouser/menu<%=menu_data[i].idmenu_sub%>">
+                            <div class="menulist-item">
+                                <div class="menulist-item-info">
+                                    <div class="menulist-img">
+                                        <img src="/image_default/<%=menu_data[i].icon_ms%>" alt="">
+                                    </div>
+                                    <div class="menulist-name_mm">
+                                        <b>
+                                            <%=menu_data[i].name_ms%>
+                                        </b>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <%}else{%>
+                            <a href="/alertsnouser/add_s<%=menu_data[i].idmenu_sub%>">
+                                <div class="menulist-item">
+                                    <div class="menulist-item-info">
+                                        <div class="menulist-img">
+                                            <img src="/image_default/<%=menu_data[i].icon_ms%>" alt="">
+                                        </div>
+                                        <div class="menulist-name_mm">
+                                            <b>
+                                                <%=menu_data[i].name_ms%>
+                                            </b>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <%}%>
+                                <%}%>
+                                    <%}%>
+        </div>
+    </div>
+    <%- include ("../_footerusers") %>

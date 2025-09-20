@@ -1,0 +1,336 @@
+<%- include ("../_header") %>
+
+    <style>
+        p {
+            text-align: center !important;
+        }
+        
+    </style>
+
+
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-md-5 align-self-center">
+                <h3 class="page-title">
+                    <%= forms[0].name_forms%>
+                </h3>
+                <div class="d-flex align-items-center mt-1">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/forms_res">แบบฟอร์ม</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                <%= forms[0].name_forms%>
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="d-flex border-bottom title-part-padding align-items-center">
+                        <div>
+                            <h4 class="card-title mb-0">ข้อมูลตอบกลับ</h4>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table id="zero_config" class="table table-striped table-bordered dataTable"
+                                            role="grid" aria-describedby="zero_config_info">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th class="sorting_asc" tabindex="0" aria-controls="zero_config"
+                                                        rowspan="1" colspan="1" aria-sort="ascending"
+                                                        aria-label="Name: activate to sort column descending"
+                                                        style="width: 0px;">ลำดับ</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="zero_config"
+                                                        rowspan="1" colspan="1"
+                                                        aria-label="Position: activate to sort column ascending"
+                                                        style="width: 0px;">รายละเอียด
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="zero_config"
+                                                        rowspan="1" colspan="1"
+                                                        aria-label="Office: activate to sort column ascending"
+                                                        style="width: 0px;">แสดง</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <%if(num_groubvr){%>
+                                                    <% for(var i=0; i<num_groubvr.length;i++ ){ %>
+                                                        <tr>
+                                                            <td>
+                                                                <%= i+1 %>
+                                                            </td>
+                                                            <td>
+                                                                <% for(var j=0; j<forms_field.length;j++ ){ %>
+                                                                    <%if(num_groubvr[i].count_res==forms_field[j].count_res){%>
+                                                                        <%if(forms_field[j].field_type=='Shorttextfield_q'
+                                                                            ){%>
+                                                                            <%= forms_field[j].label_inputname%> : <%=
+                                                                                    forms_field[j].value_res%><br>
+                                                                                    <%}%>
+                                                                                        <%if(forms_field[j].field_type=='Longtextfield_q'
+                                                                                            ){%>
+                                                                                            <%=
+                                                                                                forms_field[j].label_longtext%>
+                                                                                                : <%=
+                                                                                                    forms_field[j].value_res%>
+                                                                                                    <br>
+                                                                                                    <%}%>
+                                                                                                        <%if(forms_field[j].field_type=='Dropdownfield_q'
+                                                                                                            ){%>
+                                                                                                            <%=
+                                                                                                                forms_field[j].label_dropdown%>
+                                                                                                                : <%=
+                                                                                                                    forms_field[j].value_res%>
+                                                                                                                    <br>
+                                                                                                                    <%}%>
+                                                                                                                        <%if(forms_field[j].field_type=='Checkboxfield_q'
+                                                                                                                            ){%>
+                                                                                                                            <%=
+                                                                                                                                forms_field[j].label_checkbox%>
+                                                                                                                                :
+                                                                                                                                <%=
+                                                                                                                                    forms_field[j].value_res%>
+                                                                                                                                    <br>
+                                                                                                                                    <%}%>
+                                                                                                                                        <%if(forms_field[j].field_type=='Radiofield_q'
+                                                                                                                                            ){%>
+                                                                                                                                            <%=
+                                                                                                                                                forms_field[j].label_radio%>
+                                                                                                                                                :
+                                                                                                                                                <%=
+                                                                                                                                                    forms_field[j].value_res%>
+                                                                                                                                                    <br>
+                                                                                                                                                    <%}%>
+                                                                                                                                                        <%if(forms_field[j].field_type=='Datetimefield_q'
+                                                                                                                                                            ){%>
+                                                                                                                                                            <%=
+                                                                                                                                                                forms_field[j].label_datetime%>
+                                                                                                                                                                :
+                                                                                                                                                                <%=
+                                                                                                                                                                    forms_field[j].value_res%>
+                                                                                                                                                                    <br>
+                                                                                                                                                                    <%}%>
+                                                                                                                                                                        <%if(forms_field[j].field_type=='Gpsfield_q'
+                                                                                                                                                                            ){%>
+                                                                                                                                                                            ตำแหน่ง
+                                                                                                                                                                            :
+                                                                                                                                                                            <%=
+                                                                                                                                                                                forms_field[j].value_res%>
+                                                                                                                                                                                <br>
+                                                                                                                                                                                <%}%>
+                                                                                                                                                                                    <%if(forms_field[j].field_type=='Imagefield_q'
+                                                                                                                                                                                        ){%>
+                                                                                                                                                                                        <%=
+                                                                                                                                                                                            forms_field[j].label_inputimage%>
+                                                                                                                                                                                            :
+                                                                                                                                                                                            <br>
+                                                                                                                                                                                            <img src="/image_webapp/g_Imagefield/<%= forms_field[j].value_res %>"
+                                                                                                                                                                                                alt="Image"
+                                                                                                                                                                                                width="150px"><br>
+                                                                                                                                                                                            <%}%>
+                                                                                                                                                                                                <%}%>
+                                                                                                                                                                                                    <%}%>
+                                                            </td>
+                                                            <td>
+                                                                <div class="btn-group">
+                                                                    <a id="<%=num_groubvr[i].count_res%>" href="#"
+                                                                        onclick="editvalus_res(this.id)"
+                                                                        class="btn btn-warning" data-bs-toggle="modal"
+                                                                        data-bs-target="#edit-value-modal"><i
+                                                                            class="fas fa-pencil-alt fa-x"></i>
+                                                                        แก้ไขข้อมูล</a>
+                                                                    <a id="<%=num_groubvr[i].count_res%>" href="#"
+                                                                        onclick="deletevalus_res(this.id)"
+                                                                        class="btn btn-danger" data-bs-toggle="modal"
+                                                                        data-bs-target="#delete-forms-modal"><i
+                                                                            class="fas fa-trash-alt fa-x"></i>
+                                                                        ลบข้อมูล</a>
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                        <%}%>
+                                                            <%}%>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form action="/value_res/update<%= forms[0].idforms%>" enctype="multipart/form-data" method="POST">
+        <div id="edit-value-modal" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md"
+            style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header d-flex align-items-center border-bottom">
+                        <h4 class="modal-title" id="myModalLabel">แก้ไขข้อมูล</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body mb row value_res_edit">
+
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="submit"
+                            class="btn btn-warning font-weight-medium waves-effect">แก้ไขข้อมูล</button>
+                        <button type="button" class="btn btn-secondary font-weight-medium waves-effect"
+                            data-bs-dismiss="modal">ปิด</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    </form>
+
+    <form action="/value_res/delete" method="POST">
+        <div id="delete-forms-modal" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md"
+            style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header d-flex align-items-center border-bottom">
+                        <h4 class="modal-title" id="myModalLabel">ยืนยันการลบแบบฟอร์ม</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body mb row">
+                        <p>ลบข้อมูลตอบกลับจากแบบฟอร์ม ?</p>
+                        <input type="hidden" id="delete_valueres_id" name="value_group" class="form-control" required>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="submit" class="btn btn-success font-weight-medium waves-effect">ยืนยัน</button>
+                        <button type="button" class="btn btn-secondary font-weight-medium waves-effect"
+                            data-bs-dismiss="modal">ปิด</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    </form>
+
+
+
+    <script>
+        function editvalus_res(id) {
+            $.ajax({
+                url: '/forms_res/edit',
+                type: 'POST',
+                data: { id },
+                success: (data) => {
+                    console.log(data);
+                    const forms = document.querySelector('.value_res_edit');
+                    forms.innerHTML = ''
+                    for (var i = 0; i < data.ff.length; i++) {
+                        if (data.ff[i].field_type == "Headerfield_q") {
+                            forms.innerHTML += `${data.ff[i].tt_name ? `<h4 class="card-title mb-0 mt-2">${data.ff[i].tt_name}</h4>` : ``}`
+                        }
+                        if (data.ff[i].field_type == "Shorttextfield_q") {
+                            forms.innerHTML += `<div class="mb-3 mt-2"><label>${data.ff[i].label_inputname ? `${data.ff[i].label_inputname}` : ``}</label > <input type="text" id="${data.ff[i].idfield}" name="${data.all_value[i].idres}" value="${data.all_value[i].value_res}" class="form-control" placeholder="${data.ff[i].placeholder_field}" ${data.ff[i].validate == 1 ? `required` : ``}></div>`
+                        }
+
+                        if (data.ff[i].field_type == "Longtextfield_q") {
+                            forms.innerHTML += `<div class="mb-3 mt-2"><label>${data.ff[i].label_longtext ? `${data.ff[i].label_longtext}` : ``}</label > <input type="text" id="${data.ff[i].idfield}" name="${data.all_value[i].idres}" value="${data.all_value[i].value_res}" class="form-control" placeholder="${data.ff[i].placeholder_longtext}" ${data.ff[i].validate == 1 ? `required` : ``}></div>`
+                        }
+
+                        if (data.ff[i].field_type == "Linkfield_q") {
+                            forms.innerHTML += `<div class="mb-3 mt-2"><a href="${data.ff[i].link_q}" target="_blank">${data.ff[i].linktext_q ? `${data.ff[i].linktext_q}` : `${data.ff[i].link_q}`}</a></div>`
+                        }
+
+                        if (data.ff[i].field_type == "Dropdownfield_q") {
+                            let set_choice_dropdown = "";
+                            const choice_dropdown_text = data.ff[i].choice_dropdown;
+                            if (data.ff[i].choice_dropdown) {
+                                const sort_choice_dd = choice_dropdown_text.split(',');
+                                set_choice_dropdown += '<option>เลือก...</option>'
+                                for (var j = 0; j < sort_choice_dd.length; j++) {
+                                    const isSelected = sort_choice_dd[j] == data.all_value[i].value_res ? 'selected' : '';
+                                    set_choice_dropdown += '<option ' + isSelected + '>' + sort_choice_dd[j] + '</option>'
+                                }
+                            }
+                            forms.innerHTML += `<div class="mb-3 mt-2">${data.ff[i].label_dropdown ? `<label>${data.ff[i].label_dropdown}</label>` : ``} 
+                                    ${data.ff[i].choice_dropdown ? `<select class="form-control" name="${data.all_value[i].idres}">${set_choice_dropdown}</select>` : `<option>เลือก...</option>`} </div>`
+                        }
+                        if (data.ff[i].field_type == "Radiofield_q") {
+                            let set_choice_radio = "";
+                            const choice_radio_text = data.ff[i].choice_radio;
+                            if (data.ff[i].choice_radio) {
+                                const sort_choice_rd = choice_radio_text.split(',');
+                                for (var k = 0; k < sort_choice_rd.length; k++) {
+                                    const isChecked = data.all_value[i].value_res.includes(sort_choice_rd[k]) ? 'checked' : '';
+                                    set_choice_radio += '<div class="form-check"><input class="form-check-input" name="' + data.all_value[i].idres + '" type="radio" value="' + sort_choice_rd[k] + '" id="flexCheckDefault" ' + isChecked + '><label class="form-check-label" for="flexCheckDefault">' + sort_choice_rd[k] + '</label></div>'
+                                }
+                            }
+                            forms.innerHTML += `<div class="mb-3 mt-2">${data.ff[i].label_radio ? `<label>${data.ff[i].label_radio}</label>` : ``} 
+                                    ${data.ff[i].choice_radio ? `<div class="card-body">${set_choice_radio}</div>` : `<p class="card-title mb-0">ไม่มีข้อมูล</p>`} </div>`
+                        }
+
+                        if (data.ff[i].field_type == "Checkboxfield_q") {
+                            let set_choice_checkbox = "";
+                            const choice_checkbox_text = data.ff[i].choice_checkbox;
+                            if (data.ff[i].choice_checkbox) {
+                                const sort_choice_cb = choice_checkbox_text.split(',');
+                                for (var k = 0; k < sort_choice_cb.length; k++) {
+                                    const isChecked = data.all_value[i].value_res.includes(sort_choice_cb[k]) ? 'checked' : '';
+                                    set_choice_checkbox += '<div class="form-check"><input class="form-check-input" name="' + data.all_value[i].idres + '" type="checkbox" value="' + sort_choice_cb[k] + '" id="flexCheckDefault" ' + isChecked + '><label class="form-check-label" for="flexCheckDefault">' + sort_choice_cb[k] + '</label></div>'
+                                }
+                            }
+                            forms.innerHTML += `<div class="mb-3 mt-2">${data.ff[i].label_checkbox ? `<label>${data.ff[i].label_checkbox}</label>` : ``} 
+                                    ${data.ff[i].choice_checkbox ? `<div class="card-body">${set_choice_checkbox}</div>` : `<p class="card-title mb-0">ไม่มีข้อมูล</p>`}</div>`
+                        }
+
+                        if (data.ff[i].field_type == "Imagefield_q") {
+                            forms.innerHTML += `<div class="mb-3 mt-2">${data.ff[i].label_inputimage ? `<label>${data.ff[i].label_inputimage}</label>` : ``} 
+                            <input type="file" name="${data.all_value[i].idres}" class="form-control" onchange="document.getElementById('previewImg${data.ff[i].idfield}').src = window.URL.createObjectURL(this.files[0])"><br><img id="previewImg${data.ff[i].idfield}" ${data.all_value[i].value_res ? `src="/image_webapp/g_Imagefield/${data.all_value[i].value_res}"` : ''} width="150px"/><br></div>`;
+                        }
+
+                        if (data.ff[i].field_type == "Imagefield_show") {
+                            forms.innerHTML += `<div class="mb-3 mt-2">${data.ff[i].image_file ? `<img src="/image_fields/${data.ff[i].image_file}" width="85%" height="85%"/></div>` : ''}`
+                        }
+                        if (data.ff[i].field_type == "Vdofield_show") {
+                            let getyoutube_link = data.ff[i].youtube_link
+                            let newURL = getyoutube_link.replace("watch?v=", "embed/");
+                            forms.innerHTML += '<div class="mb-3 mt-2"><iframe  src="' + newURL + '" frameborder="0"></iframe></div>'
+                        }
+                        if (data.ff[i].field_type == "Datetimefield_q") {
+                            forms.innerHTML += `<div class="mb-3 mt-2">${data.ff[i].label_datetime ? `<label>${data.ff[i].label_datetime}</label>` : ``} 
+                                <input type="date" name="${data.all_value[i].idres}" value="${data.all_value[i].value_res}" class="form-control"></div>`
+                        }
+
+                        if (data.ff[i].field_type == "Gpsfield_q") {
+                            var latlon = data.all_value[i].value_res;
+                            var img_url = "https://maps.google.com/maps?q=" + latlon + "&width=600&height=500&hl=en&t=&z=14&ie=UTF8&iwloc=B&output=embed";
+                            forms.innerHTML += `<div id="gmap_canvas${data.all_value[i].idres}"><iframe src="${img_url}"></iframe></div>`
+                        }
+                    }
+                }
+            })
+        }
+
+        function deletevalus_res(id) {
+            console.log(id);
+            $('#delete_valueres_id').val(id)
+        }
+    </script>
+
+    <%- include ("../_footer") %>

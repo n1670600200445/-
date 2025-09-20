@@ -1,0 +1,150 @@
+<%- include ("../_headerpersonnelAlerts") %>
+<head>
+    <title>แบบประเมิน ADL</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        p {
+            margin: 0;
+            font-weight: bold;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            padding: 5px;
+            font-size: 14px;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result, #assessment {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 18px;
+            color: #333;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>แบบประเมิน ADL</h1>
+
+        <form action="/adl3" method="POST">
+            <div class="question">
+                <p>1. การเคลื่อนที่ภายในห้องหรือบ้าน</p>
+                <label><input type="radio" name="q1" value="0" <%= answers.q1 === '0' ? 'checked' : '' %> > เคลื่อนที่ไม่ไหนไม่ได้</label>
+                <label><input type="radio" name="q1" value="1" <%= answers.q1 === '1' ? 'checked' : '' %> > ใช้รถเข็นช่วยตัวเอง</label>
+                <label><input type="radio" name="q1" value="2" <%= answers.q1 === '2' ? 'checked' : '' %> > เดินหรือเคลื่อนที่โดยมีคนช่วย</label>
+                <label><input type="radio" name="q1" value="3" <%= answers.q1 === '3' ? 'checked' : '' %> > เดินหรือเคลื่อนที่ได้เอง</label>
+            </div>
+            
+            <div class="question">
+                <p>2. การลุกจากที่นอนหรือลุกจากเตียงไปยังเก้าอี้</p>
+                <label><input type="radio" name="q2" value="0" <%= answers.q2 === '0' ? 'checked' : '' %> > ไม่สามารถนั่งได้</label>
+                <label><input type="radio" name="q2" value="1" <%= answers.q2 === '1' ? 'checked' : '' %> > ต้องการความช่วยเหลือมาก</label>
+                <label><input type="radio" name="q2" value="2" <%= answers.q2 === '2' ? 'checked' : '' %> > ต้องการความช่วยเหลือบ้าง</label>
+                <label><input type="radio" name="q2" value="3" <%= answers.q2 === '3' ? 'checked' : '' %> > ทำได้เอง</label>
+            </div>
+        
+            <div class="question">
+                <p>3. การขึ้นลงบันได 1 ขั้น</p>
+                <label><input type="radio" name="q3" value="0" <%= answers.q3 === '0' ? 'checked' : '' %> > ไม่สามารถทำได้</label>
+                <label><input type="radio" name="q3" value="1" <%= answers.q3 === '1' ? 'checked' : '' %> > ต้องการคนช่วย</label>
+                <label><input type="radio" name="q3" value="2" <%= answers.q3 === '2' ? 'checked' : '' %> > ขึ้นลงได้เอง</label>
+            </div>
+        
+            <div class="question">
+                <p>4. การใช้ห้องน้ำ</p>
+                <label><input type="radio" name="q4" value="0" <%= answers.q4 === '0' ? 'checked' : '' %> > ช่วยตัวเองไม่ได้</label>
+                <label><input type="radio" name="q4" value="1" <%= answers.q4 === '1' ? 'checked' : '' %> > ทำเองได้บ้าง</label>
+                <label><input type="radio" name="q4" value="2" <%= answers.q4 === '2' ? 'checked' : '' %> > ช่วยตัวเองได้ดี</label>
+            </div>
+        
+            <div class="question">
+                <p>5. การกลั้นปัสสาวะในช่วง 1 สัปดาห์ที่ผ่านมา</p>
+                <label><input type="radio" name="q5" value="0" <%= answers.q5 === '0' ? 'checked' : '' %> > กลั้นไม่ได้</label>
+                <label><input type="radio" name="q5" value="1" <%= answers.q5 === '1' ? 'checked' : '' %> > กลั้นไม่ได้บางครั้ง</label>
+                <label><input type="radio" name="q5" value="2" <%= answers.q5 === '2' ? 'checked' : '' %> > กลั้นได้ปกติ</label>
+            </div>
+        
+            <div class="question">
+                <p>6. การถ่ายอุจจาระในช่วง 1 สัปดาห์ที่ผ่านมา</p>
+                <label><input type="radio" name="q6" value="0" <%= answers.q6 === '0' ? 'checked' : '' %> > กลั้นไม่ได้</label>
+                <label><input type="radio" name="q6" value="1" <%= answers.q6 === '1' ? 'checked' : '' %> > กลั้นไม่ได้บางครั้ง</label>
+                <label><input type="radio" name="q6" value="2" <%= answers.q6 === '2' ? 'checked' : '' %> > กลั้นได้ปกติ</label>
+            </div>
+        
+            <div class="question">
+                <p>7. การอาบน้ำ</p>
+                <label><input type="radio" name="q7" value="0" <%= answers.q7 === '0' ? 'checked' : '' %> > ต้องมีคนช่วย</label>
+                <label><input type="radio" name="q7" value="1" <%= answers.q7 === '1' ? 'checked' : '' %> > อาบน้ำได้เอง</label>
+            </div>
+        
+            <div class="question">
+                <p>8. การแต่งกาย (ล้างหน้า หวีผม แปรงฟัน โกนหนวด)</p>
+                <label><input type="radio" name="q8" value="0" <%= answers.q8 === '0' ? 'checked' : '' %> > ต้องการความช่วยเหลือ</label>
+                <label><input type="radio" name="q8" value="1" <%= answers.q8 === '1' ? 'checked' : '' %> > ทำได้เอง</label>
+            </div>
+        
+            <div class="question">
+                <p>9. การสวมใส่เสื้อผ้า</p>
+                <label><input type="radio" name="q9" value="0" <%= answers.q9 === '0' ? 'checked' : '' %> > ต้องมีคนช่วยใส่ให้</label>
+                <label><input type="radio" name="q9" value="1" <%= answers.q9 === '1' ? 'checked' : '' %> > ช่วยตัวเองได้บางส่วน</label>
+                <label><input type="radio" name="q9" value="2" <%= answers.q9 === '2' ? 'checked' : '' %> > ช่วยตัวเองได้ดี</label>
+            </div>
+        
+            <div class="question">
+                <p>10. การรับประทานอาหาร</p>
+                <label><input type="radio" name="q10" value="0" <%= answers.q10 === '0' ? 'checked' : '' %> > ต้องมีคนป้อนให้</label>
+                <label><input type="radio" name="q10" value="1" <%= answers.q10 === '1' ? 'checked' : '' %> > ตักอาหารเองได้แต่ต้องมีคนช่วย</label>
+                <label><input type="radio" name="q10" value="2" <%= answers.q10 === '2' ? 'checked' : '' %> > ตักอาหารและช่วยตัวเองได้ปกติ</label>
+            </div>
+            
+            <button type="submit">Submit</button>
+        </form>
+
+        <% if (typeof result !== 'undefined' && result !== null) { %>
+            <div id="result">คะแนนรวม: <%= result %></div>
+            <div id="assessment">ผลการประเมิน: <%= assessment %></div>
+        <% } %>
+    </div>
+<%- include ("../_footerpersonnelAlerts") %>

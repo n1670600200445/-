@@ -1,0 +1,126 @@
+<%- include ("_headerpersonnelAlerts") %>
+  <meta charset="UTF-8" />
+  <title>Temperature Log</title>
+
+  <!-- CSS DataTables -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css"
+  />
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+
+    th {
+      background-color: #74d4e1;
+      color: white;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+  </style>
+
+<body>
+  <h1> <tbody>
+  <% if (logs && logs.length > 0) { %>
+    <tr>
+      <td><%= logs[0].fullname || 'ไม่ทราบชื่อ' %></td>
+    </tr>
+  <% } else { %>
+    <tr>
+      <td colspan="5">ไม่พบข้อมูล</td>
+    </tr>
+  <% } %>
+</tbody></h1>
+
+  <table id="tempTable">
+    <thead>
+      <tr>
+        <th>#ลำดับ</th>
+        <th>วันที่และเวลา</th>
+        <th>ค่าอุณหภูมิ (°C)</th>
+        <!-- <th>Source</th> -->
+        <th>ชื่อ อสม.</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (logs && logs.length > 0) { %>
+      <% logs.forEach((log, index) => { %>
+      <tr>
+        <td><%= index + 1 %></td>
+        <td><%function showLikeDB(ts) {
+    // กรณี MySQL คืน Date object มา
+    if (ts instanceof Date) {
+      // แสดงเป็น ค.ศ. และ "ไม่เลื่อน +7" โดย format ที่โซนเวลา UTC
+      return ts.toLocaleString('th-TH-u-ca-gregory', {
+        timeZone: 'UTC',
+        hour12: false,
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', second: '2-digit'
+      }).replace(',', ''); // ตัด comma ถ้ามี
+    }
+
+    // กรณีคืนเป็นสตริงแบบ YYYY-MM-DD HH:mm:ss (ตรงตามที่ DB เก็บ)
+    const s = (ts ?? '').toString().trim();
+    const m = s.match(/^(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2})(?::(\d{2}))?$/);
+    if (m) {
+      return `${m[3]}/${m[2]}/${m[1]} ${m[4]}:${m[5]}${m[6] ? ':'+m[6] : ''}`;
+    }
+
+    // อย่างอื่น ๆ แสดงค่าดิบ
+    return s || 'Invalid Date';
+  }
+%>
+<%= showLikeDB(log.timestamp) %>
+</td>
+
+        <td><%= log.temperature %></td>
+        <!-- <td><%= log.source %></td> -->
+        <td><%= log.officer_name %></td>
+      </tr>
+      <% }); %>
+      <% } else { %>
+      <tr>
+        <td colspan="5">ไม่พบข้อมูล</td>
+      </tr>
+      <% } %>
+    </tbody>
+  </table>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- JS DataTables -->
+  <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      $("#tempTable").DataTable({
+        language: {
+          url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/th.json"
+        },
+        pageLength: 10,
+        lengthMenu: [5, 10, 20, 50]
+      });
+    });
+  </script>
+  </body>
+<%- include ("_footerpersonnelAlerts") %>

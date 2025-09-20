@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+
+</head>
+
+<body>
+    <style>
+        body {
+            background-color: rgb(255, 51, 0);
+        }
+    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'ไม่สามารถลบข้อมูลนี้ได้',
+            text: 'เนื่องจากข้อมูลนี้มีการเชื่อมโยงกับข้อมูลอื่นอยู่จึงไม่สามารถลบได้',
+            footer: 'กำลังทำการกลับไปหน้าปัจจุบัน',
+            showConfirmButton: false,
+            timer: 5000,
+        });
+        setTimeout(function() {
+            window.history.back();
+        }, 5500)
+    </script>
+</body>
+
+</html>

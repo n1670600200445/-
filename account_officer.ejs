@@ -1,0 +1,481 @@
+<%- include ("_headerpersonnelAlerts") %>
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>แบบฟอร์มกรอกข้อมูล</title>
+<style>
+  body {
+    font-family: "Prompt", sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #f3f3f3, #ffffff);
+  }
+  .form-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+  }
+  h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+  }
+  fieldset {
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+  legend {
+    font-size: 1.3em;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #2c3e50;
+    color: #34495e;
+  }
+  .form-group {
+    margin-bottom: 20px;
+  }
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #34495e;
+    font-size: 1em;
+  }
+  .form-group input[type="text"],
+  .form-group input[type="tel"],
+  .form-group input[type="date"],
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    background-color: #f8f8f8;
+    color: #2c3e50;
+    margin-bottom: 8px;
+  }
+  .form-group input[type="text"]:focus,
+  .form-group input[type="tel"]:focus,
+  .form-group input[type="date"]:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    border-color: #ff6666;
+    box-shadow: 0 0 6px rgba(128, 0, 0, 0.5);
+    outline: none;
+  }
+  .form-group textarea {
+    height: 120px;
+    resize: vertical;
+  }
+  .form-group button {
+    padding: 10px 20px;
+    background-color: #cf3c3c;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  .form-group button:hover {
+    background-color: #ff6666;
+    transform: scale(1.03);
+  }
+  .form-group button:active {
+    transform: scale(1);
+  }
+  .address-group,
+  .radio-group {
+    display: grid;
+    gap: 10px;
+  }
+  .address-group {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+  .radio-group {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+  .radio-group div {
+    display: flex;
+    align-items: center;
+  }
+  .radio-group input[type="radio"] {
+    margin-right: 6px;
+  }
+  .dob-group {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  @media print {
+    body {
+      -webkit-print-color-adjust: exact;
+    }
+    @page {
+      size: landscape;
+      margin: 0;
+    }
+  }
+  @media (orientation: landscape) {
+    .form-container {
+      max-width: 900px;
+    }
+  }
+
+  #map {
+    height: 400px;
+    width: 100%;
+    margin-top: 20px;
+  }
+</style>
+
+ <link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+/>
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script> 
+
+<div class="form-container">
+  <h1>รายละเอียดข้อมูลส่วนบุคคล</h1>
+
+
+
+
+  <script>
+    let map;
+  
+    // เรียกหาและตั้งค่าตำแหน่งปัจจุบัน
+    function findLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+      } else {
+        alert("เบราว์เซอร์ของคุณไม่รองรับการค้นหาตำแหน่ง");
+      }
+    }
+  
+    // แสดงตำแหน่งปัจจุบันและแสดงในข้อความ
+    function showPosition(position) {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+  
+      // ตั้งค่าพิกัดใน input hidden
+      document.getElementById("latitude").value = latitude;
+      document.getElementById("longitude").value = longitude;
+  
+      // แสดงพิกัดในหน้าเว็บ
+      document.getElementById("coordinates").innerText = `ละติจูด: ${latitude}, ลองจิจูด: ${longitude}`;
+  
+      // ตั้งค่าละติจูดและลองจิจูดในช่องกรอก
+      document.getElementById("latitude_input").value = latitude;
+      document.getElementById("longitude_input").value = longitude;
+  
+      // สร้างหรืออัปเดตแผนที่
+      if (!map) {
+        map = L.map("map").setView([latitude, longitude], 15);
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          maxZoom: 19,
+          attribution: "© OpenStreetMap contributors",
+        }).addTo(map);
+      } else {
+        map.setView([latitude, longitude], 15);
+      }
+  
+      // ปักหมุดตำแหน่งปัจจุบัน
+      L.marker([latitude, longitude])
+        .addTo(map)
+        .bindPopup("ตำแหน่งของคุณ")
+        .openPopup();
+    }
+  
+    // แสดงข้อผิดพลาดเมื่อไม่สามารถดึงตำแหน่งได้
+    function showError(error) {
+      let errorMessage = "เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ";
+      switch (error.code) {
+        case error.PERMISSION_DENIED:
+          errorMessage = "การอนุญาตถูกปฏิเสธ";
+          break;
+        case error.POSITION_UNAVAILABLE:
+          errorMessage = "ข้อมูลตำแหน่งไม่สามารถใช้งานได้";
+          break;
+        case error.TIMEOUT:
+          errorMessage = "หมดเวลารอการตอบกลับ";
+          break;
+      }
+      alert(errorMessage);
+    }
+  
+    // ฟังก์ชันคัดลอกค่าตำแหน่ง
+    function copyCoordinates() {
+      const coordinatesText = document.getElementById("coordinates").innerText;
+  
+      // คัดลอกค่าละติจูดและลองจิจูดจากข้อความ
+      const match = coordinatesText.match(/ละติจูด:\s([0-9.-]+),\sลองจิจูด:\s([0-9.-]+)/);
+      if (match) {
+        const latitude = match[1];
+        const longitude = match[2];
+  
+        // ตั้งค่าละติจูดและลองจิจูดในช่องกรอก
+        document.getElementById("latitude_input").value = latitude;
+        document.getElementById("longitude_input").value = longitude;
+        
+        alert("คัดลอกตำแหน่งแล้ว!");
+      } else {
+        alert("ไม่พบตำแหน่งที่ถูกต้อง");
+      }
+    }
+  
+    document.querySelector("form").addEventListener("submit", submitForm);
+  
+    function submitForm(event) {
+  const latitude = document.getElementById("latitude_input").value;
+  const longitude = document.getElementById("longitude_input").value;
+
+  // Check if latitude and longitude are empty
+  if (!latitude || !longitude) {
+    alert("กรุณาระบุตำแหน่งก่อนส่งข้อมูล");
+    event.preventDefault(); // Prevent form submission if fields are empty
+    return false;
+  }
+  return true; // Allow form submission if fields are filled
+}
+</script> 
+<!-- 
+<form action="/aclist" method="POST" > -->
+
+ <form action="/aclist_officer" method="POST" onsubmit="return submitForm(event)"> 
+   <div class="form-group">
+    <label>ระบุตำแหน่งครัวเรือน:</label>
+    <input type="hidden" name="latitude" id="latitude">
+    <input type="hidden" name="longitude" id="longitude"> 
+
+     
+   <label for="latitude_input">ละติจูด:</label>
+    <input type="text" id="latitude_input" name="latitude_input">
+    
+    <label for="longitude_input">ลองจิจูด:</label>
+    <input type="text" id="longitude_input" name="longitude_input"> 
+
+
+     <button type="button" class="btn btn-danger" onclick="findLocation()">ค้นหาตำแหน่ง</button>
+    <button type="button" class="btn btn-primary" onclick="copyCoordinates()">คัดลอกตำแหน่ง</button>
+    
+    <p id="coordinates"></p>
+    <div id="map"></div> 
+
+
+    <div class="form-group">
+      <label for="cardnumber">รหัสประจำตัว:</label>
+      <input
+        type="text"
+        id="cardnumber"
+        name="cardnumber"
+        pattern="\d{13}"
+        maxlength="13"
+        required
+      />
+      <script>
+        document
+          .getElementById("cardnumber")
+          .addEventListener("input", function () {
+            const isValid = /^\d{13}$/.test(this.value);
+            this.setCustomValidity(isValid ? "" : "กรุณาใส่เลข 13 หลัก");
+          });
+      </script>
+    </div>
+    <div class="form-group">
+      <label for="ms_us">คำนำหน้า:</label>
+      <select id="ms_us" name="ms_us" required>
+        <option value="" disabled selected>เลือกคำนำหน้า</option>
+        <% ms.forEach(function(item) { %>
+        <option value="<%= item.id %>"><%= item.ms %></option>
+        <% }); %>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="fname_us">ชื่อ:</label>
+      <input type="text" id="fname_us" name="fname_us" required />
+    </div>
+    <div class="form-group">
+      <label for="lname_us">นามสกุล:</label>
+      <input type="text" id="lname_us" name="lname_us" required />
+    </div>
+    <fieldset class="form-group">
+      <legend>วันเดือนปีเกิด:</legend>
+      <div class="dob-group">
+        <div>
+          <label for="day">วัน:</label>
+          <input
+            type="text"
+            id="day"
+            name="day"
+            required
+            placeholder="01"
+            pattern="\d{2}"
+            maxlength="2"
+          />
+        </div>
+        <div>
+          <label for="month">เดือน:</label>
+          <input
+            type="text"
+            id="month"
+            name="month"
+            required
+            placeholder="01"
+            pattern="\d{2}"
+            maxlength="2"
+          />
+        </div>
+        <div>
+          <label for="year">ปี (พ.ศ.):</label>
+          <input
+            type="text"
+            id="year"
+            name="year"
+            required
+            placeholder="2500"
+            pattern="\d{4}"
+            maxlength="4"
+          />
+        </div>
+      </div>
+    </fieldset>
+    <fieldset class="form-group">
+      <div>
+        <label for="age">อายุ:</label>
+        <input type="text" id="age" name="age" required />
+      </div>
+    </fieldset>
+    <fieldset class="form-group">
+      <div>
+        <label for="congenital">โรคประจำตัว:</label>
+        <input type="text" id="congenital" name="congenital" required />
+      </div>
+    </fieldset>
+    <fieldset class="form-group">
+      <label for="rights">สิทธิ์การรักษา</label>
+      <select class="form-control" id="name" name="name" required>
+        <option value="">กรุณาเลือก</option>
+        <% if(rights && rights.length > 0){ %> <% for(var i = 0; i <
+        rights.length; i++){ %>
+        <option value="<%= rights[i].id %>"><%= rights[i].name %></option>
+        <% } %> <% } %>
+      </select>
+    </fieldset>
+    <fieldset class="form-group">
+      <legend>ที่อยู่:</legend>
+      <div class="address-group">
+        <div>
+          <label for="h_number">บ้านเลขที่:</label>
+          <input type="text" id="h_number" name="h_number" required />
+        </div>
+        <div>
+          <label for="village_id">หมู่ที่:</label>
+          <select id="village_id" name="village_id" required>
+            <option value="" disabled selected>เลือกหมู่ที่</option>
+            <% village.forEach(function(village) { %>
+            <option value="<%= village.idvillage %>">
+              <%= village.name_village %>
+            </option>
+            <% }); %>
+          </select>
+        </div>
+        <div>
+          <label for="canton">ตำบล:</label>
+          <input type="text" id="canton" name="canton" required />
+        </div>
+        <div>
+          <label for="district">อำเภอ:</label>
+          <input type="text" id="district" name="district" required />
+        </div>
+        <div>
+          <label for="province">จังหวัด:</label>
+          <input type="text" id="province" name="province" required />
+        </div>
+      </div>
+    </fieldset>
+    <div class="form-group">
+      <label for="tel">หมายเลขโทรศัพท์:</label>
+      <input
+        type="text"
+        id="tel"
+        name="tel"
+        pattern="\d{10}"
+        maxlength="10"
+        required
+      />
+    </div>
+    <fieldset class="form-group">
+      <legend>เพศ:</legend>
+      <div class="radio-group">
+        <div>
+          <input type="radio" id="male" name="sex_us" value="ชาย" required />
+          <label for="male">ชาย</label>
+        </div>
+        <div>
+          <input type="radio" id="female" name="sex_us" value="หญิง" required />
+          <label for="female">หญิง</label>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset class="form-group">
+      <legend>รายละเอียดกลุ่มผู้สูงอายุ:</legend>
+      <div class="radio-group">
+        <div>
+          <input
+            type="radio"
+            id="social"
+            name="assessment"
+            value="กลุ่มติดสังคม"
+            required
+          />
+          <label for="social">กลุ่มติดสังคม</label>
+        </div>
+        <div>
+          <input
+            type="radio"
+            id="home"
+            name="assessment"
+            value="กลุ่มติดบ้าน"
+            required
+          />
+          <label for="home">กลุ่มติดบ้าน</label>
+        </div>
+        <div>
+          <input
+            type="radio"
+            id="bedridden"
+            name="assessment"
+            value="กลุ่มติดเตียง"
+            required
+          />
+          <label for="bedridden">กลุ่มติดเตียง</label>
+        </div>
+        <div>
+          <input
+            type="radio"
+            id="notapplicable"
+            name="assessment"
+            value="ไม่ใช่ผู้สูงอายุ"
+            required
+          />
+          <label for="notapplicable">ไม่ใช่ผู้สูงอายุ</label>
+        </div>
+      </div>
+    </fieldset>
+    <div class="form-group">
+      <button type="submit">บันทึกข้อมูล</button>
+
+    </div>
+  </form>
+</div>
+<%- include ("_footerpersonnelAlerts") %>

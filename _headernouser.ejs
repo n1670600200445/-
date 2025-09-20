@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords"
+        content="wrappixel, admin dashboard, html css dashboard, web dashboard, bootstrap 5 admin, bootstrap 5, css3 dashboard, bootstrap 5 dashboard, monster admin bootstrap 5 dashboard, frontend, responsive bootstrap 5 admin template, ">
+    <meta name="description"
+        content="Monster is powerful and clean admin dashboard template, inpired from Google's Material Design">
+    <meta name="robots" content="noindex,nofollow">
+    <title>PUBLIC HEALTH</title>
+    <link rel="canonical" href="https://www.wrappixel.com/templates/monsteradmin/" />
+    <!-- Favicon icon -->
+    <link rel="icon" type="/image/png" sizes="16x16" href="/logo/logo2.png">
+    <!-- Custom CSS -->
+    <link href="/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
+    <link href="/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/libs/apexcharts/dist/apexcharts.css">
+    <!-- Custom CSS -->
+    <link href="/dist/css/style.min.css" rel="stylesheet">
+    <link href="/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
+</head>
+
+<style>
+    #main-wrapper[data-layout=vertical] .left-sidebar[data-sidebarbg=skin1] ul {
+    background: #01579b;
+}
+
+#main-wrapper[data-layout=vertical] .topbar .top-navbar .navbar-header[data-logobg=skin1] {
+    background: #01579b;
+}
+
+body {
+    overflow-x: hidden;
+    margin: 0;
+    color: #01579b;
+    background: #f2f7f8;
+    position: relative;
+}
+
+#main-wrapper[data-layout=vertical] .left-sidebar[data-sidebarbg=skin1] ul,
+#main-wrapper[data-layout=vertical] .left-sidebar[data-sidebarbg=skin1] {
+    background: #01579b; /* เปลี่ยนสีเขียวเข้ม */
+}
+
+
+body {
+    
+    color: #000000; /* เปลี่ยนสีข้อความเป็นเทาเข้ม */
+}
+
+
+
+.ps-container {
+    -ms-touch-action: auto;
+    touch-action: auto;
+    overflow: hidden !important;
+    -ms-overflow-style: none;
+}
+
+a.link {
+    color: #01579b;
+}
+
+
+
+.SidebarBackgrounds{
+    color: #01579b;
+
+
+}
+
+#main-wrapper[data-layout=horizontal] .left-sidebar[data-sidebarbg=skin1], #main-wrapper[data-layout=horizontal] .left-sidebar[data-sidebarbg=skin1] ul, #main-wrapper[data-layout=vertical] .left-sidebar[data-sidebarbg=skin1], #main-wrapper[data-layout=vertical] .left-sidebar[data-sidebarbg=skin1] ul {
+    background: #01579b;
+}
+
+
+</style>
+
+<body>
+
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <svg class="tea lds-ripple" width="37" height="48" viewbox="0 0 37 48" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M27.0819 17H3.02508C1.91076 17 1.01376 17.9059 1.0485 19.0197C1.15761 22.5177 1.49703 29.7374 2.5 34C4.07125 40.6778 7.18553 44.8868 8.44856 46.3845C8.79051 46.79 9.29799 47 9.82843 47H20.0218C20.639 47 21.2193 46.7159 21.5659 46.2052C22.6765 44.5687 25.2312 40.4282 27.5 34C28.9757 29.8188 29.084 22.4043 29.0441 18.9156C29.0319 17.8436 28.1539 17 27.0819 17Z"
+                stroke="#009efb" stroke-width="2"></path>
+            <path
+                d="M29 23.5C29 23.5 34.5 20.5 35.5 25.4999C36.0986 28.4926 34.2033 31.5383 32 32.8713C29.4555 34.4108 28 34 28 34"
+                stroke="#009efb" stroke-width="2"></path>
+            <path id="teabag" fill="#009efb" fill-rule="evenodd" clip-rule="evenodd"
+                d="M16 25V17H14V25H12C10.3431 25 9 26.3431 9 28V34C9 35.6569 10.3431 37 12 37H18C19.6569 37 21 35.6569 21 34V28C21 26.3431 19.6569 25 18 25H16ZM11 28C11 27.4477 11.4477 27 12 27H18C18.5523 27 19 27.4477 19 28V34C19 34.5523 18.5523 35 18 35H12C11.4477 35 11 34.5523 11 34V28Z">
+            </path>
+            <path id="steamL" d="M17 1C17 1 17 4.5 14 6.5C11 8.5 11 12 11 12" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" stroke="#009efb"></path>
+            <path id="steamR" d="M21 6C21 6 21 8.22727 19 9.5C17 10.7727 17 13 17 13" stroke="#009efb" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+    </div>
+
+    <div>
+        <header class="topbar">
+            <style>
+                ul {
+                    list-style-type: none;
+                    margin: 0;
+                    padding: 0;
+                    overflow: hidden;
+                    background-color: #6caaf5;
+                }
+
+                li {
+                    float: left;
+                }
+
+                li a {
+                    display: block;
+                    color: white;
+                    text-align: center;
+                    padding: 14px 16px;
+                    text-decoration: none;
+                }
+
+                /* Change the link color to #111 (black) on hover */
+                li a:hover {
+                    background-color: #9bc1ff;
+                }
+
+                .page-wrapper>.container-fluid, .page-wrapper>.container-lg, .page-wrapper>.container-md, .page-wrapper>.container-sm, .page-wrapper>.container-xl, .page-wrapper>.container-xxl {
+    min-height: calc(100vh - 153px) !important;
+    background-image: linear-gradient(0deg, rgba(246, 247, 249, 1) 34%, rgba(227, 236, 255, 1) 53%, rgba(185, 211, 255, 1) 67%, rgba(155, 193, 255, 1) 80%, rgba(131, 186, 255, 1) 100%);
+}
+
+body {
+    overflow-x: hidden;
+    margin: 0;
+    color: #175c90;
+    background: #83baff;
+    position: relative;
+}
+
+/* .btn-check:active+.btn-success, .btn-check:checked+.btn-success, .btn-success.active, .btn-success:active, .show>.btn-success.dropdown-toggle {
+    color: #000;
+    background-color: #7bff89;
+    border-color: #4dca5b;
+} */
+
+a.custom-button {
+  background: transparent;
+  position: relative;
+  padding: 10px 20px; /* Increased padding for a more defined button */
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center content horizontally */
+  font-size: 16px; /* Reduced font-size for a sleeker look */
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid rgb(153, 255, 116); /* Increased border thickness */
+  border-radius: 30px; /* Slightly more rounded corners */
+  outline: none;
+  overflow: hidden;
+  color: rgb(153, 255, 116);
+  transition: color 0.3s ease-out, background-color 0.3s ease-out; /* Added background transition */
+  text-align: center;
+}
+
+a.custom-button span {
+  margin: 0 12px; /* Adjusted margin for better alignment */
+}
+
+a.custom-button::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  content: "";
+  border-radius: 50%;
+  display: block;
+  width: 22em;
+  height: 22em;
+  left: -6em;
+  transition: box-shadow 0.4s ease-out, width 0.4s ease-out, height 0.4s ease-out; /* Smoother effect */
+  z-index: -1;
+}
+
+a.custom-button:hover {
+  color: #272020 !important;
+  background-color: rgb(153, 255, 116) !important; /* Background color change on hover */
+  border: 2px solid rgb(153, 255, 116); /* Ensure border consistency */
+}
+
+a.custom-button:hover::before {
+  box-shadow: inset 0 0 0 12em rgb(153, 255, 116); /* Slightly faster shadow expansion */
+  width: 24em; /* Dynamic hover growth */
+  height: 24em;
+}
+
+
+
+
+
+
+
+
+
+            </style>
+            <!-- <ul class="navbar top-navbar navbar-light">
+                <li class="navbar-brand"><a href="/index_menu">PUBLIC HEALTH</a></li> -->
+
+                <!-- <li style="float:right;margin-right: 10px;"><a class="active btn-success" style="border-radius: 10px;" href="/loginusers">เข้าสู่ระบบ</a></li> -->
+               
+
+                <ul class="navbar top-navbar navbar-light">
+                    <li class="navbar-brand">
+                        <a href="/index_menu">PUBLIC HEALTH</a>
+                    </li>
+                    <li style="float: right; margin-right: 10px;">
+                        <a href="/loginusers" class="custom-button active btn-success" style="border-radius: 10px; padding: 5px 15px; display: inline-flex; align-items: center; text-decoration: none; color: white;">
+                            <img src="/logo/login3.png" class="wow fadeInUp" data-wow-delay="0.4s" style="width: 20px; height: 20px; margin-right: 10px;" />
+                            เข้าสู่ระบบ
+                        </a>
+                    </li>
+                    
+                </ul>
+                
+
+
+
+            
+        </header>
+        <div class="page-wrapper">

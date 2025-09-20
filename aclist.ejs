@@ -1,0 +1,296 @@
+<%- include("_header") %>
+<title>Account Information</title>
+<style>
+  /* Apply width only to the specific column header */
+  th.col-rights {
+    width: 50px; /* Adjust as needed */
+    white-space: nowrap; /* Prevent text wrapping */
+  }
+
+  /* Ensure column width applies to the table data cells */
+  td.col-rights {
+    width: 50px; /* Ensure consistency with the header width */
+    white-space: nowrap; /* Prevent text wrapping */
+  }
+
+  th.col-rights2 {
+    width: 50px; /* Adjust as needed */
+    white-space: nowrap; /* Prevent text wrapping */
+  }
+
+  /* Ensure column width applies to the table data cells */
+  td.col-rights2 {
+    width: 50px; /* Ensure consistency with the header width */
+    white-space: nowrap; /* Prevent text wrapping */
+  }
+
+  th.col-rights3 {
+    width: 50px; /* Adjust as needed */
+    white-space: nowrap; /* Prevent text wrapping */
+  }
+
+  /* Ensure column width applies to the table data cells */
+  td.col-rights3 {
+    width: 50px; /* Ensure consistency with the header width */
+    white-space: nowrap; /* Prevent text wrapping */
+  }
+
+  th.col-rights4 {
+    width: 65px; /* Adjust as needed */
+    white-space: nowrap; /* Prevent text wrapping */
+  }
+
+  /* Ensure column width applies to the table data cells */
+  td.col-rights4 {
+    width: 65px; /* Ensure consistency with the header width */
+    white-space: nowrap; /* Prevent text wrapping */
+  }
+</style>
+
+<div class="page-breadcrumb">
+  <div class="row">
+    <div class="col-md-5 align-self-center">
+      <h3 class="page-title">ข้อมูลบัญชี 8</h3>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">แดชบอร์ด</a></li>
+          <li class="breadcrumb-item active" aria-current="page">
+            ข้อมูลบัญชี 8
+          </li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="d-flex border-bottom title-part-padding align-items-center">
+          <div>
+            <h4 class="card-title mb-0">
+              <a href="/account">มูลบัญชี 8</a>
+            </h4>
+          </div>
+          <div class="ms-auto flex-shrink-0">
+            <a href="/account" class="btn btn-success">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-plus fill-white feather-sm"
+              >
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              เพิ่มข้อมูลบัญชี 8
+            </a>
+            <button id="btnExport" class="btn btn-info">ดาวน์โหลด Excel</button>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="container mt-5">
+            <div class="table-responsive">
+              <div
+                id="zero_config_wrapper"
+                class="dataTables_wrapper container-fluid dt-bootstrap4"
+              >
+                <div class="row">
+                  <div class="col-sm-12">
+                    <table
+                      id="zero_config"
+                      class="table table-striped table-bordered dataTable"
+                      role="grid"
+                      aria-describedby="zero_config_info"
+                    >
+                      <thead>
+                        <tr>
+                          <th>ลำดับที่</th>
+                          <th>เลขบัตรประชาชน</th>
+                          <th>คำนำหน้า</th>
+                          <th>ชื่อ</th>
+                          <th>นามสกุล</th>
+                          <th>เพศ</th>
+                          <th>อายุ</th>
+                          <th>โรคประจำตัว</th>
+                          <!-- <th>ความดัน</th>
+                          <th>อุณหภูมิ</th> -->
+                          <th class="col-rights">สิทธิ์การรักษา</th>
+                          <th class="col-rights2">วัน/เดือน/ปีเกิด</th>
+                          <th class="col-rights3">กลุ่มผู้สูงอายุ</th>
+                          <th>เบอร์โทรศัพท์</th>
+                          <th>บ้านเลขที่</th>
+                          <th>หมู่</th>
+                          <th>ละติจูด</th>
+                          <th>ลองติจูด</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% if (accounts && accounts.length > 0) { %> <%
+                        accounts.forEach(function(item, index) { %>
+                        <tr>
+                          <td><%= index + 1 %></td>
+                          <td><%= item.cardnumber %></td>
+                          <td><%= item.ms %></td>
+                          <td><%= item.fname_us %></td>
+                          <td><%= item.lname_us %></td>
+                          <td><%= item.sex_us == 3 ? 'ชาย' : 'หญิง' %></td>
+                          <td><%= item.age %></td>
+                          <td><%= item.congenital %></td>
+                          <!-- <td><%= item.last_sys || '-' %></td>
+                          <td><%= item.last_temperature || '-' %></td> -->
+                          <td class="col-rights"><%= item.name %></td>
+                          <!-- Adjusted column -->
+                          <td class="col-rights2">
+                            <% if (item.birthday) { %> <%= new
+                            Date(item.birthday).toLocaleDateString('th-TH', {
+                            year: 'numeric', month: 'long', day: 'numeric'
+                            }).replace(/[0-9]{4}/, year => parseInt(year, 10) -
+                            543) %> <% } else { %> N/A <% } %>
+                          </td>
+                          <td class="col-rights3"><%= item.assessment %></td>
+
+                          <td><%= item.tel %></td>
+                          <td><%= item.h_number %></td>
+                          <td class="col-rights4"><%= item.name_village %></td>
+                          <td><%= item.latitude %></td>
+                          <td><%= item.longitude %></td>
+                          <td>
+                            <div class="btn-group">
+                              <a
+                                href="/aclist/edit/<%= item.id %>"
+                                class="btn btn-warning btn-sm btn-edit"
+                                >แก้ไข</a
+                              >
+                              <!-- <a href="/aclist/delete/<%= item.id %>" class="btn btn-danger btn-sm btn-delete">ลบ</a> -->
+                              <a
+                                href="#"
+                                class="btn btn-danger btn-sm btn-delete"
+                                data-bs-toggle="modal"
+                                data-bs-target="#delete-users-modal"
+                                data-id="<%= item.id %>"
+                                >ลบ</a
+                              >
+                            </div>
+                          </td>
+                        </tr>
+                        <% }) %> <% } %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div
+  id="delete-users-modal"
+  class="modal fade"
+  tabindex="-1"
+  aria-labelledby="delete-users-modal-label"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header d-flex align-items-center border-bottom">
+        <h4 class="modal-title" id="delete-users-modal-label">
+          ลบข้อมูลประชาชน
+        </h4>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body mb row">
+        <p id="delete-users-message" class="text-center">
+          ต้องการลบข้อมูลใช่หรือไม่?
+        </p>
+        <form id="delete-users-form" method="post" action="">
+          <input type="hidden" name="id" id="delete-id" value="" />
+          <div class="text-center">
+            <button type="submit" class="btn btn-danger">ยืนยัน</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              ปิด
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include("_footer") %>
+
+<script>
+  // Script to handle the deletion confirmation modal
+  document.addEventListener("DOMContentLoaded", function () {
+    var deleteButtons = document.querySelectorAll(".btn-delete");
+    var deleteForm = document.getElementById("delete-users-form");
+    var deleteIdInput = document.getElementById("delete-id");
+
+    deleteButtons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        var userId = button.getAttribute("data-id");
+        deleteIdInput.value = userId;
+        deleteForm.action = "/aclist/delete/" + userId;
+      });
+    });
+  });
+</script>
+
+
+<!-- โหลด SheetJS -->
+<script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+<script>
+  document.getElementById('btnExport').addEventListener('click', function() {
+    var table = document.getElementById('zero_config');
+    var wb = XLSX.utils.book_new();
+    var ws_data = [];
+
+    for (var i = 0; i < table.rows.length; i++) {
+      var row = [];
+      var cellCount = table.rows[i].cells.length;
+
+      for (var j = 0; j < cellCount; j++) {
+        // ข้ามคอลัมน์ Actions (คอลัมน์สุดท้าย)
+        if (j === cellCount - 1) continue;
+
+        var cellText = table.rows[i].cells[j].innerText.trim();
+
+        // ถ้าเป็นเลขบัตรประชาชน 13 หลัก บังคับเป็น string
+        if (/^\d{13}$/.test(cellText)) {
+          row.push({ v: cellText, t: 's' });
+        } else {
+          row.push(cellText);
+        }
+      }
+      ws_data.push(row);
+    }
+
+    var ws = XLSX.utils.aoa_to_sheet(ws_data);
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+    XLSX.writeFile(wb, "ข้อมูลบัญชี8.xlsx");
+  });
+</script>

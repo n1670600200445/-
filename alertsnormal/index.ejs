@@ -1,0 +1,46 @@
+<%- include ("../_headerusers") %>
+<style>
+    
+</style>
+    <link rel="stylesheet" href="/dist/css/user_menu.css">
+    <div class="container-fluid mt-4">
+        <div class="menulist-con">
+            <%if(menu_data){%>
+                <% for(var i=0; i<menu_data.length;i++ ){ %>
+                    <%if(menu_data[i].type_radio==1){%>
+                        <a href="/alertsnormal/menu<%=menu_data[i].idmenu_main%>">
+                            <div class="menulist-item">
+                                <div class="menulist-item-info">
+                                    <div class="menulist-img">
+                                        <img src="/image_default/<%=menu_data[i].icon_mm%>" alt="">
+                                    </div>
+                                    <div class="menulist-name_mm">
+                                        <b>
+                                            <%=menu_data[i].name_mm%>
+                                        </b>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <%}else{%>
+                            <a href="/alertsnormal/add_m<%=menu_data[i].idmenu_main%>">
+                                <div class="menulist-item">
+                                    <div class="menulist-item-info">
+                                        <div class="menulist-img">
+                                            <img src="/image_default/<%=menu_data[i].icon_mm%>" alt="">
+                                        </div>
+                                        <div class="menulist-name_mm">
+                                            <b>
+                                                <%=menu_data[i].name_mm%>
+                                            </b>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <%}%>
+                                <%}%>
+                                    <%}%>
+        </div>
+    </div>
+
+    <%- include ("../_footerusers") %>

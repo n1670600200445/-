@@ -1,0 +1,33 @@
+const express = require('express');
+const router = express.Router();
+const multer  = require('multer');
+const upload = multer({ dest: './public/image_webapp/g_Imagefield/' });
+
+const alertsViews = require('../controllers/alertsControllers');
+router.get('/index_menu',alertsViews.index_menu);
+router.get('/alertsnouser/menu:id',alertsViews.menu_nouser_sub);
+router.get('/alertsnouser/add_m:id',alertsViews.notify_nus_m);
+router.get('/alertsnouser/add_s:id',alertsViews.notify_nus_s);
+router.post('/alertsnouser/save:id',upload.any(),alertsViews.save_nouser);
+router.post('/alertsnouser/create',alertsViews.notify_nus_showform);
+
+router.get('/indexusers',alertsViews.index_users);
+router.get('/alerts/menu:id',alertsViews.menu_us);
+router.get('/alerts/add_m:id',alertsViews.notify_m);
+router.get('/alerts/add_s:id',alertsViews.notify_s);
+router.post('/alerts/save:id',upload.any(),alertsViews.save);
+router.get('/alerts/history',alertsViews.history);
+router.post('/alerts/create',alertsViews.notify_showform);
+router.get('/alertsnormal',alertsViews.menu_normal);
+router.get('/alertsnormal/menu:id',alertsViews.menu_normal_sub); 
+router.get('/alertsnormal/add_m:id',alertsViews.notify_nm_m); 
+router.get('/alertsnormal/add_s:id',alertsViews.notify_nm_s); 
+router.post('/alertsnormal/save:id',upload.any(),alertsViews.save_normal); 
+router.post('/alertsnormal/create',alertsViews.notify_nm_showform);
+router.get('/alerts_qrcode/forms:id',alertsViews.notify_qrcode); 
+router.post('/alerts_qrcode/create',alertsViews.notify_qrcode_create);
+router.post('/alerts_qrcode/save',upload.any(),alertsViews.save_qrcode);
+router.post('/alerts/update/:id',alertsViews.update);
+router.post('/alerts/update2/:id',alertsViews.update2); 
+router.get('/alerts/delete/:id',alertsViews.delalerts);
+module.exports = router;

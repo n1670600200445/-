@@ -1,0 +1,34 @@
+const express = require('express');
+const multer  = require('multer');
+const upload = multer({ dest: './public/image_fields/' });
+const router = express.Router();
+const formsfieldViews = require('../controllers/formsfieldControllers');
+
+router.get('/formsfield/:id',formsfieldViews.list);
+router.post('/formsfield/addfield',formsfieldViews.addfield); 
+router.post('/formsfield/fetchfield',formsfieldViews.field_fetch); 
+router.post('/formsfield/updateposition',formsfieldViews.updateposition); 
+router.post('/formsfield/deletefield',formsfieldViews.deletefield); 
+router.post('/formsfield/fetch_editfield',formsfieldViews.fetch_editfield); 
+// router.post('/formsfield/update_editfield',formsfieldViews.update_editfield); 
+router.post('/formsfield/image_default',formsfieldViews.image_default); 
+router.post('/formsfield/getchoice_dropdown_list',formsfieldViews.getchoice_dropdown_list); 
+router.post('/formsfield/getchoice_checkbox_list',formsfieldViews.getchoice_checkbox_list); 
+router.post('/formsfield/getchoice_radio_list',formsfieldViews.getchoice_radio_list); 
+//update-fieldshow
+router.post('/formsfield/update_Headerfield_show',formsfieldViews.update_Headerfield_show); 
+router.post('/formsfield/update_Linkfield_show',formsfieldViews.update_Linkfield_show); 
+router.post('/formsfield/update_Vdofield_show',formsfieldViews.update_Vdofield_show); 
+router.post('/formsfield/update_Imagefield_show', upload.single('file') ,formsfieldViews.update_Imagefield_show); 
+router.post('/formsfield/update_Imagedefault_show',formsfieldViews.update_Imagedefault_show); 
+router.post('/formsfield/update_Imageandlinkfield_show', upload.single('file') ,formsfieldViews.update_Imageandlinkfield_show); 
+router.post('/formsfield/update_Imagedefaultandlinkfield_show',formsfieldViews.update_Imagedefaultandlinkfield_show); 
+router.post('/formsfield/update_Shorttextfield_q',formsfieldViews.update_Shorttextfield_q); 
+router.post('/formsfield/update_Longtextfield_q',formsfieldViews.update_Longtextfield_q); 
+router.post('/formsfield/update_Linkfield_q',formsfieldViews.update_Linkfield_q); 
+router.post('/formsfield/update_Dropdownfield_q',formsfieldViews.update_Dropdownfield_q); 
+router.post('/formsfield/update_Imagefield_q',formsfieldViews.update_Imagefield_q); 
+router.post('/formsfield/update_Datetimefield_q',formsfieldViews.update_Datetimefield_q); 
+router.post('/formsfield/update_Checkboxfield_q',formsfieldViews.update_Checkboxfield_q);
+router.post('/formsfield/update_Radiofield_q',formsfieldViews.update_Radiofield_q);
+module.exports = router;

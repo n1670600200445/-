@@ -1,0 +1,246 @@
+<%- include ("../_header") %>
+    <style>
+        p {
+            text-align: center !important;
+        }
+    </style>
+
+
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-md-5 align-self-center">
+                <h3 class="page-title">กลุ่มของประชาชน</h3>
+                <div class="d-flex align-items-center">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">แดชบอร์ด</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">กลุ่มของประชาชน</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="d-flex border-bottom title-part-padding align-items-center">
+                        <div>
+                            <h4 class="card-title mb-0">กลุ่มของประชาชน</h4>
+                        </div>
+                        <div class="ms-auto flex-shrink-0">
+                            <a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#add-group-modal"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-plus fill-white feather-sm">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>เพิ่มกลุ่มของประชาชน</a>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table id="zero_config" class="table table-striped table-bordered dataTable"
+                                            role="grid" aria-describedby="zero_config_info">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th class="sorting_asc" tabindex="0" aria-controls="zero_config"
+                                                        rowspan="1" colspan="1" aria-sort="ascending"
+                                                        aria-label="Name: activate to sort column descending"
+                                                        style="width: 0px;">ลำดับ</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="zero_config"
+                                                        rowspan="1" colspan="1"
+                                                        aria-label="Position: activate to sort column ascending"
+                                                        style="width: 0px;">ชื่อกลุ่ม
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="zero_config"
+                                                        rowspan="1" colspan="1"
+                                                        aria-label="Office: activate to sort column ascending"
+                                                        style="width: 0px;">แสดง</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <%if(group_us){%>
+                                                    <% for(var i=0; i<group_us.length;i++ ){ %>
+                                                        <tr>
+                                                            <td>
+                                                                <%= i+1 %>
+                                                            </td>
+                                                            <td>
+                                                                <%= group_us[i].name_group%>
+                                                            </td>
+                                                            <td>
+                                                                <div class="btn-group">
+                                                                    <a id="<%= group_us[i].idgroup_us%>" href="#"
+                                                                        onclick="editgroup_us(this.id)"
+                                                                        class="btn btn-warning" data-bs-toggle="modal"
+                                                                        data-bs-target="#edit-group-modal"><i
+                                                                            class="fas fa-pencil-alt fa-x"></i>
+                                                                        แก้ไขข้อมูล</a>
+                                                                    <a id="<%= group_us[i].idgroup_us%>" href="#"
+                                                                        onclick="deletegroup_us(this.id)"
+                                                                        class="btn btn-danger" data-bs-toggle="modal"
+                                                                        data-bs-target="#delete-group-modal"><i
+                                                                            class="fas fa-trash-alt fa-x"></i>
+                                                                        ลบข้อมูล</a>
+                                                                    <a href="/group/find<%= group_us[i].idgroup_us%>"
+                                                                        class="btn btn-info" ><i class="bi bi-card-checklist"></i>
+                                                                        ดูสมาชิกในกลุ่ม</a>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <%}%>
+                                                            <%}%>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form action="/group/save" method="POST">
+        <div id="add-group-modal" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md"
+            style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header d-flex align-items-center border-bottom">
+                        <h4 class="modal-title" id="myModalLabel">เพิ่มกลุ่มของประชาชน</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body mb row">
+                        <label for="fname" class="col-sm-3  text-start control-label col-form-label"> ชื่อกลุ่ม</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="name_group" placeholder="กรอกชื่อกลุ่ม" class="form-control"
+                                required>
+                        </div>
+                        <br><br>
+                        <label for="fname" class="col-sm-3 text-start control-label col-form-label"> รายละเอียด</label>
+                        <div class="col-sm-9">
+                            <textarea name="detail_group" style="height:60px;" cols="10" rows="10" class="form-control"
+                                placeholder="กรอกรายละเอียด "></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="submit"
+                            class="btn btn-success font-weight-medium waves-effect">บันทึกข้อมูล</button>
+                        <button type="button" class="btn btn-secondary font-weight-medium waves-effect"
+                            data-bs-dismiss="modal">ปิด</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    </form>
+
+    <form action="/group/update" method="POST">
+        <div id="edit-group-modal" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md"
+            style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header d-flex align-items-center border-bottom">
+                        <h4 class="modal-title" id="myModalLabel">แก้ไขกลุ่มของประชาชน</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body mb row">
+                        <label for="fname" class="col-sm-3  text-start control-label col-form-label"> ชื่อกลุ่ม</label>
+                        <div class="col-sm-9">
+                            <input id="edit-name-group" type="text" name="name_group" placeholder="กรอกชื่อกลุ่ม"
+                                class="form-control" required>
+                        </div>
+                        <br><br>
+                        <label for="fname" class="col-sm-3 text-start control-label col-form-label"> รายละเอียด</label>
+                        <div class="col-sm-9">
+                            <textarea id="edit-detail-group" name="detail_group" style="height:60px;" cols="10"
+                                rows="10" class="form-control" placeholder="กรอกรายละเอียด "></textarea>
+                        </div>
+                        <input type="hidden" name="idgroup_us" id="idgroup_us">
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="submit"
+                            class="btn btn-warning font-weight-medium waves-effect">แก้ไขข้อมูล</button>
+                        <button type="button" class="btn btn-secondary font-weight-medium waves-effect"
+                            data-bs-dismiss="modal">ปิด</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    </form>
+
+    <form action="/group/delete" method="POST">
+        <div id="delete-group-modal" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md"
+            style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header d-flex align-items-center border-bottom">
+                        <h4 class="modal-title" id="myModalLabel">ลบกลุ่มของประชาชน</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body mb row">
+                        <p id="delete-name_group"></p>
+                        <input type="hidden" name="idgroup_us" id="delete-idgroup_us" readonly>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="submit" class="btn btn-danger font-weight-medium waves-effect">ยืนยัน</button>
+                        <button type="button" class="btn btn-secondary font-weight-medium waves-effect"
+                            data-bs-dismiss="modal">ปิด</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#zero_config').DataTable();
+        });
+    </script>
+
+    <script>
+        function editgroup_us(id) {
+            console.log(id);
+            $.ajax({
+                url: '/group/edit',
+                type: 'POST',
+                data: { id },
+                success: (data) => {
+                    console.log(data.group_us.name_group);
+                    $('#edit-name-group').val(data.group_us.name_group)
+                    $('#edit-detail-group').val(data.group_us.detail_group)
+                    $('#idgroup_us').val(id)
+                }
+            });
+        }
+
+        function deletegroup_us(id) {
+            console.log(id);
+            $.ajax({
+                url: '/group/checkdelete',
+                type: 'POST',
+                data: { id },
+                success: (data) => {
+                    console.log(data);
+                    $('#delete-name_group').html('ต้องการลบกลุ่ม ' + data.group_us.name_group + ' ?')
+                    $('#delete-idgroup_us').val(id)
+                }
+            });
+        }
+    </script>
+    <%- include ("../_footer") %>

@@ -1,0 +1,84 @@
+<%- include ("../_header") %>
+<section id="main-content">
+    <section class="wrapper">
+      <div class="row">
+        <div class="col-lg-12">
+          <h3 class="page-header"><i class="fa fa-files-o"></i> EDIT INFORMATION</h3>
+          <ol class="breadcrumb">
+            <li><i class="fa fa-home"></i><a href="/index">Dashboard</a></li>
+            <li><i class="icon_document_alt"></i><a href="/personnel"> จัดการข้อมูลเจ้าหน้าที่</a></li>
+            <li><i class="fa fa-files-o"></i>แก้ไขข้อมูลแอดมิน</li>
+          </ol>
+        </div>
+      </div>
+      <!-- Form validations -->
+      <div class="row">
+        <div class="col-lg-2"> </div>
+        <div class="col-lg-8">
+            <div class="col-lg-2"> </div>
+          <section class="panel">
+            <header class="panel-heading">
+                <b style="font-size: large;"> แก้ไขข้อมูลเจ้าหน้าที่ </b>
+                <div class="panel-actions">
+                  <a href="/personnel/edit<%=editpersonnel.idpersonnel%>" class="btn-setting"><i class="fa fa-rotate-right"></i></a>
+                  <a href="/personnel" class="btn-close"><i class="fa fa-times"></i></a>
+                </div>
+            </header>
+            <div class="panel-body">
+              <div class="form">
+                <form class="form-horizontal" id="feedback_form" method="POST" action="/personnel/update<%=editpersonnel.idpersonnel %>">
+                  <div class="form-group " style="background-color: rgb(247, 245, 242); padding: 30px; margin: auto;">
+                    <label for="cname" class="control-label col-lg-2">ชื่อ <span class="required">*</span></label>
+                    <div class="col-4">
+                      <input class="form-control" id="cname" value="<%=editpersonnel.fname_ps%>" name="fname_ps"  type="text" required />
+                    </div>
+                    <label for="cname" class="control-label col-lg-1">นามสกุล <span class="required">*</span></label>
+                    <div class="col-4">
+                        <input class="form-control" id="cname" value="<%=editpersonnel.lname_ps%>" name="lname_ps"  type="text" required />
+                    </div>
+                  </div>
+                  <div class="form-group " style="background-color: rgb(221, 213, 200); padding: 30px; margin: auto;">
+                    <label for="cname" class="control-label col-lg-2">รหัสบัตรประชาชน <span class="required">*</span></label>
+                    <div class="col-4">
+                      <input class="form-control" id="cname" value="<%=editpersonnel.idcard_ps%>" name="idcard_ps"  minlength="5"  type="text" required />
+                    </div>
+                    <label for="cname" class="control-label col-lg-2">เบอร์ติดต่อ <span class="required">*</span></label>
+                    <div class="col-3">
+                      <input class="form-control" id="subject" name="phone_ps" value="<%=editpersonnel.phone_ps%>" minlength="10" type="text" required />
+                    </div>
+                  </div>
+                  <div class="form-group " style="background-color: rgb(247, 245, 242); padding: 30px; margin: auto;">
+                    <label for="cname" class="control-label col-lg-2">หน่วยงานที่รับผิดชอบ <span class="required">*</span></label>
+                    <div class="col-5">
+                    <select name="personnel_type" class="form-control" >
+                        <option value="">กรุณาเลือก</option>
+                        <% if(personneltype) { %>
+                            <% for(var i=0; i < personneltype.length; i++){ %>
+                                <option value="<%= personneltype[i].idpersonneltype %>" <% if(personneltype[i].idpersonneltype == editpersonnel.personnel_type){ %>
+                                    selected
+                                <%} %>>
+                                     <%= personneltype[i].name_pst %>
+                                </option>
+                                <%}%>
+                                    <%}%>
+                    </select>
+                </div>
+                  </div>
+                  <div class="form-group" style="background-color: rgb(221, 213, 200); padding: 30px; margin: auto;">
+                    <div class="col-offset-4 col-4">
+                      <button id="editter" class="btn btn-primary" type="submit">บันทึก</button>
+                      
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+            </div>
+          </section>
+        </div>
+      </div>
+      
+      <!-- page end-->
+    </section>
+  </section>
+  <%- include ("../_footer") %>

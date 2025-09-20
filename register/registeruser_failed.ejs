@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+
+</head>
+
+<body>
+    <style>
+        body {
+            background-color: yellow;
+        }
+    </style>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'เลขบัตรประชาชนนี้ได้ทำการลงทะเบียนแล้ว',
+            text: 'ไม่สามารถลงทะเบียนซ้ำได้',
+            footer: 'กำลังทำการกลับไปหน้าลงทะเบียน',
+            showConfirmButton: false,
+            timer: 5000,
+        });
+        setTimeout(function() {
+            window.history.back();
+        }, 4500)
+    </script>
+</body>
+
+</html>

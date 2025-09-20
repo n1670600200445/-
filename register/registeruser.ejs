@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Login user</title>
+    <!-- MDB icon -->
+    <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="MDB5/css/mdb.min.css" />
+    <link href="/dist/css/style.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <style>
+        /* body {
+            background-color: #039890;
+        }
+
+        .headerusers {
+            font-weight: bold;
+        }
+
+        .registerusers {
+            color: rgb(189, 189, 189);
+        }
+
+        .logo-image {
+            width: 150px;
+            height: 150px;
+        }
+
+        .btn-info {
+            background-color: #009efb !important;
+            border-color: #009efb !important;
+            box-shadow: 0 1px 0 rgb(255 255 255 / 15%) !important;
+        }
+
+        .container {
+            width: 100%;
+            display: flex;
+            min-height: 100vh;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            position: relative;
+            z-index: 1;
+        }
+
+        .register-users-form {
+            width: 500px;
+            border-radius: 10px;
+            overflow: hidden;
+            padding: 10px;
+        } */
+
+        body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: left;
+    background-image: linear-gradient(0deg, rgba(246, 247, 249, 1) 28%, rgba(227, 236, 255, 1) 44%, rgba(185, 211, 255, 1) 63%, rgba(155, 193, 255, 1) 77%, rgba(131, 186, 255, 1) 92%);
+}
+
+
+        
+        .container {
+  max-width: 400px;
+  background: #f8f9fd;
+  background: linear-gradient(0deg, rgb(255, 255, 255) 0%, rgb(244, 247, 251) 100%);
+  border-radius: 40px;
+  padding: 25px 35px;
+  border: 5px solid rgb(255, 255, 255);
+  box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 30px 30px -20px;
+  margin: 20px auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, calc(-50% + 350px));
+}
+
+
+/* .container {
+    max-width: 500px;
+    background: #f8f9fd;
+    background: linear-gradient(0deg, rgb(255, 255, 255) 0%, rgb(244, 247, 251) 100%);
+    border-radius: 40px;
+    padding: 30px 40px;
+    border: 5px solid rgb(255, 255, 255);
+    box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 30px 30px -20px;
+    margin: 20px auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, calc(-50% + 350px));
+}
+
+@media (max-width: 768px) {
+    .container {
+        max-width: 90%; 
+        padding: 20px 25px; 
+        transform: translate(-50%, calc(-50% + 250px)); 
+    }
+}
+
+
+@media (max-width: 576px) {
+    .container {
+        max-width: 95%; 
+        padding: 15px 20px; 
+        transform: translate(-50%, calc(-50% + 150px)); 
+    }
+} */
+
+.heading {
+  text-align: center;
+  font-weight: 900;
+  font-size: 30px;
+  color: rgb(16, 137, 211);
+}
+
+.form {
+  margin-top: 50px;
+}
+
+
+        .form .input {
+            width: 100%;
+            background: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 20px;
+            margin-top: 15px;
+            box-shadow: #cff0ff 0px 10px 10px -5px;
+            border-inline: 2px solid transparent;
+        }
+
+        .form .input::-moz-placeholder {
+            color: rgb(170, 170, 170);
+        }
+
+        .form .input::placeholder {
+            color: rgb(170, 170, 170);
+        }
+
+        .form .input:focus {
+            outline: none;
+            border-inline: 2px solid #12b1d1;
+        }
+
+        .form .forgot-password {
+            display: block;
+            margin-top: 10px;
+            margin-left: 10px;
+        }
+
+        .form .forgot-password a {
+            font-size: 11px;
+            color: #0099ff;
+            text-decoration: none;
+        }
+
+        /* .form .login-button {
+            display: block;
+            width: 100%;
+            font-weight: bold;
+            background: linear-gradient(45deg, rgb(16, 137, 211) 0%, rgb(18, 177, 209) 100%);
+            color: white;
+            padding-block: 15px;
+            margin: 20px auto;
+            border-radius: 20px;
+            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 20px 10px -15px;
+            border: none;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .form .login-button:hover {
+            transform: scale(1.03);
+            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 23px 10px -20px;
+        }
+
+        .form .login-button:active {
+            transform: scale(0.95);
+            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 15px 10px -10px;
+        } */
+
+
+        .login-button {
+    display: block;
+    width: 100%;
+    font-weight: bold;
+    background: linear-gradient(45deg, rgb(16, 137, 211) 0%, rgb(18, 177, 209) 100%);
+    color: white;
+    padding-block: 15px;
+    margin: 20px auto;
+    border-radius: 20px;
+    box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 20px 10px -15px;
+    border: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.login-button:hover {
+    transform: scale(1.03);
+    box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 23px 10px -20px;
+}
+
+.login-button:active {
+    transform: scale(0.95);
+    box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 15px 10px -10px;
+}
+
+
+        .social-account-container {
+            margin-top: 25px;
+        }
+
+        .social-account-container .title {
+            display: block;
+            text-align: center;
+            font-size: 10px;
+            color: rgb(170, 170, 170);
+        }
+
+        .social-account-container .social-accounts {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 5px;
+        }
+
+        .social-account-container .social-accounts .social-button {
+            background: linear-gradient(45deg, rgb(0, 0, 0) 0%, rgb(112, 112, 112) 100%);
+            border: 5px solid white;
+            padding: 5px;
+            border-radius: 50%;
+            width: 40px;
+            aspect-ratio: 1;
+            display: grid;
+            place-content: center;
+            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 12px 10px -8px;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .social-account-container .social-accounts .social-button .svg {
+            fill: white;
+            margin: auto;
+        }
+
+        .social-account-container .social-accounts .social-button:hover {
+            transform: scale(1.2);
+        }
+
+        .social-account-container .social-accounts .social-button:active {
+            transform: scale(0.9);
+        }
+
+        .agreement {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .agreement a {
+            text-decoration: none;
+            color: #0099ff;
+            font-size: 9px;
+        }
+
+        .logo-image {
+            width: 125px;
+            height: 125px;
+            display: block;
+            margin: 0 auto 20px auto;
+        }
+
+        .form-outline {
+            margin-bottom: 16px;
+        }
+
+        .form-outline label {
+            font-size: 14px;
+            color: #000;
+        }
+
+        .form-outline {
+    margin-bottom: 15px; /* Adjust spacing between form elements */
+}
+
+.input {
+    width: 100%;
+    background: white;
+    border: none;
+    padding: 12px 20px; /* Adjust padding for a compact look */
+    border-radius: 20px;
+    box-shadow: #cff0ff 0px 10px 10px -5px;
+    border-inline: 2px solid transparent;
+}
+
+.radio-sex label {
+    font-weight: bold;
+}
+
+.radio-sex select {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    box-shadow: #cff0ff 0px 10px 10px -5px;
+}
+
+.btn-info {
+    background-color: #009efb !important;
+    border-color: #009efb !important;
+    box-shadow: 0 1px 0 rgb(255 255 255 / 15%) !important;
+}
+
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: left;
+    background-image: linear-gradient(0deg, rgba(246, 247, 249, 1) 28%, rgba(227, 236, 255, 1) 44%, rgba(185, 211, 255, 1) 63%, rgba(155, 193, 255, 1) 77%, rgba(131, 186, 255, 1) 92%);
+}
+
+.P01 {
+    text-align: center; /* จัดกลางเนื้อหาใน <p> */
+    margin-top: 20px; /* เพิ่มระยะห่างจากด้านบนตามต้องการ */
+}
+
+.P01 a {
+    text-decoration: none; /* ลบเส้นขีดใต้ลิงก์ */
+    color: #0099ff; /* กำหนดสีของลิงก์ */
+    transition: color 0.3s ease; /* เพิ่มการเปลี่ยนแปลงสีอย่างราบรื่น */
+}
+
+.P01 a:hover {
+    color: #6a037d; /* เปลี่ยนสีลิงก์เมื่อเอาเมาส์แตะ */
+}
+
+    </style>
+</head>
+
+<body style="background-color: whitesmoke;">
+    <!-- Start your project here-->
+    <div class="container">
+        <div class="register-users-form" align="center">
+            <div class="row">
+                <div class="headerusers">
+                    <h2>ลงทะเบียนประชาชน</h2>
+                </div>
+            </div>
+            <!-- Pills content -->
+            <br>
+            <div class="tab-content">
+                <div class="tab-pane fade show active">
+                    <form action="/register/usersave" method="POST">
+                        <!-- Email input -->
+                        <div class="row no-gutters">
+                            <div class="col-md-6 pr-1">
+                                <div class="form-outline mb-2">
+                                    <input type="text" name="fname_us" id="firstname_us" class="input" placeholder="ชื่อ" required>
+                                    <label class="form-label" for="firstname_us"></label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 pr-1">
+                                <div class="form-outline mb-2">
+                                    <input type="text" name="lname_us" id="lastname_us" class="input" placeholder="นามสกุล" required>
+                                    <label class="form-label" for="lastname_us"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-outline mb-2">
+                            <input type="text" id="idcard" name="idcard_us" maxlength="13" minlength="13"
+                                class="input" placeholder="รหัสบัตรประชาชน" required />
+                            <label class="form-label" for="idcard"></label>
+                        </div>
+
+                        <div class="form-outline mb-2">
+                            <input type="text" class="input" id="phone_us" name="phone_us" maxlength="10"placeholder="เบอร์โทรศัพท์" required>
+                            <label class="form-label" for="phone_us"></label>
+                        </div>
+
+                        <div class="radio-sex row mt-4" align="start">
+                            <label class="col-md-3"> เพศ</label>
+                            <div class="col-md-2">
+                                <input name="sex_us" type="radio" id="radio_30" value="1" required
+                                    class="with-gap material-inputs material-inputs radio-col-indigo">
+                                <label for="radio_30">ชาย</label>
+                            </div>
+                            <div class="col-md-2">
+                                <input name="sex_us" type="radio" id="radio_31" value="2" required
+                                    class="with-gap material-inputs material-inputs radio-col-indigo">
+                                <label for="radio_31">หญิง</label>
+                            </div>
+                        </div>
+
+                        <div id="validate_sex_us">
+                        </div>
+                        <script>
+
+                        </script>
+                        <div class="date-form row mt-4" align="start">
+                            <label for="birthday_us" class="col-md-3">วันเดือนปีเกิด</label>
+                            <!-- <input type="hidden" id="birthday_us" name="birthday_us" class="form-control" required> -->
+                            <div class="d-flex col-md-9 ">
+                                <SELECT id="day" name="dd" class="form-control" required>
+                                </SELECT>
+                                <SELECT id="month" name="mm" onchange="change_month(this)" class="form-control"
+                                    required>
+                                </SELECT>
+                                <SELECT id="year" name="yyyy" onchange="change_year(this)" class="form-control"
+                                    required>
+                                </SELECT>
+                            </div>
+
+                        </div>
+
+                        <script>
+                            var Days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];// index => month [0-11]
+                            $(document).ready(function () {
+                                var option = '<option value="">วัน</option>';
+                                var selectedDay = "วัน";
+                                for (var i = 1; i <= Days[0]; i++) { //add option days
+                                    option += '<option value="' + i + '">' + i + '</option>';
+                                }
+                                $('#day').append(option);
+                                // $('#day').val(selectedDay);
+
+                                var option = '<option value="">เดือน</option>';
+                                var selectedMon = "เดือน";
+                                for (var i = 1; i <= 12; i++) {
+                                    option += '<option value="' + i + '">' + i + '</option>';
+                                }
+                                $('#month').append(option);
+                                // $('#month').val(selectedMon);
+
+
+                                var d = new Date();
+                                var option = '<option value="">ปี</option>';
+                                selectedYear = "ปี";
+                                var maxyear = d.getFullYear() + 543;
+                                var minyear = maxyear - 100;
+                                for (var i = minyear; i <= maxyear; i++) {// years start i
+                                    option += '<option value="' + i + '">' + i + '</option>';
+                                }
+                                $('#year').append(option);
+                                // $('#year').val(selectedYear);
+
+                                // test_d = document.getElementById("day").value
+                                // test_m = document.getElementById("month").value
+                                // test_y = document.getElementById("year").value
+                                // test_dmy = test_d+"-"+test_m+"-"+test_y
+                                // alert(test_dmy)
+                                // $(birthday_us).val(test_dmy)
+                            });
+
+                            function isLeapYear(year) {
+                                year = parseInt(year);
+                                if (year % 4 != 0) {
+                                    return false;
+                                } else if (year % 400 == 0) {
+                                    return true;
+                                } else if (year % 100 == 0) {
+                                    return false;
+                                } else {
+                                    return true;
+                                }
+                            }
+
+                            function change_year(select) {
+                                if (isLeapYear($(select).val())) {
+                                    Days[1] = 29;
+                                }
+                                else {
+                                    Days[1] = 28;
+                                }
+                                if ($("#month").val() == 2) {
+                                    var day = $('#day');
+                                    var val = $(day).val();
+                                    $(day).empty();
+                                    var option = '<option value="day" disabled>วัน</option>';
+                                    for (var i = 1; i <= Days[1]; i++) { //add option days
+                                        option += '<option value="' + i + '">' + i + '</option>';
+                                    }
+                                    $(day).append(option);
+                                    if (val > Days[month]) {
+                                        val = 1;
+                                    }
+                                    $(day).val(val);
+                                }
+                            }
+
+                            function change_month(select) {
+                                var day = $('#day');
+                                var val = $(day).val();
+                                $(day).empty();
+                                var option = '<option value="day" disabled>วัน</option>';
+                                var month = parseInt($(select).val()) - 1;
+                                for (var i = 1; i <= Days[month]; i++) { //add option days
+                                    option += '<option value="' + i + '">' + i + '</option>';
+                                }
+                                $(day).append(option);
+                                if (val > Days[month]) {
+                                    val = 1;
+                                }
+                                $(day).val(val);
+                            }
+                        </script>
+
+                        <div class="radio-sex row mt-4" align="start">
+                            <label class="col-md-3">หมู่บ้าน</label>
+                            <div class="col-md-9">
+                                <select name="village_id" class="input" id="" required>
+                                    <option value="">กรุณาเลือก</option>
+                                    <% if(village) { %>
+                                        <% for(var i=0; i < village.length; i++){ %>
+                                            <option value="<%= village[i].idvillage %>">
+                                                <%= village[i].name_village %>
+                                            </option>
+                                        <%}%>
+                                    <%}%>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-outline mb-2">
+                            <input type="text" id="idcard" name="address_us" class="input" placeholder="บ้านเลขที่" required />
+                            <label class="form-label" for="idcard"></label>
+                        </div>
+
+                        <button type="submit" class="login-button"
+                            onclick="radiovalidate_sex_us()">ลงทะเบียน</button>
+
+                              
+                        <div class="text-center registerusers">
+                            <p class="P01"> <a href="/loginusers">กลับเข้าสู่ระบบ</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- Pills content -->
+        </div>
+    </div>
+    <!-- End your project here-->
+    <script>
+        function radiovalidate_sex_us() {
+            if (document.querySelector("input[type='radio'][name=sex_us]:checked") == null) {
+                document.getElementById('validate_sex_us').innerHTML = '<p style="color: red;">*กรุณาเลือกเพศ</p>';
+            }
+        }
+    </script>
+    <script type="text/javascript" src="MDB5/js/mdb.min.js"></script>
+    <!-- Custom scripts -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+</body>
+
+</html>

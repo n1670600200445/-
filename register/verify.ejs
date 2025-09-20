@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOTIFY</title>
+    <link href="/dist/css/style.min.css" rel="stylesheet">
+</head>
+<style>
+    .otp-card {
+        text-align: center;
+        background-color: white;
+        border-radius: 10px;
+        padding: 3rem;
+        box-shadow: 0 10px 40px -20px black;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="d-flex justify-content-center align-items-center" style="height: 100vh">
+            <div class="text-center">
+                <div class="row">
+                    <input type="hidden" value="<%=phone_us%>" id="phone_us">
+                    <div class="otp-card">
+                        <h2>ยืนยันเบอร์โทรศัพท์</h2>
+                        <p>ระบบได้ส่งรหัส OTP ไปที่เบอร์ <%=phone_us%>
+                                <br>โปรดใส่รหัส OTP
+                                ที่ท่านได้รับเพื่อสำเร็จขั้นตอนการยืนยันหมายเลขโทรศัพท์
+                                <br><span id="timeout"></span>
+                        </p>
+                        <p id="message"></p>
+
+                        <form>
+                            <div class="row">
+                                <div>
+                                    <input type="text" name="input_verify_us" maxlength="6" class="form-control"
+                                        id="input_verifynumber" placeholder="กรอกรหัส OTP" required />
+                                </div>
+                                <div class="mt-2">
+                                    <a onclick="resendOTP()" class="btn btn-warning w-100"><i
+                                            data-feather="refresh-cw"></i>ขอรหัส OTP ใหม่</a>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-6 text-center">
+                                    <a onclick="history.back()" class="btn btn-secondary w-100">กลับ</a>
+                                </div>
+                                <div class="col-md-6 text-center">
+                                    <a onclick="submitOTP()" class="btn btn-success w-100">ยืนยัน</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="/assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    setInterval(() => {
+        const phone_us = document.getElementById('phone_us').value;
+        $.ajax({
+            url: '/timeout',
+            type: 'POST',
+            data: { phone_us },
+            success: (data) => {
+                if (data.timeout != -2) {
+                    $('#timeout').text(`เหลือเวลาอีก: ${data.timeout} วินาที`);
+                } else {
+                    $('#timeout').text(`รหัส OTP ของคุณหมดอายุ กรุณาขอ OTP ใหม่`);
+                    $('#timeout').css("color", "red")
+                }
+            }
+        });
+    }, 1000);
+
+    function resendOTP() {
+        const phone_us = document.getElementById('phone_us').value;
+        $.ajax({
+            url: '/register/getotp_us',
+            type: 'POST',
+            data: { phone_us },
+            success: (data) => {
+                console.log(data);
+            }
+        });
+    }
+
+    function submitOTP() {
+        const input_verifynumber = document.getElementById('input_verifynumber').value;
+        const phone_us = document.getElementById('phone_us').value;
+
+        $.ajax({
+            url: '/register/verify_us',
+            type: 'POST',
+            data: { input_verifynumber, phone_us },
+            success: (data) => {
+                console.log(data.Log);
+                if (data.Log) {
+                    if(data.Log == 1){
+                        
+                    }
+                    if (data.Log == 2) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'รหัส OTP ไม่ถูกต้อง',
+                            text: 'กรุณาลองใหม่',
+                        })
+                    }
+                    if (data.Log == 3) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'ไม่พบรหัส OTP',
+                        })
+                    }
+                }
+            }
+        });
+    }
+
+</script>
+
+</html>

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <meta charset="UTF-8" />
+    <title>OCR ตัวเลขจากภาพ</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #f0f4f8;
+        color: #333;
+        max-width: 700px;
+        margin: 40px auto;
+        padding: 20px;
+        border-radius: 16px;
+        background: white;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      }
+      h2,
+      h3 {
+        color: #2c3e50;
+        border-bottom: 2px solid #dcdcdc;
+        padding-bottom: 6px;
+      }
+      input[type="file"],
+      input[type="text"],
+      button {
+        font-size: 1rem;
+        padding: 10px 16px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        outline: none;
+        margin-top: 10px;
+      }
+      input[type="text"] {
+        width: 80%;
+      }
+      button {
+        background: #3498db;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        margin-left: 5px;
+      }
+      button:hover {
+        background: #2980b9;
+      }
+      video,
+      canvas,
+      img {
+        max-width: 100%;
+        margin-top: 15px;
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+      hr {
+        margin: 30px 0;
+        border: none;
+        height: 1px;
+        background: #e0e0e0;
+      }
+      ul {
+        padding-left: 20px;
+        color: #2d3436;
+      }
+      li {
+        padding: 4px 0;
+      }
+      #message {
+        margin: 15px 0;
+        font-weight: bold;
+        padding: 10px;
+        border-radius: 8px;
+      }
+      #message.success {
+        color: green;
+        background-color: #d4edda;
+        border: 1px solid #c3e6cb;
+      }
+      #message.error {
+        color: red;
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+      }
+      select.form-select.custom-select-enhanced {
+        background-color: #f9fbfc;
+        border: 1px solid #a6c1d1;
+        border-radius: 12px;
+        padding: 12px 20px;
+        font-size: 1rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+      select.form-select.custom-select-enhanced:focus {
+        outline: none;
+        border-color: #3498db;
+        box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.2);
+        background-color: #ffffff;
+      }
+      select.form-select.custom-select-enhanced:hover {
+        border-color: #5dade2;
+      }
+      option {
+        padding: 15px;
+      }
+    </style>
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  </head>
+  <body>
+    <h2>เก็บข้อมูลสุขภาพ ค่าอุณหภูมิ</h2>
+    <h2>📷 อัปโหลดภาพหรือเปิดกล้อง</h2>
+
+    <div id="message" style="display: none"></div>
+
+   <form id="uploadForm" enctype="multipart/form-data">
+      <input type="file" name="image" accept="image/*" required />
+      <button type="submit">📂 อัปโหลด</button>
+    </form>
+
+
+    <hr />
+
+    <div>
+      <button id="startCameraBtn">🎥 เปิดกล้อง</button>
+      <button id="captureBtn" disabled>📸 ถ่ายภาพ</button>
+    </div>
+
+    <video id="video" autoplay playsinline style="display: none"></video>
+    <canvas id="canvas" style="display: none"></canvas>
+
+    <div id="resultArea"></div>
+
+    <hr />
+    <!-- ฟอร์มกรอกข้อมูลด้วยตนเอง -->
+<form id="manualForm" method="POST" enctype="multipart/form-data" action="/process_image">
+      <div class="mb-3">
+        <label for="member_id" class="form-label fw-bold">
+          <i class="bi bi-person-circle me-1"></i> เลือกชื่อสมาชิก:
+        </label>
+        <select
+          class="form-select form-select-lg custom-select-enhanced"
+          id="member_id"
+          name="member_id"
+          required
+        >
+          <option value="">-- กรุณาเลือกชื่อ --</option>
+        </select>
+      </div>
+      <hr />
+
+      <div class="mb-3">
+        <label for="officer_name">ชื่อเจ้าหน้าที่/อสม.:</label>
+        <input type="text" id="officer_name" name="officer_name" placeholder="กรอกชื่อเจ้าหน้าที่" required/>
+      </div>
+      <hr />
+
+      <label>กรุณากรอกตัวเลขด้วยตนเอง:</label><br />
+      <input type="text" name="manual_input" placeholder="ตัวอย่าง 36.5" pattern="\d+(\.\d+)?" required />
+      <button type="submit">💾 บันทึกข้อมูล</button>
+    </form>
+    <div id="resultMessage" class="mt-3"></div>
+
+    <script>
+      // เปิดใช้งาน Select2
+      $(document).ready(function () {
+        $("#member_id").select2({
+          placeholder: "-- กรุณาเลือกชื่อ --",
+          allowClear: true,
+        });
+      });
+
+      // ฟังก์ชันโหลดรายชื่อสมาชิก
+      function loadMembers() {
+        fetch("/get_members")
+          .then((res) => {
+            if (!res.ok) throw new Error("HTTP error " + res.status);
+            return res.json();
+          })
+          .then((data) => {
+            const select = document.getElementById("member_id");
+            select.innerHTML = '<option value="">-- กรุณาเลือกชื่อ --</option>';
+
+            data.forEach((member) => {
+              const option = document.createElement("option");
+              option.value = member.id;
+              option.textContent = member.fullname;
+              select.appendChild(option);
+            });
+
+            $("#member_id").trigger("change.select2");
+          })
+          .catch((err) => console.error("Error loading members:", err));
+      }
+
+      loadMembers();
+      setInterval(loadMembers, 30000);
+
+      const video = document.getElementById("video");
+      const canvas = document.getElementById("canvas");
+      const startCameraBtn = document.getElementById("startCameraBtn");
+      const captureBtn = document.getElementById("captureBtn");
+      const messageDiv = document.getElementById("message");
+      const resultArea = document.getElementById("resultArea");
+      const uploadForm = document.getElementById("uploadForm");
+      const manualForm = document.getElementById("manualForm");
+      let stream = null;
+
+      function showMessage(text, isSuccess = true) {
+        messageDiv.style.display = "block";
+        messageDiv.textContent = text;
+        messageDiv.className = isSuccess ? "success" : "error";
+        setTimeout(() => {
+          messageDiv.style.display = "none";
+        }, 4000);
+      }
+
+      startCameraBtn.addEventListener("click", async () => {
+        if (stream) {
+          stopCamera();
+          return;
+        }
+        try {
+          stream = await navigator.mediaDevices.getUserMedia({ video: true });
+          video.srcObject = stream;
+          video.style.display = "block";
+          captureBtn.disabled = false;
+          startCameraBtn.textContent = "⏹️ ปิดกล้อง";
+        } catch (err) {
+          showMessage("❌ ไม่สามารถเข้าถึงกล้อง: " + err.message, false);
+        }
+      });
+
+      function stopCamera() {
+        if (stream) {
+          stream.getTracks().forEach((track) => track.stop());
+          stream = null;
+          video.style.display = "none";
+          captureBtn.disabled = true;
+          startCameraBtn.textContent = "🎥 เปิดกล้อง";
+        }
+      }
+
+      captureBtn.addEventListener("click", async () => {
+        if (!stream) {
+          showMessage("กรุณาเปิดกล้องก่อน", false);
+          return;
+        }
+
+        const context = canvas.getContext("2d");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        canvas.toBlob(async (blob) => {
+          const formData = new FormData();
+          formData.append("image", blob, "capture.jpg");
+          formData.append("member_id", document.getElementById("member_id").value);
+          formData.append("officer_name", document.getElementById("officer_name").value);
+
+          try {
+            const res = await fetch("/process_image", {
+              method: "POST",
+              body: formData,
+            });
+            const data = await res.json();
+
+            if (data.error) {
+              showMessage(data.error, false);
+              return;
+            }
+
+            showMessage("✅ บันทึกข้อมูลสำเร็จ");
+            resultArea.innerHTML = `
+              <h3>🖼️ ภาพที่ถ่าย:</h3>
+              <img src="${data.image_url}" alt="Uploaded Image" />
+              <h3>🌡️ ตัวเลขค่าอุณหภูมิ:</h3>
+              <ul>
+                ${
+                  data.numbers.length > 0
+                    ? data.numbers.map((n) => `<li>${n}</li>`).join("")
+                    : "<li>ไม่พบค่าที่เป็นตัวเลขทศนิยมในภาพ</li>"
+                }
+              </ul>
+            `;
+            stopCamera();
+          } catch (error) {
+            showMessage("เกิดข้อผิดพลาดในการส่งข้อมูล", false);
+          }
+        }, "image/jpeg");
+      });
+
+      uploadForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const input = uploadForm.querySelector('input[name="image"]');
+        if (input.files.length === 0) {
+          showMessage("กรุณาเลือกไฟล์ภาพก่อน", false);
+          return;
+        }
+        if (!document.getElementById("member_id").value) {
+          showMessage("กรุณาเลือกชื่อสมาชิกก่อน", false);
+          return;
+        }
+
+  const formData = new FormData();
+  formData.append("image", input.files[0]);
+  formData.append("member_id", document.getElementById("member_id").value);
+  formData.append("officer_name", document.getElementById("officer_name").value);
+
+  try {
+    const res = await fetch("/process_image", {
+      method: "POST",
+      body: formData,
+    });
+    const data = await res.json();
+
+    if (data.error) {
+      showMessage(data.error, false);
+      return;
+    }
+
+    showMessage("✅ บันทึกข้อมูลสำเร็จ");
+    resultArea.innerHTML = `
+      <h3>🖼️ ภาพที่อัปโหลด:</h3>
+      <img src="${data.image_url}" alt="Uploaded Image" />
+      <h3>🌡️ ตัวเลขค่าอุณหภูมิ:</h3>
+      <ul>
+        ${
+          data.numbers.length > 0
+            ? data.numbers.map((n) => `<li>${n}</li>`).join("")
+            : "<li>ไม่พบค่าที่เป็นตัวเลขทศนิยมในภาพ</li>"
+        }
+      </ul>
+    `;
+  } catch (error) {
+    showMessage("เกิดข้อผิดพลาดในการส่งข้อมูล", false);
+  }
+});
+
+
+      manualForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const input = manualForm.querySelector('input[name="manual_input"]');
+        if (!input.value.match(/^\d+(\.\d+)?$/)) {
+          showMessage("กรุณากรอกตัวเลขทศนิยม เช่น 36.5", false);
+          return;
+        }
+
+        const formData = new FormData(manualForm); // officer_name จะถูกส่งอัตโนมัติ
+        try {
+          const res = await fetch("/manual", {
+            method: "POST",
+            body: formData,
+          });
+          const data = await res.json();
+
+          if (data.error) {
+            showMessage(data.error, false);
+            return;
+          }
+
+          showMessage(data.message);
+          resultArea.innerHTML = `
+            <h3>🌡️ ตัวเลขที่กรอกด้วยตนเอง:</h3>
+            <ul><li>${data.value}</li></ul>
+          `;
+          manualForm.reset();
+        } catch (error) {
+          showMessage("เกิดข้อผิดพลาดในการบันทึกข้อมูล", false);
+        }
+
+      });
+    </script>
+  </body>
+</html>

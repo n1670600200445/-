@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>อัปโหลดภาพค่าความดัน</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #eef2f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 50px;
+    }
+
+    .form-box {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: auto;
+      text-align: center;
+    }
+
+    .input-group {
+      margin: 15px 0;
+      text-align: left;
+    }
+
+    label {
+      display: inline-block;
+      width: 80px;
+      font-weight: bold;
+    }
+
+    input[type="text"] {
+      padding: 6px;
+      width: 180px;
+    }
+
+    input[type="file"], button {
+      margin-top: 15px;
+    }
+
+    button {
+      padding: 8px 20px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #canvasWrapper {
+  /* เอาความกว้างแบบตายตัวออก */
+  border: 1px solid #ccc;
+  overflow: auto;
+  text-align: center; /* จัดกลางตัว canvas */
+  max-width: 600px;
+}
+
+canvas {
+  display: inline-block; /* เพื่อให้ text-align: center ทำงาน */
+  max-width: 100%;       /* กันไม่ให้ใหญ่เกิน container */
+  height: auto;          /* รักษาอัตราส่วน */
+  margin: 0 auto;        /* จัดกลางในกรณี inline-block */
+  
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to right, #e0ecf8, #f4f7fa);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 50px;
+  margin: 0;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.form-box {
+  background: white;
+  padding: 30px 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: auto;
+  max-width: 700px;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.input-group {
+  margin: 15px 0;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+label {
+  display: inline-block;
+  width: 100px;
+  font-weight: 600;
+  color: #333;
+}
+
+input[type="text"],
+input[type="time"] {
+  padding: 8px 10px;
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+input[type="text"]:focus,
+input[type="time"]:focus {
+  border-color: #007bff;
+}
+
+input[type="file"] {
+  margin-top: 15px;
+  padding: 6px;
+}
+
+button {
+  padding: 10px 24px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+#canvasWrapper {
+  margin-top: 20px;
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+  overflow: auto;
+  text-align: center;
+  max-width: 600px;
+  max-height: 300px; /* ✅ จำกัดความสูงไม่ให้ขยายเกิน */
+  background: #f9f9f9;
+  padding: 10px;
+}
+
+canvas {
+  display: inline-block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 8px;
+}
+
+input[type="radio"] {
+  accent-color: #007bff;
+  margin-right: 6px;
+}
+
+div[style*="margin-bottom: 20px"] label {
+  font-weight: 600;
+  color: #444;
+}
+
+  </style>
+</head>
+<body>
+
+  <h2>เก็บข้อมูลสุขภาพ ค่าความดัน</h2>
+
+  <!-- ปุ่มตัวเลือก -->
+<!-- <div style="margin-bottom: 20px;">
+  <label><input type="radio" name="dataType" value="bp" checked onclick="toggleForm('bp')"> ค่าความดัน</label>
+  
+</div>  -->
+
+  <!-- <div class="form-box">
+    <input type="file" id="imageUpload" accept="image/*" />
+    <button onclick="uploadImage()">วิเคราะห์ภาพ</button>
+
+    <div id="canvasWrapper">
+      <canvas id="imageCanvas"></canvas>
+    </div>
+
+    <div class="input-group">
+      <label>SYS:</label>
+       <input type="text" id="sys" readonly> -->
+           <!-- <input type="text" id="sys" > -->
+       
+    <!-- </div>
+    <div class="input-group">
+      <label>DIA:</label> -->
+      <!-- <input type="text" id="dia" readonly> -->
+      <!-- <input type="text" id="dia" >
+    </div>
+    <div class="input-group">
+      <label>PULSE:</label> -->
+      <!-- <input type="text" id="pulse" readonly> -->
+      <!-- <input type="text" id="pulse" >
+    </div> -->
+
+    <div class="form-box">
+
+      <input type="file" id="imageUpload" accept="image/*" />
+     <button type="button" onclick="uploadImage()">วิเคราะห์ภาพ</button>
+
+    
+      <div id="canvasWrapper">
+        <canvas id="imageCanvas"></canvas>
+      </div>
+      
+
+
+      <!-- ฟอร์มค่าความดัน -->
+  <div id="bp-form">
+    <div class="input-group">
+      <label>SYS:</label>
+      <input type="text" id="sys">
+    </div>
+    <div class="input-group">
+      <label>DIA:</label>
+      <input type="text" id="dia">
+    </div>
+    <div class="input-group">
+      <label>PULSE:</label>
+      <input type="text" id="pulse">
+    </div>
+
+    <div class="input-group">
+      <label>ผู้บันทึก:</label>
+      <input type="text" id="recorder">
+    </div>
+
+    
+
+
+
+  </div>
+
+
+
+    <button type="button" onclick="saveToDatabase()" id="saveBtn">บันทึกข้อมูล</button>
+
+  </div>
+
+  <script>
+document.getElementById('saveBtn').addEventListener('click', () => {
+  // อ่านค่าจากฟอร์ม
+  const sys = document.getElementById('sys').value.trim();
+  const dia = document.getElementById('dia').value.trim();
+  const pulse = document.getElementById('pulse').value.trim();
+  const recorder = document.getElementById('recorder').value.trim();
+
+  // ตรวจสอบว่ากรอกครบไหม
+  if (!sys || !dia || !pulse || !recorder ) {
+    alert('กรุณากรอกข้อมูลให้ครบทุกช่องก่อนบันทึก');
+    return; // ไม่ส่งข้อมูล
+  }
+
+  // เตรียมข้อมูลส่ง
+  const payload = { sys, dia, pulse, recorder };
+
+  fetch('/save-data', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      alert('บันทึกข้อมูลเรียบร้อยแล้ว');
+
+      // ล้างช่องกรอกข้อมูล
+      document.getElementById('sys').value = '';
+      document.getElementById('dia').value = '';
+      document.getElementById('pulse').value = '';
+      document.getElementById('recorder').value = '';
+
+    } else {
+      alert('บันทึกข้อมูลล้มเหลว: ' + (data.error || 'Unknown error'));
+    }
+  })
+  .catch(err => {
+    alert('เกิดข้อผิดพลาดในการส่งข้อมูล');
+    console.error(err);
+  });
+});
+
+
+  </script>
+
+
+
+  <script>
+   window.onload = function () {
+  const allRectangles = {
+    bp: [
+      { x1: 255, y1: 95, x2: 365, y2: 145, color: 'red', label: 'SYS' },
+      { x1: 255, y1: 145, x2: 365, y2: 200, color: 'blue', label: 'DIA' },
+      { x1: 255, y1: 200, x2: 365, y2: 250, color: 'green', label: 'PULSE' }
+    ],
+    
+  };
+
+  let rectangles = [...allRectangles.bp]; // เริ่มต้นเป็นค่าความดัน
+
+  let dragging = false;
+  let resizing = false;
+  let dragIndex = -1;
+  let dragOffsetX = 0;
+  let dragOffsetY = 0;
+  const resizeMargin = 10;
+
+  const canvas = document.getElementById('imageCanvas');
+  const ctx = canvas.getContext('2d');
+  let img = null;
+
+  function drawImageWithRectangles() {
+    if (!img) return;
+
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, 0, 0);
+
+    rectangles.forEach(rect => {
+      ctx.strokeStyle = rect.color;
+      ctx.lineWidth = 3;
+      ctx.strokeRect(rect.x1, rect.y1, rect.x2 - rect.x1, rect.y2 - rect.y1);
+
+      ctx.font = "18px Arial";
+      ctx.fillStyle = rect.color;
+      ctx.fillText(rect.label, rect.x1, rect.y1 - 5);
+
+      ctx.beginPath();
+      ctx.arc(rect.x2, rect.y2, 5, 0, 2 * Math.PI);
+      ctx.fill();
+    });
+  }
+
+  function pointInRect(x, y, rect) {
+    return x >= rect.x1 && x <= rect.x2 && y >= rect.y1 && y <= rect.y2;
+  }
+
+  function pointNearCorner(x, y, rect) {
+    return (
+      Math.abs(x - rect.x2) < resizeMargin &&
+      Math.abs(y - rect.y2) < resizeMargin
+    );
+  }
+
+  canvas.onmousedown = function (e) {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+
+    const mouseX = (e.clientX - rect.left) * scaleX;
+    const mouseY = (e.clientY - rect.top) * scaleY;
+
+    dragIndex = -1;
+    dragging = false;
+    resizing = false;
+
+    rectangles.forEach((r, i) => {
+      if (pointNearCorner(mouseX, mouseY, r)) {
+        dragIndex = i;
+        resizing = true;
+      } else if (pointInRect(mouseX, mouseY, r)) {
+        dragIndex = i;
+        dragging = true;
+        dragOffsetX = mouseX - r.x1;
+        dragOffsetY = mouseY - r.y1;
+      }
+    });
+  };
+
+  canvas.onmousemove = function (e) {
+    if (dragIndex === -1) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+
+    const mouseX = (e.clientX - rect.left) * scaleX;
+    const mouseY = (e.clientY - rect.top) * scaleY;
+
+    if (resizing) {
+      rectangles[dragIndex].x2 = Math.min(canvas.width, Math.max(rectangles[dragIndex].x1 + 10, mouseX));
+      rectangles[dragIndex].y2 = Math.min(canvas.height, Math.max(rectangles[dragIndex].y1 + 10, mouseY));
+    } else if (dragging) {
+      const w = rectangles[dragIndex].x2 - rectangles[dragIndex].x1;
+      const h = rectangles[dragIndex].y2 - rectangles[dragIndex].y1;
+
+      let newX1 = mouseX - dragOffsetX;
+      let newY1 = mouseY - dragOffsetY;
+
+      newX1 = Math.max(0, Math.min(newX1, canvas.width - w));
+      newY1 = Math.max(0, Math.min(newY1, canvas.height - h));
+
+      rectangles[dragIndex].x1 = newX1;
+      rectangles[dragIndex].y1 = newY1;
+      rectangles[dragIndex].x2 = newX1 + w;
+      rectangles[dragIndex].y2 = newY1 + h;
+    }
+
+    drawImageWithRectangles();
+  };
+
+  canvas.onmouseup = canvas.onmouseleave = function () {
+    dragging = false;
+    resizing = false;
+    dragIndex = -1;
+  };
+
+  document.getElementById('imageUpload').addEventListener('change', function () {
+    if (this.files && this.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        img = new Image();
+        img.onload = function () {
+          // จัดกรอบให้อยู่ตรงกลาง
+          const rectW = 50;
+          const rectH = 50;
+          const startX = (img.width / 2) - rectW / 2;
+          const startY = (img.height / 2) - rectH * 2;
+
+          // จัดกรอบใหม่ตามประเภท
+          rectangles.forEach((r, i) => {
+            r.x1 = startX;
+            r.y1 = startY + i * (rectH + 10);
+            r.x2 = r.x1 + rectW;
+            r.y2 = r.y1 + rectH;
+          });
+
+          drawImageWithRectangles();
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(this.files[0]);
+    }
+  });
+
+  // ฟังก์ชันเปลี่ยนประเภท
+  window.toggleForm = function (type) {
+    rectangles = [...allRectangles[type]];
+    document.getElementById('bp-form').style.display = (type === 'bp') ? 'block' : 'none';
+   
+    if (img) {
+      // จัดตำแหน่งกรอบใหม่ตอนสลับประเภท
+      const rectW = 50;
+      const rectH = 50;
+      const startX = (img.width / 2) - rectW / 2;
+      const startY = (img.height / 2) - rectH * 2;
+
+      rectangles.forEach((r, i) => {
+        r.x1 = startX;
+        r.y1 = startY + i * (rectH + 10);
+        r.x2 = r.x1 + rectW;
+        r.y2 = r.y1 + rectH;
+      });
+
+      drawImageWithRectangles();
+    }
+  };
+
+  window.uploadImage = function () {
+  if (!img) {
+    alert("กรุณาเลือกภาพก่อน");
+    return;
+  }
+
+  const input = document.getElementById('imageUpload');
+  if (input.files.length === 0) {
+    alert("กรุณาเลือกภาพ");
+    return;
+  }
+
+  const rectsToSend = rectangles.map(r => ({
+    x1: Math.round(r.x1),
+    y1: Math.round(r.y1),
+    x2: Math.round(r.x2),
+    y2: Math.round(r.y2),
+  }));
+
+  const formData = new FormData();
+  formData.append('image', input.files[0]);
+  formData.append('rectangles', JSON.stringify(rectsToSend));
+  
+
+
+  fetch('/process-image', {
+    method: 'POST',
+    body: formData
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.error) {
+        alert('เกิดข้อผิดพลาด: ' + data.error);
+        return;
+      }
+      document.getElementById('sys').value = data.sys || '';
+      document.getElementById('dia').value = data.dia || '';
+      document.getElementById('pulse').value = data.pulse || '';
+     
+      })
+      .catch(err => {
+        alert('เกิดข้อผิดพลาดในการประมวลผล');
+        console.error(err);
+      });
+  };
+};
+
+  </script>
+  
+  
+
+</body>
+</html>

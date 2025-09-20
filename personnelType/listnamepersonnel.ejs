@@ -1,0 +1,272 @@
+<%- include ("../_header") %>
+
+  <style>
+    p {
+      text-align: center !important;
+    }
+  </style>
+
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-md-5 align-self-center">
+        <h3 class="page-title"><%=personnelnametype[0].name_pst%></h3>
+        <div class="d-flex align-items-center mt-1">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/personnelType">หน่วยงาน</a></li>
+              <li class="breadcrumb-item active" aria-current="page">รายชื่อเจ้าหน้าที่</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="d-flex border-bottom title-part-padding align-items-center">
+            <div>
+              <h4 class="card-title mb-0">รายชื่อเจ้าหน้าที่</h4>
+            </div>
+            <div class="ms-auto flex-shrink-0">
+              <a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#add-personnel-modal"><svg
+                  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-plus fill-white feather-sm">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>เพิ่มเจ้าหน้าที่</a>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="table-responsive">
+              <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <table id="zero_config" class="table table-striped table-bordered dataTable" role="grid"
+                      aria-describedby="zero_config_info">
+                      <thead>
+                        <tr role="row">
+                          <th class="sorting_asc" tabindex="0" aria-controls="zero_config" rowspan="1" colspan="1"
+                            aria-sort="ascending" aria-label="Name: activate to sort column descending"
+                            style="width: 0px;">ลำดับ</th>
+                          <th class="sorting" tabindex="0" aria-controls="zero_config" rowspan="1" colspan="1"
+                            aria-label="Position: activate to sort column ascending" style="width: 0px;">ชื่อ/นามสกุล
+                          </th>
+                          <th class="sorting" tabindex="0" aria-controls="zero_config" rowspan="1" colspan="1"
+                            aria-label="Position: activate to sort column ascending" style="width: 0px;">เบอร์โทรศัพท์
+                          </th>
+                          <th class="sorting" tabindex="0" aria-controls="zero_config" rowspan="1" colspan="1"
+                            aria-label="Office: activate to sort column ascending" style="width: 0px;">แสดง</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <%if(personnelname){%>
+                          <% for(var i=0; i<personnelname.length;i++ ){ %>
+                            <tr>
+                              <td>
+                                <%= i+1 %>
+                              </td>
+                              <td>
+                                <%= personnelname[i].fname_ps%>
+                                  <%= personnelname[i].lname_ps%>
+                              </td>
+                              <td>
+                                <%= personnelname[i].phone_ps%>
+                              </td>
+                              <td>
+                                <div class="btn-group">
+                                  <a id="<%= personnelname[i].idpersonnel%>" href="#" onclick="editpersonnel(this.id)"
+                                    class="btn btn-warning" data-bs-toggle="modal"
+                                    data-bs-target="#edit-personnel-modal"><i class="fas fa-pencil-alt fa-x"></i>
+                                    แก้ไขข้อมูล</a>
+                                  <a id="<%= personnelname[i].idpersonnel%>" href="#" onclick="deletepersonnel(this.id)"
+                                    class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#delete-personnel-modal"><i class="fas fa-trash-alt fa-x"></i>
+                                    ลบข้อมูล</a>
+                                </div>
+
+                              </td>
+                            </tr>
+                            <%}%>
+                              <%}%>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <form action="/personneltype/savename" method="POST">
+    <div id="add-personnel-modal" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md"
+      style="display: none;" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header d-flex align-items-center border-bottom">
+            <h4 class="modal-title" id="myModalLabel">เพิ่มข้อมูลเจ้าหน้าที่</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body mb row">
+            <label for="fname" class="col-sm-3  text-start control-label col-form-label"> ชื่อ</label>
+            <div class="col-sm-9">
+              <input type="text" name="fname_ps" placeholder="กรอกชื่อ" class="form-control" required>
+            </div>
+            <br><br>
+            <label for="fname" class="col-sm-3 text-start control-label col-form-label"> นามสกุล</label>
+            <div class="col-sm-9">
+              <input type="text" name="lname_ps" placeholder="กรอกนามสกุล" class="form-control" required>
+            </div>
+            <br><br>
+            <label for="fname" class="col-sm-3 text-start control-label col-form-label"> เบอร์โทรศัพท์</label>
+            <div class="col-sm-9">
+              <input type="text" name="phone_ps" placeholder="กรอกเบอร์โทรศัพท์" maxlength="10" 
+                class="form-control" required>
+            </div>
+            <br><br>
+            <label for="fname" class="col-sm-3 text-start control-label col-form-label"> รหัสบัตรประชาชน</label>
+            <div class="col-sm-9">
+              <input type="text" name="idcard_ps" maxlength="13" placeholder="กรอกรหัสบัตรประชาชน" class="form-control" required>
+            </div>
+            <br><br>
+            <input type="hidden" name="personnel_type" value="<%=personnelnametype[0].idpersonneltype%>">
+  
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button type="submit" class="btn btn-success font-weight-medium waves-effect">บันทึกข้อมูล</button>
+            <button type="button" class="btn btn-secondary font-weight-medium waves-effect"
+              data-bs-dismiss="modal">ปิด</button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+  </form>
+
+  <form action="/personneltype/updatename" method="POST">
+    <div id="edit-personnel-modal" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md"
+      style="display: none;" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header d-flex align-items-center border-bottom">
+            <h4 class="modal-title" id="myModalLabel">แก้ไขข้อมูลเจ้าหน้าที่</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body mb row" id="editpersonnel">
+            <label for="fname" class="col-sm-3  text-start control-label col-form-label"> ชื่อ</label>
+            <div class="col-sm-9">
+              <input type="text" id="edit-fname_ps" name="fname_ps" placeholder="กรอกชื่อ" class="form-control" required>
+            </div>
+            <br><br>
+            <label for="fname" class="col-sm-3 text-start control-label col-form-label"> นามสกุล</label>
+            <div class="col-sm-9">
+              <input type="text" id="edit-lname_ps" name="lname_ps" placeholder="กรอกนามสกุล" class="form-control" required>
+            </div>
+            <br><br>
+            <label for="fname" class="col-sm-3 text-start control-label col-form-label"> เบอร์โทรศัพท์</label>
+            <div class="col-sm-9">
+              <input type="text" id="edit-phone_ps" name="phone_ps" placeholder="กรอกเบอร์โทรศัพท์" maxlength="10" minlength="10"
+                class="form-control" required>
+            </div>
+            <br><br>
+            <label for="fname" class="col-sm-3 text-start control-label col-form-label"> รหัสบัตรประชาชน</label>
+            <div class="col-sm-9">
+              <input type="text" id="edit-idcard_ps" name="idcard_ps" placeholder="กรอกรหัสบัตรประชาชน" maxlength="13" minlength="13" class="form-control" required>
+            </div>
+            <br><br>
+            <input type="hidden" name="personnel_type" id="edit-personneltype" class="form-control">
+            <input type="hidden" name="idpersonnel" id="edit-idpersonnel" readonly>
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button type="submit" class="btn btn-warning font-weight-medium waves-effect">แก้ไขข้อมูล</button>
+            <button type="button" class="btn btn-secondary font-weight-medium waves-effect"
+              data-bs-dismiss="modal">ปิด</button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+  </form>
+
+  <form action="/personneltype/deletename" method="POST">
+    <div id="delete-personnel-modal" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md"
+      style="display: none;" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header d-flex align-items-center border-bottom">
+            <h4 class="modal-title" id="myModalLabel">ลบข้อมูลเจ้าหน้าที่</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body mb row">
+            <p id="deletepersonnel"></p>
+            <input type="hidden" name="idpersonnel" id="delete-idpersonnel" readonly>
+            <input type="hidden" name="idpersonnel_type" id="delete-personneltype" readonly>
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button type="submit" class="btn btn-danger font-weight-medium waves-effect">ยืนยัน</button>
+            <button type="button" class="btn btn-secondary font-weight-medium waves-effect"
+              data-bs-dismiss="modal">ปิด</button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+  </form>
+
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+  integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
+  integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
+  
+  <script>
+    $(document).ready(function () {
+      $('#zero_config').DataTable();
+    });
+  </script>
+
+  <script>
+    function editpersonnel(id) {
+      $.ajax({
+          url: '/personnel/edit',
+          type: 'POST',
+          data: { id },
+          success: (data) => {
+            console.log(data);
+            $('#edit-fname_ps').val(data.editpersonnel.fname_ps)
+            $('#edit-lname_ps').val(data.editpersonnel.lname_ps)
+            $('#edit-phone_ps').val(data.editpersonnel.phone_ps)
+            $('#edit-idcard_ps').val(data.editpersonnel.idcard_ps)
+            $('#edit-personneltype').val(data.editpersonnel.personnel_type)
+            $('#edit-idpersonnel').val(id)
+          }
+        });
+    }
+
+    function deletepersonnel(id) {
+      $.ajax({
+          url: '/personnel/checkdelete',
+          type: 'POST',
+          data: { id },
+          success: (data) => {
+            console.log(data);
+            $('#deletepersonnel').html('ต้องการลบเจ้าหน้าที่ '+data.editpersonnel.fname_ps+' '+data.editpersonnel.lname_ps+' ?')
+            $('#delete-idpersonnel').val(id)
+            $('#delete-personneltype').val(data.editpersonnel.personnel_type)
+          }
+        });
+    }
+
+
+  </script>
+
+  <%- include ("../_footer") %>

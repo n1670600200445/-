@@ -1,0 +1,56 @@
+<%- include ("../_header") %>
+<section id="main-content">
+    <section class="wrapper">
+      <div class="row">
+        <div class="col-lg-12">
+          <h3 class="page-header"><i class="fa fa-files-o"></i> EDIT INFORMATION</h3>
+          <ol class="breadcrumb">
+            <li><i class="fa fa-home"></i><a href="/index">Dashboard</a></li>
+            <li><i class="icon_document_alt"></i><a href="/personneltype"> จัดการข้อมูลหน่วยงาน</a></li>
+            <li><i class="fa fa-files-o"></i>แก้ไขข้อมูลหน่วยงาน</li>
+          </ol>
+        </div>
+      </div>
+      <!-- Form validations -->
+      <div class="row">
+        <div class="col-lg-2"> </div>
+        <div class="col-lg-8">
+            <div class="col-lg-2"> </div>
+          <section class="panel">
+            <header class="panel-heading">
+                <b style="font-size: large;"> แก้ไขข้อมูลหน่วยงาน </b>
+                <div class="panel-actions">
+                  <a href="/personneltype/edit<%=editpersonneltype.idpersonneltype%>" class="btn-setting"><i class="fa fa-rotate-right"></i></a>
+                  <a href="/personneltype" class="btn-close"><i class="fa fa-times"></i></a>
+                </div>
+            </header>
+            <div class="panel-body">
+              <div class="form">
+                <form class="form-horizontal" id="feedback_form" method="POST" action="/personneltype/update<%=editpersonneltype.idpersonneltype %>">
+                  <div class="form-group " style="background-color: rgb(247, 245, 242); padding: 30px; margin: auto;">
+                    <label for="cname" class="control-label col-lg-2">ชื่อหน่วยงาน <span class="required">*</span></label>
+                    <div class="col-lg-5">
+                      <input class="form-control" id="cname" value="<%=editpersonneltype.name_pst%>" name="name_pst"  type="text" required />
+                    </div>
+                    
+                    </div>
+               
+                <div class="form-group" style="background-color: rgb(221, 213, 200); padding: 30px; margin: auto;">
+                  <div class="col-lg-offset-4 col-lg-4">
+                    <button id="editter" class="btn btn-primary" type="submit">บันทึก</button>
+                    
+                  </div>
+                  </div>
+                </div>
+                </form>
+              </div>
+
+            </div>
+          </section>
+        </div>
+      </div>
+      
+      <!-- page end-->
+    </section>
+  </section>
+  <%- include ("../_footer") %>

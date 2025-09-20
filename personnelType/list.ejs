@@ -1,0 +1,233 @@
+<%- include ("../_header") %>
+
+<style>
+  p {
+    text-align: center !important;
+  }
+</style>
+
+<input id="idpt" value="<%=idpersonneltype1%>" readonly hidden>
+<input id="namept" value="<%=name_pst1%>" readonly hidden>
+
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-md-5 align-self-center">
+        <h3 class="page-title">หน่วยงาน</h3>
+        <div class="d-flex align-items-center mt-1">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">แดชบอร์ด</a></li>
+              <li class="breadcrumb-item active" aria-current="page">หน่วยงาน</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="d-flex border-bottom title-part-padding align-items-center">
+            <div>
+              <h4 class="card-title mb-0">หน่วยงาน</h4>
+            </div>
+            <div class="ms-auto flex-shrink-0">
+              <a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#add-personneltype-modal"><svg
+                  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-plus fill-white feather-sm">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>เพิ่มหน่วยงาน</a>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="table-responsive">
+              <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <table id="zero_config" class="table table-striped table-bordered dataTable" role="grid"
+                    aria-describedby="zero_config_info">
+                    <thead>
+                      <tr role="row">
+                        <th class="sorting_asc" tabindex="0" aria-controls="zero_config" rowspan="1" colspan="1"
+                          aria-sort="ascending" aria-label="Name: activate to sort column descending"
+                          style="width: 0px;">ลำดับ</th>
+                        <th class="sorting" tabindex="0" aria-controls="zero_config" rowspan="1" colspan="1"
+                          aria-label="Position: activate to sort column ascending" style="width: 0px;">ชื่อหน่วยงาน</th>
+                        <th class="sorting" tabindex="0" aria-controls="zero_config" rowspan="1" colspan="1"
+                          aria-label="Office: activate to sort column ascending" style="width: 0px;">แสดง</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <%if(personneltype){%>
+                        <% for(var i=0; i<personneltype.length;i++ ){ %>
+                          <tr>
+                            <td>
+                              <%= i+1 %>
+                            </td>
+                            <td>
+                              <%= personneltype[i].name_pst%>
+                            </td>
+                            <td>
+                              <div class="btn-group">
+                                <a id="<%= personneltype[i].idpersonneltype%>" href="#"
+                                  onclick="editpersonelType(this.id)" class="btn btn-warning" data-bs-toggle="modal"
+                                  data-bs-target="#edit-personelType-modal"><i class="fas fa-pencil-alt fa-x"></i>
+                                  แก้ไขข้อมูล</a>
+                                <a id="<%= personneltype[i].idpersonneltype%>" href="#"
+                                  onclick="deletepersonelType(this.id)" class="btn btn-danger" data-bs-toggle="modal"
+                                  data-bs-target="#delete-personelType-modal"><i class="fas fa-trash-alt fa-x"></i>
+                                  ลบข้อมูล</a>
+                                <a class="btn btn-info"
+                                  href="/personneltype/name<%= personneltype[i].idpersonneltype%> "><i
+                                  class="bi bi-card-checklist" aria-hidden="true"></i>
+                                  ดูรายชื่อเจ้าหน้าที่ในหน่วยงาน</a>
+                              </div>
+
+                            </td>
+                          </tr>
+                          <%}%>
+                            <%}%>
+                    </tbody>
+                  </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <form action="/personneltype/save" method="POST">
+    <div id="add-personneltype-modal" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md"
+      style="display: none;" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header d-flex align-items-center border-bottom">
+            <h4 class="modal-title" id="myModalLabel">เพิ่มหน่วยงาน</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body mb row">
+            <label for="fname" class="col-sm-3 text-start control-label col-form-label"> หน่วยงาน:</label>
+            <div class="col-sm-9">
+              <input type="text" name="name_pst" placeholder="กรอกชื่อหน่วยงาน" class="form-control" required>
+            </div>
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button type="submit" class="btn btn-success font-weight-medium waves-effect">บันทึกข้อมูล</button>
+            <button type="button" class="btn btn-secondary font-weight-medium waves-effect"
+              data-bs-dismiss="modal">ปิด</button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+  </form>
+
+  <form action="/personneltype/update" method="POST">
+    <div id="edit-personelType-modal" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md"
+      style="display: none;" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header d-flex align-items-center border-bottom">
+            <h4 class="modal-title" id="myModalLabel">แก้ไขหน่วยงาน</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body mb row" id="editpt">
+
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button type="submit" class="btn btn-warning font-weight-medium waves-effect">แก้ไขข้อมูล</button>
+            <button type="button" class="btn btn-secondary font-weight-medium waves-effect"
+              data-bs-dismiss="modal">ปิด</button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+  </form>
+
+  <form action="/personneltype/delete" method="POST">
+    <div id="delete-personelType-modal" class="modal fade" tabindex="-1" aria-labelledby="bs-example-modal-md"
+      style="display: none;" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header d-flex align-items-center border-bottom">
+            <h4 class="modal-title" id="myModalLabel">ลบข้อมูลหน่วยงาน</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body mb row" id="deletept">
+
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button type="submit" class="btn btn-danger font-weight-medium waves-effect">ยืนยัน</button>
+            <button type="button" class="btn btn-secondary font-weight-medium waves-effect"
+              data-bs-dismiss="modal">ปิด</button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+  </form>
+  
+  <script>
+    $(document).ready(function () {
+      $('.table').DataTable();
+    });
+  </script>
+
+  <script>
+    function editpersonelType(id) {
+      const idpt1 = document.getElementById("idpt").value
+      const namept1 = document.getElementById('namept').value
+
+
+      let sort_idpt = idpt1.split(',')
+      let sort_namept = namept1.split(',')
+
+
+      let obj = []
+      var editpt = document.getElementById("editpt");
+      for (i in sort_idpt) {
+        obj.push({ "idpersonneltype": sort_idpt[i], "name_pst": sort_namept[i] })
+      }
+      for (j in obj) {
+        if (id == obj[j].idpersonneltype) {
+          editpt.innerHTML = '<label for="fname" class="col-sm-3 text-start control-label col-form-label"> หน่วยงาน:</label>'
+            + '<div class="col-sm-9"> <input type="text" name="name_pst" value="' + obj[j].name_pst + '" class="form-control" required></div>'
+            + '<input type="hidden" name="idpersonneltype" value="' + obj[j].idpersonneltype + '" readonly>'
+        }
+      }
+    }
+
+    function deletepersonelType(id) {
+      const idpt1 = document.getElementById("idpt").value
+      const namept1 = document.getElementById('namept').value
+
+      let sort_idpt = idpt1.split(',')
+      let sort_namept = namept1.split(',')
+
+      let obj = []
+      var deletept = document.getElementById("deletept");
+      for (i in sort_idpt) {
+        obj.push({ "idpersonneltype": sort_idpt[i], "name_pst": sort_namept[i] })
+      }
+      for (j in obj) {
+        if (id == obj[j].idpersonneltype) {
+          deletept.innerHTML = '<p>ต้องการลบหน่วยงาน ' + obj[j].name_pst + ' ? </p>'
+            + '<input type="hidden" name="idpersonneltype" value="' + obj[j].idpersonneltype + '" readonly>'
+        }
+      }
+    }
+
+  </script>
+
+  <%- include ("../_footer") %>

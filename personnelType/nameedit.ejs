@@ -1,0 +1,85 @@
+<%- include ("../_header") %>
+<section id="main-content">
+    <section class="wrapper">
+      <div class="row">
+        <div class="col-lg-12">
+          <h3 class="page-header"><i class="fa fa-files-o"></i> EDIT INFORMATION</h3>
+          <ol class="breadcrumb">
+            <li><i class="fa fa-home"></i><a href="/index">Dashboard</a></li>
+            <li><i class="icon_document_alt"></i><a href="/personneltype"> จัดการข้อมูลหน่วยงาน</a></li>
+            <li><i class="fa fa-window-maximize" aria-hidden="true"></i><a href="/personneltype/name<%= editpersonnel.personnel_type%>">จัดการข้อมูลเจ้าหน้าที่ในหน่วยงาน</a> </li>
+            <li><i class="fa fa-files-o"></i>แก้ไขข้อมูลเจ้าหน้าที่ในหน่วยงาน</li>
+          </ol>
+        </div>
+      </div>
+      <!-- Form validations -->
+      <div class="row">
+        <div class="col-lg-2"> </div>
+        <div class="col-lg-8">
+            <div class="col-lg-2"> </div>
+          <section class="panel">
+            <header class="panel-heading">
+                <b style="font-size: large;"> แก้ไขข้อมูลเจ้าหน้าที่ในหน่วยงาน </b>
+                <div class="panel-actions">
+                  <a href="/personneltype/edit/name<%=editpersonnel.idpersonnel%>" class="btn-setting"><i class="fa fa-rotate-right"></i></a>
+                  <a href="/personneltype/name<%= editpersonnel.personnel_type%>" class="btn-close"><i class="fa fa-times"></i></a>
+                </div>
+            </header>
+            <div class="panel-body">
+              <div class="form">
+                <form class="form-horizontal" id="feedback_form" method="POST" action="/personneltype/updatename<%=editpersonnel.personnel_type%>/<%=editpersonnel.idpersonnel %>">
+                  <div class="form-group " style="background-color: rgb(247, 245, 242); padding: 30px; margin: auto;">
+                    <label for="cname" class="control-label col-lg-2">ชื่อ <span class="required">*</span></label>
+                    <div class="col-lg-4">
+                      <input class="form-control" id="cname" value="<%=editpersonnel.fname_ps%>" name="fname_ps"  type="text" required />
+                    </div>
+                    <label for="cname" class="control-label col-lg-1">นามสกุล <span class="required">*</span></label>
+                    <div class="col-lg-4">
+                        <input class="form-control" id="cname" value="<%=editpersonnel.lname_ps%>" name="lname_ps"  type="text" required />
+                    </div>
+                  </div>
+                  <div class="form-group " style="background-color: rgb(221, 213, 200); padding: 30px; margin: auto;">
+                    <label for="cname" class="control-label col-lg-2">รหัสบัตรประชาชน <span class="required">*</span></label>
+                    <div class="col-lg-4">
+                      <input class="form-control" id="cname" value="<%=editpersonnel.idcard_ps%>" name="idcard_ps"  minlength="5"  type="text" required />
+                    </div>
+                    <label for="cname" class="control-label col-lg-2">เบอร์ติดต่อ <span class="required">*</span></label>
+                    <div class="col-lg-3">
+                      <input class="form-control" id="subject" name="phone_ps" value="<%=editpersonnel.phone_ps%>" minlength="10" type="text" required />
+                    </div>
+                  </div>
+                  <div class="form-group " style="background-color: rgb(247, 245, 242); padding: 30px; margin: auto;">
+                    <label for="cname" class="control-label col-lg-2">หน่วยงานที่รับผิดชอบ <span class="required">*</span></label>
+                    <div class="col-lg-5" ar>
+                    <select name="personnel_type" class="form-control" >
+                        <option value="">กรุณาเลือก</option>
+                        <% if(personneltype) { %>
+                            <% for(var i=0; i < personneltype.length; i++){ %>
+                                <option value="<%= personneltype[i].idpersonneltype %>" <% if(personneltype[i].idpersonneltype == editpersonnel.personnel_type){ %>
+                                    selected
+                                <%} %>>
+                                     <%= personneltype[i].name_pst %>
+                                </option>
+                                <%}%>
+                                    <%}%>
+                    </select>
+                </div>
+                  </div>
+                  <div class="form-group" style="background-color: rgb(221, 213, 200); padding: 30px; margin: auto;">
+                    <div class="col-lg-offset-4 col-lg-4">
+                      <button id="editter" class="btn btn-primary" type="submit">บันทึก</button>
+                      
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+            </div>
+          </section>
+        </div>
+      </div>
+      
+      <!-- page end-->
+    </section>
+  </section>
+  <%- include ("../_footer") %>
